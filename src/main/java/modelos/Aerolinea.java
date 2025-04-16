@@ -1,12 +1,16 @@
 package modelos;
 
+import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 
+
+@Document(collection = "aerolineas", schemaVersion= "1.0")
 public class Aerolinea implements Serializable {
-    private static final long serialVersionUID = 1L;
     
+    @Id
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;

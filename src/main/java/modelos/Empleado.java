@@ -4,10 +4,13 @@
  */
 package modelos;
 
+import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Secret;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
+
+@Document(collection = "empleados", schemaVersion= "1.0")
 public abstract class Empleado {
     @NotBlank 
     private String nombre;

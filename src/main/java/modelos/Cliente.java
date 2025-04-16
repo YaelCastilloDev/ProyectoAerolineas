@@ -1,10 +1,12 @@
 package modelos;
 
+import io.jsondb.annotation.Document;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+@Document(collection = "clientes", schemaVersion= "1.0")
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     

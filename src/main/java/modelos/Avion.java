@@ -1,9 +1,11 @@
 package modelos;
 
+import io.jsondb.annotation.Document;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 
+
+@Document(collection = "aviones", schemaVersion= "1.0")
 public class Avion implements Serializable {
     
     @NotBlank(message = "El nombre no puede estar vacío")

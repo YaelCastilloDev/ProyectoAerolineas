@@ -1,12 +1,13 @@
 package modelos;
 
+import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalTime;
 
+@Document(collection = "administrativos", schemaVersion= "1.0")
 public class Administrativo implements Serializable {
-    private static final long serialVersionUID = 1L;
     
     @NotBlank(message = "El departamento no puede estar vacío")
     @Size(max = 50, message = "El departamento no puede exceder 50 caracteres")

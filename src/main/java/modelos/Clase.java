@@ -1,8 +1,11 @@
 package modelos;
 
+import io.jsondb.annotation.Document;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 
+
+@Document(collection = "clases", schemaVersion= "1.0")
 public class Clase implements Serializable {
     private static final long serialVersionUID = 1L;
     

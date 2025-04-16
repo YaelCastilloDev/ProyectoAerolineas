@@ -1,10 +1,13 @@
 package modelos;
 
+import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalTime;
 
+
+@Document(collection = "boletos", schemaVersion= "1.0")
 public class Boleto implements Serializable {
     
     @Id

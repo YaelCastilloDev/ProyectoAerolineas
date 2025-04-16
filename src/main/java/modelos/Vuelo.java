@@ -1,11 +1,14 @@
 package modelos;
 
+import io.jsondb.annotation.Document;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+
+@Document(collection = "vuelos", schemaVersion= "1.0")
 public class Vuelo implements Serializable {
     private static final long serialVersionUID = 1L;
     
