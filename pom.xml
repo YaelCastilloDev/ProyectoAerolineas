@@ -55,6 +55,22 @@
         <artifactId>slf4j-simple</artifactId>
         <version>1.7.36</version>
     </dependency>
+    
+    <!-- JUnit 5 -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.10.0</version>
+        <scope>test</scope>
+      <type>jar</type>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.10.0</version>
+        <scope>test</scope>
+    </dependency>
     </dependencies>
 
     <build>
@@ -69,6 +85,8 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+            
+
             
             <!-- Plugin para ejecutar la clase main -->
             <plugin>

@@ -9,7 +9,7 @@ import dao.implementacion.AerolineaDAOimpl;
 public class AerolineaControlador {
     AerolineaDAOimpl aerolineaDAOimpl = new AerolineaDAOimpl();
 
-    public void crear(Aerolinea aerolinea) {
+    public void crear(Aerolinea aerolinea) throws IllegalArgumentException {
         new AerolineaValidacion().validarCompleto(
             aerolinea.getNombre(),
             aerolinea.getPais(),
@@ -27,7 +27,7 @@ public class AerolineaControlador {
         aerolineaDAOimpl.crear(aerolinea);
     }
 
-    public Aerolinea buscarPorId(String id) {
+    public Aerolinea buscarPorId(String id) throws IllegalArgumentException {
         Aerolinea aerolinea = aerolineaDAOimpl.buscarPorId(id);
         if (aerolinea == null) {
             throw new IllegalArgumentException("No se encontró aerolínea con ID: " + id);
@@ -43,7 +43,7 @@ public class AerolineaControlador {
         return aerolineas;
     }
 
-    public void actualizar(Aerolinea aerolinea) {
+    public void actualizar(Aerolinea aerolinea) throws IllegalArgumentException {
         new AerolineaValidacion().validarCompleto(
             aerolinea.getNombre(),
             aerolinea.getPais(),
@@ -61,7 +61,7 @@ public class AerolineaControlador {
         aerolineaDAOimpl.actualizar(aerolinea);
     }
 
-    public void eliminar(String id) {
+    public void eliminar(String id) throws IllegalArgumentException {
         Aerolinea aerolinea = aerolineaDAOimpl.buscarPorId(id);
         if (aerolinea == null) {
             throw new IllegalArgumentException("No existe aerolínea con ID: " + id);
