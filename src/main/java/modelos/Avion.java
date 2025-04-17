@@ -5,7 +5,6 @@ import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 
-
 @Document(collection = "aviones", schemaVersion= "1.0")
 public class Avion implements Serializable {
     
@@ -29,9 +28,12 @@ public class Avion implements Serializable {
     @NotBlank(message = "La matrícula no puede estar vacía")
     @Pattern(regexp = "^[A-Z0-9]{2,10}$", message = "Formato de matrícula inválido")
     private String matricula;
+    
+    @NotBlank(message = "La aerolínea propietaria no puede estar vacía")
+    @Size(min = 2, max = 50, message = "La aerolínea propietaria debe tener entre 2 y 50 caracteres")
+    private String aerolineaPropietaria;
 
     public void setMatricula(String matricula) { this.matricula = matricula; }
-
     public String getMatricula() { return matricula; }
     
     public String getNombre() { return nombre; }
@@ -45,4 +47,9 @@ public class Avion implements Serializable {
 
     public int getPeso() { return peso; }
     public void setPeso(int peso) { this.peso = peso; }
+
+    public String getAerolineaPropietaria() { return aerolineaPropietaria; }
+    public void setAerolineaPropietaria(String aerolineaPropietaria) { 
+        this.aerolineaPropietaria = aerolineaPropietaria; 
+    }
 }

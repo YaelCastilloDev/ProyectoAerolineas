@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package dao.contrato;
 
-/**
- *
- * @author yael
- */
+import java.util.List;
+import modelos.Avion;
+
 public interface AvionDAO {
-    
+    void crear(Avion avion);
+    Avion buscarPorId(String matricula);
+    List<Avion> listarTodos();
+    void actualizar(Avion avion);
+    void eliminar(String matricula);
 }

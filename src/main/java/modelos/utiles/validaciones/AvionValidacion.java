@@ -21,13 +21,15 @@ public class AvionValidacion {
             String modelo,
             int peso,
             String matricula,
-            LocalDate fechaFabricacion) {
+            String aerolineaPropietaria
+            ) {
         
         avion.setNombre(nombre);
         avion.setCapacidad(capacidad);
         avion.setModelo(modelo);
         avion.setPeso(peso);
         avion.setMatricula(matricula);
+        avion.setAerolineaPropietaria(aerolineaPropietaria);
 
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<Avion>> violations = validator.validate(avion);
