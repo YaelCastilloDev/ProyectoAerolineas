@@ -1,6 +1,7 @@
 package modelos;
 
 import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
 @Document(collection = "aviones", schemaVersion= "1.0")
 public class Avion implements Serializable {
     
+    @Id
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max = 30, message = "El nombre no puede exceder 30 caracteres")
     private String nombre;

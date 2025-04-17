@@ -9,6 +9,6 @@ package controladores;
  *
  * @author yael
  */
-public class Azafata {
+public class AdministrativoControlador {
     
 }

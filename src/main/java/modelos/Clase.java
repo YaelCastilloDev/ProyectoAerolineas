@@ -1,6 +1,7 @@
 package modelos;
 
 import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
 public class Clase implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @Id
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 3, max = 20, message = "El nombre debe tener entre 3 y 20 caracteres")
     @Pattern(regexp = "^[A-Z][a-zA-Z ]*$", message = "Debe comenzar con mayúscula y contener solo letras")

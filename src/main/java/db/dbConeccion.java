@@ -1,15 +1,18 @@
 package db;
 
-import io.jsondb.JsonDBTemplate;
-import java.io.File;
+//import io.jsondb.JsonDBTemplate;
+//import java.io.File;
 
 import io.jsondb.JsonDBTemplate;
+import java.io.File;
 
 /**
  *
  * @author yael
  */
 
+
+/*
 public class dbConeccion {
     // Ruta absoluta corregida (o mejor usa ruta relativa)
     private static final String DB_FILES_LOCATION = "/home/yael/Escritorio/javaprojecto/Proyectoaerolineas/basededatosJSON/";
@@ -32,8 +35,10 @@ public class dbConeccion {
         }
         return jsonDBTemplate;
     }
-}
-/*public class dbConeccion {
+} 
+
+*/
+public class dbConeccion {
     // Usa esta ruta exacta (ajusta según tu sistema)
     private static final String DB_FILES_LOCATION = "/home/yael/Escritorio/basededatosJSON/";
     private static final String BASE_SCAN_PACKAGE = "modelos"; // Asegúrate que coincida con tu paquete
@@ -42,30 +47,25 @@ public class dbConeccion {
 public static JsonDBTemplate getConnection() {
     if (jsonDBTemplate == null) {
         try {
+            // 1. Verifica que el directorio existe
             File dbDir = new File(DB_FILES_LOCATION);
-            System.out.println("Absolute path: " + dbDir.getAbsolutePath());
-            
             if (!dbDir.exists()) {
-                throw new RuntimeException("DB directory doesn't exist");
+                if (!dbDir.mkdirs()) {
+                    throw new RuntimeException("No se pudo crear el directorio de la base de datos");
+                }
             }
+
+            // 2. Inicialización alternativa
+            jsonDBTemplate = new JsonDBTemplate(DB_FILES_LOCATION, BASE_SCAN_PACKAGE); // Usa la clase directamente
             
-            // Verify specific file exists
-            File aerolineasFile = new File(dbDir, "aerolineas.json");
-            System.out.println("Aerolineas file exists: " + aerolineasFile.exists());
-            System.out.println("Aerolineas file readable: " + aerolineasFile.canRead());
-            System.out.println("Aerolineas file writable: " + aerolineasFile.canWrite());
-            
-            jsonDBTemplate = new JsonDBTemplate(DB_FILES_LOCATION, BASE_SCAN_PACKAGE);
-            
-            // Force collection check
-            System.out.println("Collections found: " + jsonDBTemplate.getCollectionNames());
+            System.out.println("Conexión exitosa. Colecciones: " + jsonDBTemplate.getCollectionNames());
             
         } catch (Exception e) {
-            System.err.println("Detailed error:");
+            System.err.println("Error crítico en conexión:");
             e.printStackTrace();
-            throw new RuntimeException("DB initialization failed", e);
+            throw new RuntimeException("Falló la inicialización de JsonDB", e);
         }
     }
     return jsonDBTemplate;
 }
-}*/
+}

@@ -5,6 +5,7 @@
 package modelos;
 
 import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
 import io.jsondb.annotation.Secret;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 
 @Document(collection = "empleados", schemaVersion= "1.0")
 public abstract class Empleado {
+    
     @NotBlank 
     private String nombre;
     
@@ -27,7 +29,7 @@ public abstract class Empleado {
     @Positive 
     private double salario;
     
-    @Secret 
+    @Id 
     @Email 
     private String correoElectronico;
     

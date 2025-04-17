@@ -1,6 +1,7 @@
 package modelos;
 
 import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.List;
 public class Vuelo implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @Id
     @NotBlank(message = "La ciudad de salida no puede estar vacía")
     @Size(max = 50, message = "La ciudad no puede exceder 50 caracteres")
     private String ciudadSalida;

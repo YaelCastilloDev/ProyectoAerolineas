@@ -3,56 +3,47 @@ package dao.implementacion;
 import dao.contrato.AerolineaDAO;
 import db.dbConeccion;
 import io.jsondb.JsonDBTemplate;
-import modelos.Aerolinea;
 import java.util.List;
+import modelos.Aerolinea;
 
 public class AerolineaDAOimpl implements AerolineaDAO {
     private final JsonDBTemplate db;
     
     public AerolineaDAOimpl() {
         this.db = dbConeccion.getConnection();
-        // Crear la colección si no existe
-        if (!db.collectionExists(Aerolinea.class)) {
-            db.createCollection(Aerolinea.class);
+        if (!this.db.collectionExists(Aerolinea.class)) {
+            this.db.createCollection(Aerolinea.class);
         }
     }
     
     @Override
     public void crear(Aerolinea aerolinea) {
-        try {
-            // Verificar si ya existe una aerolínea con ese nombre
-            if (db.findById(aerolinea.getNombre(), Aerolinea.class) != null) {
-                throw new IllegalArgumentException("Ya existe una aerolínea con ese nombre");
-            }
-            
-            // Insertar la nueva aerolínea
-            db.insert(aerolinea);
-            System.out.println("Aerolínea creada exitosamente: " + aerolinea.getNombre());
-        } catch (Exception e) {
-            System.err.println("Error al crear aerolínea: " + e.getMessage());
-            throw e;
-        }
+        db.insert(aerolinea);
     }
-    
-    
-    public List<Aerolinea> listarTodos() {
+
+    @Override
+    public Aerolinea buscarPorId(String id) {
+        return db.findById(id, Aerolinea.class);
+    }
+
+    @Override
+    public List<Aerolinea> listarTodas() {
         return db.findAll(Aerolinea.class);
     }
-    
-    
-    public Aerolinea buscarPorNombre(String nombre) {
-        return db.findById(nombre, Aerolinea.class);
-    }
-    
-    
+
+    @Override
     public void actualizar(Aerolinea aerolinea) {
-        db.save(aerolinea, Aerolinea.class);
+        db.upsert(aerolinea);
     }
-    
-    public void eliminar(String nombre) {
-        Aerolinea a = db.findById(nombre, Aerolinea.class);
-        if (a != null) {
-            db.remove(a, Aerolinea.class);
+
+    @Override
+    public void eliminar(String id) {
+        Aerolinea aerolinea = db.findById(id, Aerolinea.class);
+        if (aerolinea != null) {
+            db.remove(aerolinea, Aerolinea.class);
+        }
+        else {
+            System.out.println("aqui va una excepcion (o en controlador)");
         }
     }
 }

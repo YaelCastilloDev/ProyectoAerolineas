@@ -1,6 +1,7 @@
 package modelos;
 
 import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ public class Piloto implements Serializable {
     @Digits(integer = 6, fraction = 2, message = "Salario inválido")
     private double salario;
     
+    @Id
     @NotBlank(message = "El correo no puede estar vacío")
     @Email(message = "Debe ser un correo electrónico válido")
     @Size(max = 60, message = "El correo no puede exceder 60 caracteres")

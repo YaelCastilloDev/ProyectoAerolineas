@@ -1,15 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package dao.contrato;
 
+import java.util.List;
 import modelos.Aerolinea;
 
-/**
- *
- * @author yael
- */
 public interface AerolineaDAO {
     void crear(Aerolinea aerolinea);
+    Aerolinea buscarPorId(String id);
+    List<Aerolinea> listarTodas();
+    void actualizar(Aerolinea aerolinea);
+    void eliminar(String id);
 }

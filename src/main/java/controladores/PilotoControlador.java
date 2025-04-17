@@ -9,6 +9,6 @@ package controladores;
  *
  * @author yael
  */
-public class Administrativo {
+public class PilotoControlador {
     
 }

@@ -9,6 +9,6 @@ package controladores;
  *
  * @author yael
  */
-public  class Empleado {
+public class ClienteControlador {
     
 }

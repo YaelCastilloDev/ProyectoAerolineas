@@ -1,6 +1,7 @@
 package modelos;
 
 import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -23,6 +24,8 @@ public class Cliente implements Serializable {
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     private LocalDate fechaNacimiento;
     
+    
+    @Id
     @NotBlank(message = "El correo no puede estar vacío")
     @Email(message = "Debe ser un correo válido")
     @Size(max = 60, message = "El correo no puede exceder 60 caracteres")
