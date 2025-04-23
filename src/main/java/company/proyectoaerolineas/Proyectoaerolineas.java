@@ -1,7 +1,7 @@
 package company.proyectoaerolineas;
 
-import dao.implementacion.AerolineaDAOimpl;
-import db.dbConeccion;
+import controladores.dao.implementaciones.AerolineaDAOimpl;
+import modelos.dbConeccion;
 import io.jsondb.JsonDBTemplate;
 import java.util.List;
 import modelos.Aerolinea;
