@@ -1,7 +1,7 @@
-package controladores.dao.implementaciones;
+package modelos.dao.implementaciones;
 
-import controladores.dao.contratos.AvionDAO;
-import modelos.dbConeccion;
+import modelos.dao.contratos.AvionDAO;
+import modelos.coneccion.dbConeccion;
 import io.jsondb.JsonDBTemplate;
 import java.util.List;
 import modelos.Avion;

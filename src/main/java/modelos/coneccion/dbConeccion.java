@@ -1,4 +1,4 @@
-package modelos;
+package modelos.coneccion;
 
 //import io.jsondb.JsonDBTemplate;
 //import java.io.File;

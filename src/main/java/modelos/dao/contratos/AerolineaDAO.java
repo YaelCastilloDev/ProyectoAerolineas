@@ -1,4 +1,4 @@
-package controladores.dao.contratos;
+package modelos.dao.contratos;
 
 import java.util.List;
 import modelos.Aerolinea;

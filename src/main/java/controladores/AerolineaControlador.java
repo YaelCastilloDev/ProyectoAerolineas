@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import modelos.Aerolinea;
 import modelos.utiles.validaciones.AerolineaValidacion;
-import controladores.dao.implementaciones.AerolineaDAOimpl;
+import modelos.dao.implementaciones.AerolineaDAOimpl;
 
 public class AerolineaControlador {
     AerolineaDAOimpl aerolineaDAOimpl = new AerolineaDAOimpl();
