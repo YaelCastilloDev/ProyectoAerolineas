@@ -1,7 +1,7 @@
 package controladores.dao.implementaciones;
 
 import controladores.dao.contratos.AerolineaDAO;
-import modelos.dbConeccion;
+import modelos.ConexionDB;
 import io.jsondb.JsonDBTemplate;
 import java.util.List;
 import modelos.Aerolinea;
@@ -10,7 +10,7 @@ public class AerolineaDAOimpl implements AerolineaDAO {
     private final JsonDBTemplate db;
     
     public AerolineaDAOimpl() {
-        this.db = dbConeccion.getConnection();
+        this.db = ConexionDB.getConnection();
         if (!this.db.collectionExists(Aerolinea.class)) {
             this.db.createCollection(Aerolinea.class);
         }
@@ -41,9 +41,6 @@ public class AerolineaDAOimpl implements AerolineaDAO {
         Aerolinea aerolinea = db.findById(id, Aerolinea.class);
         if (aerolinea != null) {
             db.remove(aerolinea, Aerolinea.class);
-        }
-        else {
-            System.out.println("aqui va una excepcion (o en controlador)");
         }
     }
 }

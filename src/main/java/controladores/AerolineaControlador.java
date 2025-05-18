@@ -1,10 +1,10 @@
 package controladores;
 
-import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import modelos.Aerolinea;
 import modelos.utiles.validaciones.AerolineaValidacion;
 import controladores.dao.implementaciones.AerolineaDAOimpl;
+import java.util.NoSuchElementException;
 
 public class AerolineaControlador {
     AerolineaDAOimpl aerolineaDAOimpl = new AerolineaDAOimpl();
@@ -35,10 +35,10 @@ public class AerolineaControlador {
         return aerolinea;
     }
 
-    public List<Aerolinea> listarTodas() {
+    public List<Aerolinea> listarTodas() throws NoSuchElementException {
         List<Aerolinea> aerolineas = aerolineaDAOimpl.listarTodas();
         if (aerolineas.isEmpty()) {
-            System.out.println("No hay aerolíneas registradas");
+            throw new NoSuchElementException("No hay aerolíneas registradas.");
         }
         return aerolineas;
     }
@@ -66,7 +66,6 @@ public class AerolineaControlador {
         if (aerolinea == null) {
             throw new IllegalArgumentException("No existe aerolínea con ID: " + id);
         }
-
         aerolineaDAOimpl.eliminar(id);
     }
 }

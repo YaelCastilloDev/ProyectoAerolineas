@@ -1,7 +1,7 @@
 package controladores.dao.implementaciones;
 
 import controladores.dao.contratos.AvionDAO;
-import modelos.dbConeccion;
+import modelos.ConexionDB;
 import io.jsondb.JsonDBTemplate;
 import java.util.List;
 import modelos.Avion;
@@ -10,7 +10,7 @@ public class AvionDAOimpl implements AvionDAO {
     private final JsonDBTemplate db;
     
     public AvionDAOimpl() {
-        this.db = dbConeccion.getConnection();
+        this.db = ConexionDB.getConnection();
         if (!this.db.collectionExists(Avion.class)) {
             this.db.createCollection(Avion.class);
         }

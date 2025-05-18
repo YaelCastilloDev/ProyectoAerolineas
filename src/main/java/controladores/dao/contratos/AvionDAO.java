@@ -4,9 +4,9 @@ import java.util.List;
 import modelos.Avion;
 
 public interface AvionDAO {
-    void crear(Avion avion);
-    Avion buscarPorId(String matricula);
-    List<Avion> listarTodos();
-    void actualizar(Avion avion);
-    void eliminar(String matricula);
+    public void crear(Avion avion);
+    public Avion buscarPorId(String matricula);
+    public List<Avion> listarTodos();
+    public void actualizar(Avion avion);
+    public void eliminar(String matricula);
 }
