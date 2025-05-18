@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <exec.mainClass>company.proyectoaerolineas.Proyectoaerolineas</exec.mainClass>
+        <exec.mainClass>company.proyectoaerolineas.ProyectoAerolineas</exec.mainClass>
     </properties>
 
  <dependencies>
@@ -48,7 +48,8 @@
 <dependency>
   <groupId>io.jsondb</groupId>
   <artifactId>jsondb-core</artifactId>
-  <version>1.0.106</version>
+  <version>1.0.115-j11</version>
+    <type>jar</type>
 </dependency>
         <dependency>
         <groupId>org.slf4j</groupId>
