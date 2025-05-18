@@ -28,7 +28,6 @@ modelos\Clase.class
 modelos\utiles\validaciones\VueloValidacion.class
 modelos\utiles\validaciones\AerolineaValidacion.class
 controladores\EmpleadoControlador.class
-modelos\dbConeccion.class
 controladores\dao\implementaciones\AzafataDAOimpl.class
 controladores\dao\contratos\AvionDAO.class
 controladores\dao\implementaciones\VueloDAOimpl.class
@@ -41,6 +40,7 @@ modelos\utiles\validaciones\AvionValidacion.class
 modelos\utiles\validaciones\AzafataValidacion.class
 controladores\AvionControlador.class
 controladores\dao\contratos\AzafataDAO.class
+modelos\ConexionDB.class
 modelos\Aerolinea.class
 modelos\utiles\validaciones\ClienteValidacion.class
 company\proyectoaerolineas\ProyectoAerolineas.class

@@ -28,13 +28,13 @@ D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\modelos\
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\ClaseControlador.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\modelos\Vuelo.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\AzafataControlador.java
+D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\modelos\ConexionDB.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\dao\implementaciones\PilotoDAOimpl.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\dao\contratos\BoletoDAO.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\dao\implementaciones\AzafataDAOimpl.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\modelos\utiles\validaciones\AdministrativoValidacion.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\modelos\utiles\validaciones\VueloValidacion.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\dao\contratos\AdministrativoDAO.java
-D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\modelos\dbConeccion.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\dao\contratos\EmpleadoDAO.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\controladores\EmpleadoControlador.java
 D:\Descargas\OneDrive\Documents\GitHub\ProyectoAerolineas\src\main\java\modelos\Clase.java

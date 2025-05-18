@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package controladores.dao.contratos;
 
-/**
- *
- * @author yael
- */
+import java.util.List;
+import modelos.Administrativo;
+
 public interface AdministrativoDAO {
-    
+    public void crear(Administrativo administrativo);
+    public Administrativo buscarPorId(String correoElectronico);
+    public List<Administrativo> listarTodas();
+    public void actualizar(Administrativo administrativo);
+    public void eliminar(String correoElectronico);
 }
