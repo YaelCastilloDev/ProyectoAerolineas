@@ -1,14 +1,39 @@
 package company.proyectoaerolineas;
 
 import controladores.dao.implementaciones.AerolineaDAOimpl;
-import modelos.dbConeccion;
+import controladores.dao.implementaciones.ClienteDAOimpl;
+import modelos.ConexionDB;
 import io.jsondb.JsonDBTemplate;
+import java.time.LocalDate;
 import java.util.List;
 import modelos.Aerolinea;
+import modelos.Cliente;
 
-public class Proyectoaerolineas {
-    
+public class ProyectoAerolineas {
     public static void main(String[] args) {
+        try {
+            JsonDBTemplate db = ConexionDB.getConnection();
+            if (!db.collectionExists(Cliente.class)) {
+                System.out.println("Creando colección clientes...");
+                db.createCollection(Cliente.class); // Cambio clave aquí
+            }
+            ClienteDAOimpl clienteDAOimpl = new ClienteDAOimpl();
+            Cliente cliente = new Cliente();
+            cliente.setNombre("Mauricio");
+            cliente.setFechaNacimiento(LocalDate.parse("2005-11-16"));
+            cliente.setNacionalidad("Mexicano");
+            cliente.setCorreoElectronico("mauricio@gmail.com");
+            cliente.setTelefono("1234567890");
+            cliente.setPasaportes(List.of("Mexicana", "Estadounidense"));
+            
+            clienteDAOimpl.actualizar(cliente);
+            System.out.println("Cliente agregado exitosamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /*public static void main(String[] args) {
         try {
             // 1. Obtener conexión
             JsonDBTemplate db = dbConeccion.getConnection();
@@ -43,5 +68,5 @@ public class Proyectoaerolineas {
             System.err.println(" Error crítico:");
             e.printStackTrace();
         }
-    }
+    }*/
 }
