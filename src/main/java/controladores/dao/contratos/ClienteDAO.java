@@ -5,8 +5,8 @@ import modelos.Cliente;
 
 public interface ClienteDAO {
     public void crear(Cliente cliente);
-    public Cliente buscarPorId(String id);
+    public Cliente buscarPorId(String correoElectronico);
     public List<Cliente> listarTodas();
     public void actualizar(Cliente cliente);
-    public void eliminar(String id);
+    public void eliminar(String correoElectronico);
 }

@@ -25,10 +25,10 @@ public class ClienteControlador {
         clienteDAOimpl.crear(cliente);
     }
     
-    public Cliente buscarPorId(String id) throws IllegalArgumentException {
-        Cliente cliente = clienteDAOimpl.buscarPorId(id);
+    public Cliente buscarPorId(String correoElectronico) throws IllegalArgumentException {
+        Cliente cliente = clienteDAOimpl.buscarPorId(correoElectronico);
         if (cliente == null) {
-            throw new IllegalArgumentException("No se encontró el cliente con el ID: " + id);
+            throw new IllegalArgumentException("No se encontró el cliente con el correo: " + correoElectronico);
         }
         return cliente;
     }
@@ -51,16 +51,16 @@ public class ClienteControlador {
         );
         
         if (clienteDAOimpl.buscarPorId(cliente.getCorreoElectronico()) == null) {
-            throw new IllegalArgumentException("No existe cliente con ID: " + cliente.getCorreoElectronico());
+            throw new IllegalArgumentException("No existe cliente con el correo: " + cliente.getCorreoElectronico());
         }
         clienteDAOimpl.actualizar(cliente);
     }
     
-    public void eliminar(String id) throws IllegalArgumentException {
-        Cliente cliente = clienteDAOimpl.buscarPorId(id);
+    public void eliminar(String correoElectronico) throws IllegalArgumentException {
+        Cliente cliente = clienteDAOimpl.buscarPorId(correoElectronico);
         if (cliente == null) {
-            throw new IllegalArgumentException("No existe cliente con ID: " + id);
+            throw new IllegalArgumentException("No existe cliente con el correo: " + correoElectronico);
         }
-        clienteDAOimpl.eliminar(id);
+        clienteDAOimpl.eliminar(correoElectronico);
     }
 }

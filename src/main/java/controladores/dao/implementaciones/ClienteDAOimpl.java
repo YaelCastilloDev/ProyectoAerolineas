@@ -22,8 +22,8 @@ public class ClienteDAOimpl implements ClienteDAO {
     }
 
     @Override
-    public Cliente buscarPorId(String id) {
-        return db.findById(id, Cliente.class);
+    public Cliente buscarPorId(String correoElectronico) {
+        return db.findById(correoElectronico, Cliente.class);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class ClienteDAOimpl implements ClienteDAO {
     }
 
     @Override
-    public void eliminar(String id) {
-        Cliente cliente = buscarPorId(id);
+    public void eliminar(String correoElectronico) {
+        Cliente cliente = buscarPorId(correoElectronico);
         if (cliente != null) {
             db.remove(cliente, Cliente.class);
         }
