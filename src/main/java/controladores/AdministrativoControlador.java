@@ -1,6 +1,7 @@
 package controladores;
 
 import controladores.dao.implementaciones.AdministrativoDAOimpl;
+import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import modelos.Administrativo;
@@ -10,21 +11,25 @@ public class AdministrativoControlador {
     private AdministrativoDAOimpl administrativoDAOimpl = new AdministrativoDAOimpl();
     
     public void crear(Administrativo administrativo) throws IllegalArgumentException {
-        new AdministrativoValidacion().validarCompleto(
-                administrativo.getDeptoTrabajo(), 
-                administrativo.getHorarioEntrada(), 
-                administrativo.getHorarioSalida(), 
-                administrativo.getPuesto(), 
-                administrativo.getTipoContrato(), 
-                administrativo.getAnosExperiencia(), 
-                administrativo.getCorreoElectronico(), 
-                administrativo.getContrasena()
-        );
-        
-        if (administrativoDAOimpl.buscarPorId(administrativo.getCorreoElectronico()) != null) {
-            throw new IllegalArgumentException("Ya existe un administrativo con el correo: " + administrativo.getCorreoElectronico());
+        try {
+            new AdministrativoValidacion().validarCompleto(
+                    administrativo.getDeptoTrabajo(), 
+                    administrativo.getHorarioEntrada(), 
+                    administrativo.getHorarioSalida(), 
+                    administrativo.getPuesto(), 
+                    administrativo.getTipoContrato(), 
+                    administrativo.getAnosExperiencia(), 
+                    administrativo.getCorreoElectronico(), 
+                    administrativo.getContrasena()
+            );
+
+            if (administrativoDAOimpl.buscarPorId(administrativo.getCorreoElectronico()) != null) {
+                throw new IllegalArgumentException("Ya existe un administrativo con el correo: " + administrativo.getCorreoElectronico());
+            }
+            administrativoDAOimpl.crear(administrativo);
+        } catch (ConstraintViolationException e) {
+            throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
         }
-        administrativoDAOimpl.crear(administrativo);
     }
     
     public Administrativo buscarPorId(String correoElectronico) throws IllegalArgumentException {
@@ -44,21 +49,25 @@ public class AdministrativoControlador {
     }
     
     public void actualizar(Administrativo administrativo) throws IllegalArgumentException {
-        new AdministrativoValidacion().validarCompleto(
-                administrativo.getDeptoTrabajo(), 
-                administrativo.getHorarioEntrada(), 
-                administrativo.getHorarioSalida(), 
-                administrativo.getPuesto(), 
-                administrativo.getTipoContrato(), 
-                administrativo.getAnosExperiencia(), 
-                administrativo.getCorreoElectronico(), 
-                administrativo.getContrasena()
-        );
-        
-        if (administrativoDAOimpl.buscarPorId(administrativo.getCorreoElectronico()) == null) {
-            throw new IllegalArgumentException("No existe administrativo con el correo: " + administrativo.getCorreoElectronico());
+        try {
+            new AdministrativoValidacion().validarCompleto(
+                    administrativo.getDeptoTrabajo(), 
+                    administrativo.getHorarioEntrada(), 
+                    administrativo.getHorarioSalida(), 
+                    administrativo.getPuesto(), 
+                    administrativo.getTipoContrato(), 
+                    administrativo.getAnosExperiencia(), 
+                    administrativo.getCorreoElectronico(), 
+                    administrativo.getContrasena()
+            );
+
+            if (administrativoDAOimpl.buscarPorId(administrativo.getCorreoElectronico()) == null) {
+                throw new IllegalArgumentException("No existe administrativo con el correo: " + administrativo.getCorreoElectronico());
+            }
+            administrativoDAOimpl.actualizar(administrativo);
+        } catch (ConstraintViolationException e) {
+            throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
         }
-        administrativoDAOimpl.actualizar(administrativo);
     }
     
     public void eliminar(String correoElectronico) throws IllegalArgumentException {
