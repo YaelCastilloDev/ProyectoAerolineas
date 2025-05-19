@@ -4,27 +4,32 @@ import java.util.List;
 import modelos.Aerolinea;
 import modelos.utiles.validaciones.AerolineaValidacion;
 import controladores.dao.implementaciones.AerolineaDAOimpl;
+import jakarta.validation.ConstraintViolationException;
 import java.util.NoSuchElementException;
 
 public class AerolineaControlador {
-    AerolineaDAOimpl aerolineaDAOimpl = new AerolineaDAOimpl();
+    private AerolineaDAOimpl aerolineaDAOimpl = new AerolineaDAOimpl();
 
     public void crear(Aerolinea aerolinea) throws IllegalArgumentException {
-        new AerolineaValidacion().validarCompleto(
-            aerolinea.getNombre(),
-            aerolinea.getPais(),
-            aerolinea.getCentroOperacionPrincipal(),
-            aerolinea.getBases(),
-            aerolinea.getSitioOficial(),
-            aerolinea.getNombreContacto(),
-            aerolinea.getTelefono()
-        );
-        
-        if (aerolineaDAOimpl.buscarPorId(aerolinea.getNombre()) != null) {
-            throw new IllegalArgumentException("Ya existe una aerolínea con el nombre: " + aerolinea.getNombre());
-        }
+        try {
+            new AerolineaValidacion().validarCompleto(
+                aerolinea.getNombre(),
+                aerolinea.getPais(),
+                aerolinea.getCentroOperacionPrincipal(),
+                aerolinea.getBases(),
+                aerolinea.getSitioOficial(),
+                aerolinea.getNombreContacto(),
+                aerolinea.getTelefono()
+            );
 
-        aerolineaDAOimpl.crear(aerolinea);
+            if (aerolineaDAOimpl.buscarPorId(aerolinea.getNombre()) != null) {
+                throw new IllegalArgumentException("Ya existe una aerolínea con el nombre: " + aerolinea.getNombre());
+            }
+
+            aerolineaDAOimpl.crear(aerolinea);
+        } catch (ConstraintViolationException e) {
+            throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
+        }
     }
 
     public Aerolinea buscarPorId(String id) throws IllegalArgumentException {
@@ -44,21 +49,25 @@ public class AerolineaControlador {
     }
 
     public void actualizar(Aerolinea aerolinea) throws IllegalArgumentException {
-        new AerolineaValidacion().validarCompleto(
-            aerolinea.getNombre(),
-            aerolinea.getPais(),
-            aerolinea.getCentroOperacionPrincipal(),
-            aerolinea.getBases(),
-            aerolinea.getSitioOficial(),
-            aerolinea.getNombreContacto(),
-            aerolinea.getTelefono()
-        );
+        try {
+            new AerolineaValidacion().validarCompleto(
+                aerolinea.getNombre(),
+                aerolinea.getPais(),
+                aerolinea.getCentroOperacionPrincipal(),
+                aerolinea.getBases(),
+                aerolinea.getSitioOficial(),
+                aerolinea.getNombreContacto(),
+                aerolinea.getTelefono()
+            );
 
-        if (aerolineaDAOimpl.buscarPorId(aerolinea.getNombre()) == null) {
-            throw new IllegalArgumentException("No existe aerolínea con ID: " + aerolinea.getNombre());
+            if (aerolineaDAOimpl.buscarPorId(aerolinea.getNombre()) == null) {
+                throw new IllegalArgumentException("No existe aerolínea con ID: " + aerolinea.getNombre());
+            }
+
+            aerolineaDAOimpl.actualizar(aerolinea);
+        } catch (ConstraintViolationException e) {
+            throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
         }
-
-        aerolineaDAOimpl.actualizar(aerolinea);
     }
 
     public void eliminar(String id) throws IllegalArgumentException {
