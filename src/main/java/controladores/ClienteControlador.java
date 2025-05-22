@@ -1,7 +1,7 @@
 package controladores;
 
-import controladores.dao.implementaciones.ClienteDAOimpl;
 import jakarta.validation.ConstraintViolationException;
+import modelos.dao.implementaciones.ClienteDAOimpl;
 import java.util.List;
 import java.util.NoSuchElementException;
 import modelos.Cliente;

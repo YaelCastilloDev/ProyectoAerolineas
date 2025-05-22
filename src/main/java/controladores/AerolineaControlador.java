@@ -3,9 +3,9 @@ package controladores;
 import java.util.List;
 import modelos.Aerolinea;
 import modelos.utiles.validaciones.AerolineaValidacion;
-import controladores.dao.implementaciones.AerolineaDAOimpl;
 import jakarta.validation.ConstraintViolationException;
 import java.util.NoSuchElementException;
+import modelos.dao.implementaciones.AerolineaDAOimpl;
 
 public class AerolineaControlador {
     private AerolineaDAOimpl aerolineaDAOimpl = new AerolineaDAOimpl();

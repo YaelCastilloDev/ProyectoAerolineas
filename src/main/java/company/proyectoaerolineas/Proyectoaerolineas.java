@@ -1,18 +1,12 @@
 package company.proyectoaerolineas;
 
-import controladores.dao.implementaciones.AdministrativoDAOimpl;
-import controladores.dao.implementaciones.AerolineaDAOimpl;
-import controladores.dao.implementaciones.ClienteDAOimpl;
 import modelos.ConexionDB;
 import io.jsondb.JsonDBTemplate;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import modelos.Administrativo;
-import modelos.Aerolinea;
-import modelos.Cliente;
+import modelos.dao.implementaciones.AdministrativoDAOimpl;
 
-public class ProyectoAerolineas {
+public class Proyectoaerolineas {
     public static void main(String[] args) {
         try {
             JsonDBTemplate db = ConexionDB.getConnection();
@@ -43,14 +37,14 @@ public class ProyectoAerolineas {
             cliente.setCorreoElectronico("mauricio@gmail.com");
             cliente.setTelefono("1234567890");
             cliente.setPasaportes(List.of("Mexicana", "Estadounidense"));
-            
+
             clienteDAOimpl.actualizar(cliente);
             System.out.println("Cliente agregado exitosamente");*/
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     /*public static void main(String[] args) {
         try {
             // 1. Obtener conexión
