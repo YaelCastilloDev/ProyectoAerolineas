@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package modelos.dao.contratos;
 
-/**
- *
- * @author yael
- */
+import java.util.List;
+import modelos.Azafata;
+
 public interface AzafataDAO {
-    
+    public void crear(Azafata azafata);
+    public Azafata buscarPorId(String correoElectronico);
+    public List<Azafata> listarTodas();
+    public void actualizar(Azafata azafata);
+    public void eliminar(String correoElectronico);
 }

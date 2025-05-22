@@ -1,24 +1,35 @@
 package company.proyectoaerolineas;
 
-import modelos.dao.implementaciones.AerolineaDAOimpl;
-import modelos.coneccion.dbConeccion;
-import modelos.dao.implementaciones.AerolineaDAOimpl;
-import modelos.dao.implementaciones.ClienteDAOimpl;
+import modelos.ConexionDB;
 import io.jsondb.JsonDBTemplate;
-import java.time.LocalDate;
-import java.util.List;
-import modelos.Aerolinea;
-import modelos.Cliente;
+import java.time.LocalTime;
+import modelos.Administrativo;
+import modelos.dao.implementaciones.AdministrativoDAOimpl;
 
 public class Proyectoaerolineas {
     public static void main(String[] args) {
         try {
-            JsonDBTemplate db = dbConeccion.getConnection();
-            if (!db.collectionExists(Cliente.class)) {
+            JsonDBTemplate db = ConexionDB.getConnection();
+            if (!db.collectionExists(Administrativo.class)) {
                 System.out.println("Creando colección clientes...");
-                db.createCollection(Cliente.class); // Cambio clave aquí
+                db.createCollection(Administrativo.class); // Cambio clave aquí
             }
-            ClienteDAOimpl clienteDAOimpl = new ClienteDAOimpl();
+            
+            AdministrativoDAOimpl adao = new AdministrativoDAOimpl();
+            Administrativo administrativo = new Administrativo();
+            administrativo.setAnosExperiencia(4);
+            administrativo.setCorreoElectronico("mauricio@gmail.com");
+            administrativo.setContrasena("Hola123456");
+            administrativo.setDeptoTrabajo("Contabilidad");
+            administrativo.setPuesto("Contador");
+            administrativo.setTipoContrato("TIEMPO_COMPLETO");
+            administrativo.setHorarioEntrada(LocalTime.parse("12:00:00"));
+            administrativo.setHorarioSalida(LocalTime.parse("12:50:00"));
+            
+            adao.actualizar(administrativo);
+            System.out.println("Administrativo agregado exitosamente");
+            
+            /*ClienteDAOimpl clienteDAOimpl = new ClienteDAOimpl();
             Cliente cliente = new Cliente();
             cliente.setNombre("Mauricio");
             cliente.setFechaNacimiento(LocalDate.parse("2005-11-16"));
@@ -28,12 +39,11 @@ public class Proyectoaerolineas {
             cliente.setPasaportes(List.of("Mexicana", "Estadounidense"));
 
             clienteDAOimpl.actualizar(cliente);
-            System.out.println("Cliente agregado exitosamente");
+            System.out.println("Cliente agregado exitosamente");*/
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-}
 
     /*public static void main(String[] args) {
         try {
@@ -70,6 +80,5 @@ public class Proyectoaerolineas {
             System.err.println(" Error crítico:");
             e.printStackTrace();
         }
-    }
+    }*/
 }
-*/

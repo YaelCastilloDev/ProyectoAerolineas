@@ -2,16 +2,16 @@ package controladores;
 
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import modelos.Avion;
 import modelos.utiles.validaciones.AvionValidacion;
 import modelos.dao.implementaciones.AvionDAOimpl;
 
 public class AvionControlador {
-    AvionDAOimpl avionDAOimpl = new AvionDAOimpl();
+    private AvionDAOimpl avionDAOimpl = new AvionDAOimpl();
 
     public void crear(Avion avion) throws IllegalArgumentException {
         try {
-            
             new AvionValidacion().validarCompleto(
                 avion.getNombre(),
                 avion.getCapacidad(),
@@ -39,10 +39,10 @@ public class AvionControlador {
         return avion;
     }
 
-    public List<Avion> listarTodos() {
+    public List<Avion> listarTodos() throws NoSuchElementException {
         List<Avion> aviones = avionDAOimpl.listarTodos();
         if (aviones.isEmpty()) {
-            System.out.println("No hay aviones registrados");
+            throw new NoSuchElementException("No hay aviones registrados.");
         }
         return aviones;
     }
