@@ -1,10 +1,10 @@
 package controladores;
 
-import controladores.dao.implementaciones.AdministrativoDAOimpl;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import modelos.Administrativo;
+import modelos.dao.implementaciones.AdministrativoDAOimpl;
 import modelos.utiles.validaciones.AdministrativoValidacion;
 
 public class AdministrativoControlador {
