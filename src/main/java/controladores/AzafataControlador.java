@@ -1,10 +1,10 @@
 package controladores;
 
-import controladores.dao.implementaciones.AzafataDAOimpl;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import modelos.Azafata;
+import modelos.dao.implementaciones.AzafataDAOimpl;
 import modelos.utiles.validaciones.AzafataValidacion;
 
 public class AzafataControlador {
