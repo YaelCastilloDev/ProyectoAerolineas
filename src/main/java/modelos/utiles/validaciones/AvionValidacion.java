@@ -4,9 +4,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import java.time.LocalDate;
 import java.util.Set;
 import modelos.Avion;
+import modelos.dao.implementaciones.AvionDAOimpl;
 
 public class AvionValidacion {
     private final Avion avion;
@@ -21,8 +21,7 @@ public class AvionValidacion {
             String modelo,
             int peso,
             String matricula,
-            String aerolineaPropietaria
-            ) {
+            String aerolineaPropietaria) {
         
         avion.setNombre(nombre);
         avion.setCapacidad(capacidad);
@@ -36,6 +35,12 @@ public class AvionValidacion {
         
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
+        }
+    }
+
+    public void validarMatriculaUnica(String matricula, AvionDAOimpl dao) {
+        if (dao.buscarPorId(matricula) != null) {
+            throw new IllegalArgumentException("Ya existe un avión con la matrícula: " + matricula);
         }
     }
 

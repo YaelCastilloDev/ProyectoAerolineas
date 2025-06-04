@@ -2,78 +2,88 @@ package controladores;
 
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import modelos.Avion;
 import modelos.utiles.validaciones.AvionValidacion;
 import modelos.dao.implementaciones.AvionDAOimpl;
 
 public class AvionControlador {
-    private AvionDAOimpl avionDAOimpl = new AvionDAOimpl();
+    private final AvionDAOimpl avionDAO;
+    private final AvionValidacion validador;
 
-    public void crear(Avion avion) throws IllegalArgumentException {
+    public AvionControlador() {
+        this.avionDAO = new AvionDAOimpl();
+        this.validador = new AvionValidacion();
+    }
+
+    public void crearAvion(
+            String nombre,
+            int capacidad,
+            String modelo,
+            int peso,
+            String matricula,
+            String aerolineaPropietaria) {
+        
         try {
-            new AvionValidacion().validarCompleto(
-                avion.getNombre(),
-                avion.getCapacidad(),
-                avion.getModelo(),
-                avion.getPeso(),
-                avion.getMatricula(),
-                avion.getAerolineaPropietaria()
-            );
+            validador.validarCompleto(nombre, capacidad, modelo, peso, matricula, aerolineaPropietaria);
             
-            if (avionDAOimpl.buscarPorId(avion.getMatricula()) != null) {
-                throw new IllegalArgumentException("Ya existe un avión con la matrícula: " + avion.getMatricula());
-            }
-
-            avionDAOimpl.crear(avion);
+            Avion avion = validador.getAvionValidado();
+            avionDAO.crear(avion);
+            
         } catch (ConstraintViolationException e) {
-            throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
+            throw new IllegalArgumentException(
+                e.getConstraintViolations().iterator().next().getMessage());
         }
     }
 
-    public Avion buscarPorId(String matricula) throws IllegalArgumentException {
-        Avion avion = avionDAOimpl.buscarPorId(matricula);
+    public Avion buscarAvion(String matricula) {
+        Avion avion = avionDAO.buscarPorId(matricula);
         if (avion == null) {
-            throw new IllegalArgumentException("No se encontró avión con matrícula: " + matricula);
+            throw new IllegalArgumentException("No existe avión con matrícula: " + matricula);
         }
         return avion;
     }
 
-    public List<Avion> listarTodos() throws NoSuchElementException {
-        List<Avion> aviones = avionDAOimpl.listarTodos();
+    public List<Avion> listarAviones() {
+        List<Avion> aviones = avionDAO.listarTodos();
         if (aviones.isEmpty()) {
-            throw new NoSuchElementException("No hay aviones registrados.");
+            throw new IllegalStateException("No hay aviones registrados");
         }
         return aviones;
     }
 
-    public void actualizar(Avion avion) throws IllegalArgumentException {
+    public List<Avion> listarAvionesPorAerolinea(String aerolinea) {
+        List<Avion> aviones = avionDAO.listarPorAerolinea(aerolinea);
+        if (aviones.isEmpty()) {
+            throw new IllegalStateException("No hay aviones registrados para la aerolínea: " + aerolinea);
+        }
+        return aviones;
+    }
+
+    public void actualizarAvion(
+            String nombre,
+            int capacidad,
+            String modelo,
+            int peso,
+            String matricula,
+            String aerolineaPropietaria) {
+        
         try {
-            new AvionValidacion().validarCompleto(
-                avion.getNombre(),
-                avion.getCapacidad(),
-                avion.getModelo(),
-                avion.getPeso(),
-                avion.getMatricula(),
-                avion.getAerolineaPropietaria()
-            );
-
-            if (avionDAOimpl.buscarPorId(avion.getMatricula()) == null) {
-                throw new IllegalArgumentException("No existe avión con matrícula: " + avion.getMatricula());
-            }
-
-            avionDAOimpl.actualizar(avion);
+            validador.validarCompleto(nombre, capacidad, modelo, peso, matricula, aerolineaPropietaria);
+            
+            Avion avion = validador.getAvionValidado();
+            avionDAO.actualizar(avion);
+            
         } catch (ConstraintViolationException e) {
-            throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
+            throw new IllegalArgumentException(
+                e.getConstraintViolations().iterator().next().getMessage());
         }
     }
 
-    public void eliminar(String matricula) throws IllegalArgumentException {
-        Avion avion = avionDAOimpl.buscarPorId(matricula);
-        if (avion == null) {
-            throw new IllegalArgumentException("No existe avión con matrícula: " + matricula);
-        }
+    public void eliminarAvion(String matricula) {
+        avionDAO.eliminar(matricula);
+    }
 
-        avionDAOimpl.eliminar(matricula);
+    public boolean existeAvion(String matricula) {
+        return avionDAO.buscarPorId(matricula) != null;
     }
 }

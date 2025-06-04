@@ -1,7 +1,7 @@
 package modelos.dao.implementaciones;
 
 import modelos.dao.contratos.AerolineaDAO;
-import modelos.coneccion.dbConeccion;
+import modelos.conexion.dbConexion;
 import io.jsondb.JsonDBTemplate;
 import java.util.List;
 import modelos.Aerolinea;
@@ -10,7 +10,7 @@ public class AerolineaDAOimpl implements AerolineaDAO {
     private final JsonDBTemplate db;
     
     public AerolineaDAOimpl() {
-        this.db = dbConeccion.getConnection();
+        this.db = dbConexion.getConnection();
         if (!this.db.collectionExists(Aerolinea.class)) {
             this.db.createCollection(Aerolinea.class);
         }

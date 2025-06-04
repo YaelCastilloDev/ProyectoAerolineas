@@ -1,12 +1,16 @@
 package modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Document(collection = "vuelos", schemaVersion= "1.0")
@@ -14,6 +18,8 @@ public class Vuelo implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    private String id;
+    
     @NotBlank(message = "La ciudad de salida no puede estar vacía")
     @Size(max = 50, message = "La ciudad no puede exceder 50 caracteres")
     private String ciudadSalida;
@@ -47,8 +53,74 @@ public class Vuelo implements Serializable {
     
     @Size(min = 4, max = 4, message = "Debe haber exactamente 4 azafatas")
     private List<@NotNull Azafata> azafatas;
+    
+    @PositiveOrZero(message = "El número de pasajeros no puede ser negativo")
+    private int pasajerosRegistrados = 0;
+    
+    @Positive(message = "El costo del boleto debe ser positivo")
+    private double costoBoleto;
+    
+    @JsonIgnore // Para evitar recursión en JSON
+    private List<Boleto> boletos = new ArrayList<>();
+
+    // Método para agregar boleto
+    public void agregarBoleto(Boleto boleto) {
+        if (boletos == null) {
+            boletos = new ArrayList<>();
+        }
+        boletos.add(boleto);
+    }
+
+    // Método para obtener boletos no cancelados
+    public List<Boleto> getBoletosActivos() {
+        return boletos.stream()
+            .filter(b -> b.getEstado() != Boleto.EstadoBoleto.CANCELADO)
+            .collect(Collectors.toList());
+    }
+    
+    public void setBoletos(List<Boleto> boletos) {
+    this.boletos = boletos != null ? boletos : new ArrayList<>();
+    }
+
+    // Método para verificar disponibilidad por clase
+    public boolean tieneDisponibilidad(Clase clase) {
+        long boletosClase = getBoletosActivos().stream()
+            .filter(b -> b.getClase().equals(clase))
+            .count();
+        return boletosClase < clase.getCapacidad();
+    }
+    
+    // Método para verificar disponibilidad de asientos
+    public boolean tieneAsientosDisponibles() {
+        return pasajerosRegistrados < avion.getCapacidad();
+    }
+    
+    // Método para registrar un pasajero
+    public void registrarPasajero() {
+        if (!tieneAsientosDisponibles()) {
+            throw new IllegalStateException("No hay asientos disponibles en este vuelo");
+        }
+        pasajerosRegistrados++;
+    }
+
+    // Validación para fechas coherentes
+    @AssertTrue(message = "La fecha/hora de llegada debe ser posterior a la de salida")
+    private boolean isFechasValidas() {
+        if (fechaSalida == null || fechaLlegada == null) {
+            return false;
+        }
+        return fechaLlegada.isAfter(fechaSalida);
+    }
 
     // Getters y Setters
+    public String getId(){
+        return id;
+    }
+    
+    public void setId(){
+        this.id = id;
+    }
+    
     public String getCiudadSalida() {
         return ciudadSalida;
     }
@@ -128,13 +200,17 @@ public class Vuelo implements Serializable {
     public void setAzafatas(List<Azafata> azafatas) {
         this.azafatas = azafatas;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vuelo vuelo = (Vuelo) o;
+        return Objects.equals(id, vuelo.id);
+    }
 
-    // Validación adicional para asegurar que la hora de llegada sea después de la de salida
-    @AssertTrue(message = "La hora de llegada debe ser posterior a la hora de salida")
-    private boolean isHorarioValido() {
-        if (horaSalida == null || horaLlegada == null) {
-            return true;
-        }
-        return horaLlegada.isAfter(horaSalida);
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

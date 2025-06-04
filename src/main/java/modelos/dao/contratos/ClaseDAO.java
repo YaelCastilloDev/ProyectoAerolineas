@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package modelos.dao.contratos;
 
-/**
- *
- * @author yael
- */
+import java.util.List;
+import modelos.Clase;
+
 public interface ClaseDAO {
-    
+    void crear(Clase clase);
+    Clase buscarPorNombre(String nombre);
+    List<Clase> listarTodos();
+    List<Clase> listarPorTipo(Clase.TipoClase tipo);
+    void actualizar(Clase clase);
+    void eliminar(String nombre);
+    boolean existe(String nombre);
 }

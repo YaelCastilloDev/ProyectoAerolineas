@@ -4,67 +4,101 @@ import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.LocalTime;
-
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Document(collection = "boletos", schemaVersion= "1.0")
 public class Boleto implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     @Id
     private String id;
-
-
     
+    @NotNull(message = "El cliente no puede ser nulo")
+    private Cliente cliente;
+    
+    @NotNull(message = "El vuelo no puede ser nulo")
+    private Vuelo vuelo;
+    
+    @NotNull(message = "La clase no puede ser nula")
+    private Clase clase;
     
     @Positive(message = "El costo debe ser positivo")
     @Digits(integer = 6, fraction = 2, message = "Costo inválido")
-    private double costoBoleto;
+    private double costo;
     
-    @Min(value = 1, message = "Número de sala inválido")
-    @Max(value = 50, message = "Número de sala inválido")
-    private int sala;
+    @NotBlank(message = "El asiento no puede estar vacío")
+    @Pattern(regexp = "^[A-Z][1-9][0-9]?$", message = "Formato de asiento inválido (Ej: A1, B12)")
+    private String asiento;
     
-    @Min(value = 1, message = "Número de control inválido")
-    @Max(value = 999, message = "Número de control inválido")
-    private int control;
+    @NotNull(message = "La fecha de emisión no puede estar vacía")
+    private LocalDateTime fechaEmision;
     
-    @NotBlank(message = "La clase no puede estar vacía")
-    @Pattern(regexp = "Primera|Ejecutiva|Turista", message = "Clase no válida")
-    private String clase;
+    @NotNull(message = "El estado no puede ser nulo")
+    private EstadoBoleto estado;
     
-    @Min(value = 1, message = "Zona inválida")
-    @Max(value = 10, message = "Zona inválida")
-    private int zona;
-    
-    @NotNull(message = "La hora de expedición no puede estar vacía")
-    private LocalTime horaExpedicion;
-    
-    @NotNull(message = "La hora de salida no puede estar vacía")
-    @FutureOrPresent(message = "La hora de salida debe ser en el futuro o presente")
-    private LocalTime horaSalida;
+    // Enums para estados y tipos
+    public enum EstadoBoleto {
+        RESERVADO, PAGADO, CANCELADO, UTILIZADO
+    }
 
-    // Getters y Setters...
-    public double getCostoBoleto() { return costoBoleto; }
-    public void setCostoBoleto(double costoBoleto) { this.costoBoleto = costoBoleto; }
+    // Constructor que genera ID automático
+    public Boleto() {
+        this.id = "BLT-" + UUID.randomUUID().toString().substring(0, 8);
+        this.fechaEmision = LocalDateTime.now();
+        this.estado = EstadoBoleto.RESERVADO;
+    }
 
-    public int getSala() { return sala; }
-    public void setSala(int sala) { this.sala = sala; }
-
-    public int getControl() { return control; }
-    public void setControl(int control) { this.control = control; }
-
-    public String getClase() { return clase; }
-    public void setClase(String clase) { this.clase = clase; }
-
-    public int getZona() { return zona; }
-    public void setZona(int zona) { this.zona = zona; }
+    // Métodos de negocio
+    public void pagar() {
+        if (this.estado != EstadoBoleto.RESERVADO) {
+            throw new IllegalStateException("Solo se pueden pagar boletos reservados");
+        }
+        this.estado = EstadoBoleto.PAGADO;
+    }
     
+    public void cancelar() {
+        if (this.estado == EstadoBoleto.UTILIZADO) {
+            throw new IllegalStateException("No se puede cancelar un boleto utilizado");
+        }
+        this.estado = EstadoBoleto.CANCELADO;
+    }
+    
+    public void utilizar() {
+        if (this.estado != EstadoBoleto.PAGADO) {
+            throw new IllegalStateException("Solo se pueden utilizar boletos pagados");
+        }
+        this.estado = EstadoBoleto.UTILIZADO;
+    }
+
+    // Getters y Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public LocalTime getHoraExpedicion() { return horaExpedicion; }
-    public void setHoraExpedicion(LocalTime horaExpedicion) { this.horaExpedicion = horaExpedicion; }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public LocalTime getHoraSalida() { return horaSalida; }
-    public void setHoraSalida(LocalTime horaSalida) { this.horaSalida = horaSalida; }
+    public Vuelo getVuelo() { return vuelo; }
+    public void setVuelo(Vuelo vuelo) { this.vuelo = vuelo; }
+
+    public Clase getClase() { return clase; }
+    public void setClase(Clase clase) { this.clase = clase; }
+
+    public double getCosto() { return costo; }
+    public void setCosto(double costo) { this.costo = costo; }
+
+    public String getAsiento() { return asiento; }
+    public void setAsiento(String asiento) { this.asiento = asiento; }
+
+    public LocalDateTime getFechaEmision() { return fechaEmision; }
+    public void setFechaEmision(LocalDateTime fechaEmision) { this.fechaEmision = fechaEmision; }
+
+    public EstadoBoleto getEstado() { return estado; }
+    public void setEstado(EstadoBoleto estado) { this.estado = estado; }
+
+    @Override
+    public String toString() {
+        return "Boleto #" + id + " - " + vuelo.getCiudadSalida() + " a " + 
+               vuelo.getCiudadLlegada() + " (" + clase.getNombre() + ")";
+    }
 }

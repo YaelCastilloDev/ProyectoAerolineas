@@ -11,6 +11,9 @@ import java.util.List;
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @Id
+    private String id;
+    
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     @Pattern(regexp = "^[A-Z][a-zA-Z ]*$", message = "Debe comenzar con mayúscula")
@@ -25,7 +28,6 @@ public class Cliente implements Serializable {
     private LocalDate fechaNacimiento;
     
     
-    @Id
     @NotBlank(message = "El correo no puede estar vacío")
     @Email(message = "Debe ser un correo válido")
     @Size(max = 60, message = "El correo no puede exceder 60 caracteres")
@@ -38,6 +40,14 @@ public class Cliente implements Serializable {
     private List<@Size(min = 8, max = 20) String> pasaportes;
 
     // Getters and Setters
+    public String getId(){
+        return id;
+    }
+    
+    public void setId(){
+        this.id = id;
+    }
+    
     public String getNombre() {
         return nombre;
     }
