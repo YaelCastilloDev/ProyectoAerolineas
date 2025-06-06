@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas;
+package vistas.administrativo;
 
 /**
  *
  * @author Diego Ivan
  */
-public class VentanaAzafata extends javax.swing.JFrame {
+public class VentanaPiloto extends javax.swing.JFrame {
 
     /**
-     * Creates new form Aerolinea
+     * Creates new form
      */
-    public VentanaAzafata() {
+    public VentanaPiloto() {
         initComponents();
     }
 
@@ -32,7 +32,7 @@ public class VentanaAzafata extends javax.swing.JFrame {
         tfBuscar = new javax.swing.JTextField();
         btnRefrescar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaAzafatas = new javax.swing.JTable();
+        tablaAerolineas = new javax.swing.JTable();
         pnlBotones = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
@@ -40,7 +40,7 @@ public class VentanaAzafata extends javax.swing.JFrame {
         btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Azafatas");
+        setTitle("Pilotos");
 
         btnRegresar.setText("Regresar");
         btnRegresar.setMinimumSize(new java.awt.Dimension(80, 23));
@@ -93,19 +93,19 @@ public class VentanaAzafata extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tablaAzafatas.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAerolineas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Nombre", "N. Horas Asistencia", "N. Idiomas"
+                "Nombre", "Licencia", "Años Experiencia", "Horas Vuelo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -116,8 +116,12 @@ public class VentanaAzafata extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaAzafatas.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tablaAzafatas);
+        tablaAerolineas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaAerolineas);
+        if (tablaAerolineas.getColumnModel().getColumnCount() > 0) {
+            tablaAerolineas.getColumnModel().getColumn(2).setResizable(false);
+            tablaAerolineas.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -246,13 +250,13 @@ public class VentanaAzafata extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaAzafata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPiloto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaAzafata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPiloto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaAzafata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPiloto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaAzafata.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPiloto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -386,7 +390,7 @@ public class VentanaAzafata extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaAzafata().setVisible(true);
+                new VentanaPiloto().setVisible(true);
             }
         });
     }
@@ -402,7 +406,7 @@ public class VentanaAzafata extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
-    private javax.swing.JTable tablaAzafatas;
+    private javax.swing.JTable tablaAerolineas;
     private javax.swing.JTextField tfBuscar;
     // End of variables declaration//GEN-END:variables
 }
