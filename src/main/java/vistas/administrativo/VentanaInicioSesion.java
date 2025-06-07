@@ -4,6 +4,10 @@
  */
 package vistas.administrativo;
 
+import controladores.AdministrativoControlador;
+import javax.swing.JOptionPane;
+import modelos.Administrativo;
+
 /**
  *
  * @author Diego Ivan
@@ -133,6 +137,17 @@ public class VentanaInicioSesion extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         // TODO add your handling code here:
+        String usuario = tfUsuario.getText();
+        char[] password = pfContraseña.getPassword();
+        String contraseña = new String(password);
+        
+        if(usuario.isEmpty() || contraseña.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Campos Obligatorios");
+        }else{
+            AdministrativoControlador adminControl = new AdministrativoControlador();
+            adminControl.validarCredenciales(usuario, contraseña);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     /**

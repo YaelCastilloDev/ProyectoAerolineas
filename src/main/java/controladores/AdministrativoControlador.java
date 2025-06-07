@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import modelos.Administrativo;
 import modelos.dao.implementaciones.AdministrativoDAOimpl;
 import modelos.utiles.validaciones.AdministrativoValidacion;
+import vistas.administrativo.VentanaMenuAdmin;
 
 public class AdministrativoControlador {
     private AdministrativoDAOimpl administrativoDAOimpl = new AdministrativoDAOimpl();
@@ -94,7 +95,13 @@ public class AdministrativoControlador {
         }
         
         tabla.setVisible(true);
-    }
+    }  
     
-
+    public void validarCredenciales(String correo, String contraseña){
+        Administrativo admin = administrativoDAOimpl.verificarContraseña(correo, contraseña);
+        if(admin != null){
+            VentanaMenuAdmin nuevoMenu = new VentanaMenuAdmin();
+            nuevoMenu.setVisible(true);
+        }
+    }
 }

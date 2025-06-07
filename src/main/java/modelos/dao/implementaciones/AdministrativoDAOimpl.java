@@ -15,7 +15,7 @@ public class AdministrativoDAOimpl implements AdministrativoDAO {
             this.db.createCollection(Administrativo.class);
         }
     }
-
+    
     @Override
     public void crear(Administrativo administrativo) {
         db.insert(administrativo);
@@ -43,4 +43,13 @@ public class AdministrativoDAOimpl implements AdministrativoDAO {
             db.remove(administrativo, Administrativo.class);
         }
     }
+    
+    public Administrativo verificarContraseña(String correo, String contrasena) {
+        Administrativo administrativo = buscarPorId(correo);
+        if (administrativo != null && administrativo.getContrasena().equals(contrasena)) {
+            return administrativo;
+    }
+        return null;
+    }
+    
 }
