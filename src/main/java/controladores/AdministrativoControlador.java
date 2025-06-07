@@ -43,7 +43,7 @@ public class AdministrativoControlador {
     public List<Administrativo> listarTodas() throws NoSuchElementException {
         List<Administrativo> administrativos = administrativoDAOimpl.listarTodas();
         if (administrativos.isEmpty()) {
-            throw new NoSuchElementException("No hay clientes registrados.");
+            throw new NoSuchElementException("No hay administrativos registrados.");
         }
         return administrativos;
     }
@@ -73,7 +73,7 @@ public class AdministrativoControlador {
     public void eliminar(String correoElectronico) throws IllegalArgumentException {
         Administrativo administrativo = administrativoDAOimpl.buscarPorId(correoElectronico);
         if (administrativo == null) {
-            throw new IllegalArgumentException("No existe cliente con el correo: " + correoElectronico);
+            throw new IllegalArgumentException("No existe administrativo con el correo: " + correoElectronico);
         }
         administrativoDAOimpl.eliminar(correoElectronico);
     }

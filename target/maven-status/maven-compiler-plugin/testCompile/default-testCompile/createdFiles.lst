@@ -1,1 +1,7 @@
-jsonIO/AerolineaTests.class
+jsonIO\ClienteTests.class
+jsonIO\ExportadorCSVControladorTest.class
+jsonIO\AerolineaTests.class
+jsonIO\PilotoTest.class
+jsonIO\AdministrativoTest.class
+jsonIO\ExportadorExcelTests.class
+jsonIO\AzafataTest.class
