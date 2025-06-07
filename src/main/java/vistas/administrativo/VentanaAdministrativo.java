@@ -6,9 +6,10 @@ package vistas.administrativo;
 
 import controladores.AdministrativoControlador;
 import java.io.FileNotFoundException;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JTable;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import modelos.Administrativo;
 
 /**
@@ -16,6 +17,7 @@ import modelos.Administrativo;
  * @author Diego Ivan
  */
 public class VentanaAdministrativo extends javax.swing.JFrame {
+    AdministrativoControlador administrativoControlador = new AdministrativoControlador();
 
     /**
      * Creates new form 
@@ -272,40 +274,67 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        try {
-            int posFila = tablaAdministrativos.getSelectedRow();
-            String correo = tablaAdministrativos.getValueAt(posFila, 1).toString();
-            
-            Administrativo admin = new AdministrativoControlador().buscarPorId(correo);
-        
-            VentanaFormularioAdministrativo ventana = new VentanaFormularioAdministrativo();
-            
-            ventana.getTfPuesto().setText(admin.getPuesto());
-            ventana.getTfDepartamento().setText(admin.getDeptoTrabajo());
-            ventana.getTfAñosExperiencia().setText(String.valueOf(admin.getAnosExperiencia()));
-            ventana.getTfContrato().setText(admin.getTipoContrato());
-            ventana.getTfCorreo().setText(admin.getCorreoElectronico());
-            ventana.getTfHoraEntrada().setText(admin.getHorarioEntrada().toString());
-            ventana.getTfHoraSalida().setText(admin.getHorarioSalida().toString());
-            
-            ventana.getTxtOperacion().setText("Modificar Administrativo");
+        int fila = tablaAdministrativos.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                String correo = tablaAdministrativos.getValueAt(fila, 0).toString(); // Asegúrate que la columna 0 es el correo
+                Administrativo admin = administrativoControlador.buscarPorId(correo);
 
-            ventana.show(true);
-        } catch (Exception e) {
-            // TODO add your handling code here:
+                VentanaFormularioActualizarAdministrativo ventana = new VentanaFormularioActualizarAdministrativo();
+
+                // Llenar los campos del formulario con los datos del administrativo
+                ventana.getTfCorreo().setText(admin.getCorreoElectronico());
+                ventana.getTfDepartamento().setText(admin.getDeptoTrabajo());
+                ventana.getTfPuesto().setText(admin.getPuesto());
+                ventana.getTfContrato().setText(admin.getTipoContrato());
+                ventana.getTfAñosExperiencia().setText(String.valueOf(admin.getAnosExperiencia()));
+                ventana.getTfHoraEntrada().setText(admin.getHorarioEntrada().toString());
+                ventana.getTfHoraSalida().setText(admin.getHorarioSalida().toString());
+
+                // Establecer el título de la ventana y mostrarla
+                ventana.setTitle("MODIFICAR ADMINISTRATIVO");
+                ventana.pack();
+                ventana.setLocationRelativeTo(this);
+                ventana.setVisible(true);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un administrativo de la tabla.");
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try {
-            dialogoEliminar.setTitle("Eliminar Administrativo");
-            dialogoEliminar.setVisible(true);
-        } catch (Exception e) {
-            // TODO add your handling code here:
+        int fila = tablaAdministrativos.getSelectedRow();
+        if (fila >= 0) {
+            String correo = tablaAdministrativos.getValueAt(fila, 0).toString();
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Deseas eliminar al administrativo con correo: " + correo + "?",
+                    "CONFIRMAR ELIMINACIÓN",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    administrativoControlador.eliminar(correo);
+                    administrativoControlador.listarTodas(); // Asegúrate de tener este método que refresca la tabla
+                    JOptionPane.showMessageDialog(this, "Administrativo eliminado con éxito.");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un administrativo de la tabla.");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {
+        //GEN-FIRST:event_btnExportarActionPerformed
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportarActionPerformed
 
@@ -313,9 +342,42 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        new AdministrativoControlador().mostrarEnTabla(tablaAdministrativos);
-    }//GEN-LAST:event_btnRefrescarActionPerformed
+    private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {
+        cargarTablaAdministrativos();
+    }
+
+    public void cargarTablaAdministrativos() {
+        try {
+            List<Administrativo> admins = administrativoControlador.listarTodas();
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.setColumnIdentifiers(new Object[]{"Correo Electrónico", "Departamento",
+                    "Horario", "Años Experiencia", "Tipo Contrato"});
+
+            for (Administrativo admin : admins) {
+                String horario = admin.getHorarioEntrada() + " - " + admin.getHorarioSalida();
+
+                modelo.addRow(new Object[]{
+                        admin.getCorreoElectronico(),
+                        admin.getDeptoTrabajo(),
+                        horario,
+                        admin.getAnosExperiencia(),
+                        admin.getTipoContrato()
+                });
+            }
+
+            tablaAdministrativos.setModel(modelo);
+
+            // Optional: Adjust column widths if needed
+            tablaAdministrativos.getColumnModel().getColumn(2).setPreferredWidth(150); // Wider for horario
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar los administrativos: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
         try {
@@ -358,128 +420,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VentanaAdministrativo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

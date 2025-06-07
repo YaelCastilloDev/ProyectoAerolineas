@@ -4,11 +4,20 @@
  */
 package vistas.administrativo;
 
+import controladores.AerolineaControlador;
+import controladores.AvionControlador;
+import modelos.Avion;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 /**
  *
  * @author Diego Ivan
  */
 public class VentanaAvion extends javax.swing.JFrame {
+    AvionControlador avionControlador = new AvionControlador();
 
     /**
      * Creates new form Avion
@@ -224,8 +233,42 @@ public class VentanaAvion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+        cargarTablaAviones();
     }//GEN-LAST:event_btnRefrescarActionPerformed
+
+    public void cargarTablaAviones() {
+        try {
+            List<Avion> aviones = new AvionControlador().listarAviones(); // Este método debe existir
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.setColumnIdentifiers(new Object[]{
+                    "Nombre", "Capacidad", "Modelo", "Peso (kg)", "Matrícula", "Aerolínea Propietaria"
+            });
+
+            for (Avion avion : aviones) {
+                modelo.addRow(new Object[]{
+                        avion.getNombre(),
+                        avion.getCapacidad(),
+                        avion.getModelo(),
+                        avion.getPeso(),
+                        avion.getMatricula(),
+                        avion.getAerolineaPropietaria()
+                });
+            }
+
+            tablaAviones.setModel(modelo);
+
+            // Opcional: ajustar ancho de columnas
+            tablaAviones.getColumnModel().getColumn(5).setPreferredWidth(150); // Aerolínea
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar los aviones: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:

@@ -4,6 +4,13 @@
  */
 package vistas.administrativo;
 
+import controladores.ClienteControlador;
+import modelos.Cliente;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 /**
  *
  * @author Diego Ivan
@@ -32,7 +39,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         tfBuscar = new javax.swing.JTextField();
         btnRefrescar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaAerolineas = new javax.swing.JTable();
+        tablaClientes = new javax.swing.JTable();
         pnlBotones = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
@@ -93,7 +100,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tablaAerolineas.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
             },
@@ -116,8 +123,8 @@ public class VentanaCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaAerolineas.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tablaAerolineas);
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaClientes);
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -226,8 +233,40 @@ public class VentanaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+        cargarTablaClientes();
     }//GEN-LAST:event_btnRefrescarActionPerformed
+
+    public void cargarTablaClientes() {
+        try {
+            List<Cliente> clientes = new ClienteControlador().listarTodas(); // método necesario en el controlador
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.setColumnIdentifiers(new Object[]{
+                    "ID", "Nombre", "Nacionalidad", "Fecha Nacimiento", "Correo", "Teléfono", "Pasaportes"
+            });
+
+            for (Cliente cliente : clientes) {
+                modelo.addRow(new Object[]{
+                        cliente.getId(),
+                        cliente.getNombre(),
+                        cliente.getNacionalidad(),
+                        cliente.getFechaNacimiento(), // o format(fechaNacimiento)
+                        cliente.getCorreoElectronico(),
+                        cliente.getTelefono(),
+                        String.join(", ", cliente.getPasaportes())
+                });
+            }
+
+            tablaClientes.setModel(modelo);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar clientes: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
 
     /**
      * @param args the command line arguments
@@ -402,7 +441,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
-    private javax.swing.JTable tablaAerolineas;
+    private javax.swing.JTable tablaClientes;
     private javax.swing.JTextField tfBuscar;
     // End of variables declaration//GEN-END:variables
 }

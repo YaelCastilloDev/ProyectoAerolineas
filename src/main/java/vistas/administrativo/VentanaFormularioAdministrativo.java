@@ -7,10 +7,8 @@ package vistas.administrativo;
 import controladores.AdministrativoControlador;
 import java.time.LocalTime;
 import java.util.Arrays;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
+
 import modelos.Administrativo;
 
 /**
@@ -430,12 +428,15 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         dialogoCancelar.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(pfContra1.getPassword() == pfContra2.getPassword()) {
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        if(Arrays.equals(pfContra1.getPassword(), pfContra2.getPassword())) {
             dialogoGuardar.setTitle("Guardar");
             dialogoGuardar.setVisible(true);
+        } else {
+            // You might want to add some error message here
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }
 
     private void btnCancelarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarNoActionPerformed
         dialogoCancelar.dispose();

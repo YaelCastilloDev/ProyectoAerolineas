@@ -5,15 +5,20 @@
 package vistas.administrativo;
 
 import controladores.AerolineaControlador;
-import javax.swing.JTable;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import modelos.Aerolinea;
+
+import java.util.List;
 
 /**
  *
  * @author Diego Ivan
  */
 public class VentanaAerolinea extends javax.swing.JFrame {
-
+    AerolineaControlador aerolineaControlador = new AerolineaControlador();
     /**
      * Creates new form Aerolinea
      */
@@ -256,7 +261,7 @@ public class VentanaAerolinea extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            VentanaFormularioAdministrativo ventana = new VentanaFormularioAdministrativo();
+            VentanaFormularioAerolinea ventana = new VentanaFormularioAerolinea();
             
             ventana.getTxtOperacion().setText("Registrar Aerolínea");
             
@@ -308,8 +313,43 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        new AerolineaControlador().mostrarEnTabla(tablaAerolineas);
+        cargarTablaAerolineas();
     }//GEN-LAST:event_btnRefrescarActionPerformed
+
+    public void cargarTablaAerolineas() {
+        try {
+            List<Aerolinea> aerolineas = new AerolineaControlador().listarTodas(); // Este método debes tenerlo implementado
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.setColumnIdentifiers(new Object[]{
+                    "Nombre", "País", "Centro Operación", "Bases", "Sitio Oficial", "Nombre Contacto", "Teléfono"
+            });
+
+            for (Aerolinea aerolinea : aerolineas) {
+                modelo.addRow(new Object[]{
+                        aerolinea.getNombre(),
+                        aerolinea.getPais(),
+                        aerolinea.getCentroOperacionPrincipal(),
+                        String.join(", ", aerolinea.getBases()), // convertir lista de bases a String
+                        aerolinea.getSitioOficial(),
+                        aerolinea.getNombreContacto(),
+                        aerolinea.getTelefono()
+                });
+            }
+
+            tablaAerolineas.setModel(modelo);
+
+            // Opcional: ajustar anchos de columnas
+            tablaAerolineas.getColumnModel().getColumn(3).setPreferredWidth(150); // Bases
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar las aerolíneas: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
