@@ -4,6 +4,11 @@
  */
 package vistas.administrativo;
 
+import controladores.VueloControlador;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import modelos.Vuelo;
+
 /**
  *
  * @author Diego Ivan
@@ -372,10 +377,29 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Vuelo vuelo = new Vuelo();
+        
+        vuelo.setCiudadSalida(tfCiudadOrigen.getText());
+        vuelo.setCiudadLlegada(tfCiudadDestino.getText());
+        vuelo.setFechaSalida(LocalDate.parse(tfFechaSalida.getText()));
+        vuelo.setFechaLlegada(LocalDate.parse(tfFechaLlegada.getText()));
+        vuelo.setHoraSalida(LocalTime.parse(tfHoraSalida.getText()));
+        vuelo.setHoraLlegada(LocalTime.parse(tfHoraLlegada.getText()));
+        //vuelo.setClase(clase);
+        //vuelo.setAvion(avion);
+        //vuelo.setPilotos(pilotos);
+        //vuelo.setAzafatas(azafatas);
+        //¿Pasajeros registrados?
+        //¿Costo de boletos?
+        
+        //new VueloControlador().crearVuelo(ciudadSalida, ciudadLlegada, LocalDate.MIN, LocalDate.MAX, LocalTime.MIN, LocalTime.MAX, clase, avion, pilotos, azafatas);
+        
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

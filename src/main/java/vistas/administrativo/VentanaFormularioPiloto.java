@@ -4,6 +4,11 @@
  */
 package vistas.administrativo;
 
+import controladores.PilotoControlador;
+import java.time.LocalDate;
+import modelos.Piloto;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author Diego Ivan
@@ -282,10 +287,25 @@ public class VentanaFormularioPiloto extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Piloto piloto = new Piloto();
+        
+        piloto.setNombre(tfNombre.getText());
+        piloto.setSalario(Double.parseDouble(tfSalario.getText()));
+        piloto.setDireccion(tfDireccion.getText());
+        piloto.setTipoLicencia(tfLicencia.getText());
+        piloto.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
+        piloto.setCorreoElectronico(tfCorreo.getText());
+        piloto.setGenero((String) cbGenero.getSelectedItem());
+        piloto.setContrasena(tfContraseña.getText());
+        
+        new PilotoControlador().crear(piloto);
+        
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

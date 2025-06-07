@@ -4,6 +4,11 @@
  */
 package vistas.administrativo;
 
+import controladores.ClienteControlador;
+import java.time.LocalDate;
+import modelos.Cliente;
+import javax.swing.JSlider;
+
 /**
  *
  * @author Diego Ivan
@@ -243,10 +248,19 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Cliente cliente = new Cliente();
+        
+        cliente.setNombre(tfNombre.getText());
+        cliente.setNacionalidad(tfNacionalidad.getText());
+        cliente.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
+        cliente.setCorreoElectronico(tfCorreo.getText());
+        cliente.setTelefono(tfTelefono.getText());
+        //cliente.setPasaportes(sldNumeroPasaportes.getValue()); ¿Por que es una lista?
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

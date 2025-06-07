@@ -4,6 +4,12 @@
  */
 package vistas.administrativo;
 
+import controladores.AzafataControlador;
+import java.time.LocalDate;
+import modelos.Azafata;
+import javax.swing.JComboBox;
+
+
 /**
  *
  * @author Diego Ivan
@@ -327,10 +333,27 @@ public class VentanaFormularioAzafata extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Azafata azafata = new Azafata();
+        
+        azafata.setNombre(tfNombre.getText());
+        azafata.setSalario(Double.parseDouble(tfSalario.getText()));
+        azafata.setDireccion(tfDireccion.getText());
+        //¿Donde esta el atributo de tipo de licencia?
+        azafata.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
+        azafata.setCorreoElectronico(tfCorreo.getText());
+        azafata.setGenero((String) cbGenero.getSelectedItem());
+        azafata.setContrasena(tfContraseña.getText());
+        azafata.setNumIdiomas(Integer.parseInt(tfNumIdiomas.getText()));
+        azafata.setAnoInicio(LocalDate.parse(tfAñoInicio.getText()));
+        
+        new AzafataControlador().crear(azafata);
+        
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

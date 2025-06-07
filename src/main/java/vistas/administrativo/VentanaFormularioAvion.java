@@ -4,6 +4,9 @@
  */
 package vistas.administrativo;
 
+import controladores.AvionControlador;
+import modelos.Avion;
+
 /**
  *
  * @author Diego Ivan
@@ -41,6 +44,8 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
         pnlDatos4 = new javax.swing.JPanel();
         tfAerolinea = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        tfModelo = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -138,6 +143,8 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Aerolínea");
 
+        jLabel4.setText("Modelo");
+
         javax.swing.GroupLayout pnlDatos4Layout = new javax.swing.GroupLayout(pnlDatos4);
         pnlDatos4.setLayout(pnlDatos4Layout);
         pnlDatos4Layout.setHorizontalGroup(
@@ -145,17 +152,28 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
             .addGroup(pnlDatos4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(tfAerolinea, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlDatos4Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(131, 131, 131)
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlDatos4Layout.createSequentialGroup()
+                        .addComponent(tfAerolinea, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfModelo)))
+                .addContainerGap())
         );
         pnlDatos4Layout.setVerticalGroup(
             pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatos4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addGroup(pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfAerolinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfAerolinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -240,10 +258,23 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Avion avion = new Avion();
+                
+        avion.setNombre(tfNombre.getText());
+        avion.setCapacidad(Integer.parseInt(tfCapacidad.getText()));
+        avion.setPeso(Integer.parseInt(tfPeso.getText()));
+        avion.setMatricula(tfMatricula.getText());
+        avion.setAerolineaPropietaria(tfAerolinea.getText());
+        avion.setModelo(tfModelo.getText());
+        
+        new AvionControlador().crearAvion(avion.getNombre(), avion.getCapacidad(), avion.getModelo(), avion.getPeso(), avion.getMatricula(), avion.getAerolineaPropietaria());
+        
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
@@ -294,6 +325,7 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -304,6 +336,7 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
     private javax.swing.JTextField tfAerolinea;
     private javax.swing.JTextField tfCapacidad;
     private javax.swing.JTextField tfMatricula;
+    private javax.swing.JTextField tfModelo;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfPeso;
     private javax.swing.JLabel txtOperacion;

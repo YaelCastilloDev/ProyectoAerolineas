@@ -4,6 +4,9 @@
  */
 package vistas.administrativo;
 
+import controladores.BoletoControlador;
+import modelos.Boleto;
+
 /**
  *
  * @author Diego Ivan
@@ -178,10 +181,16 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Boleto boleto = new Boleto();
+        
+        //boleto.setClase(); ¿Es un atributo de tipo Clase o es un nombre?
+        boleto.setCosto(Double.parseDouble(tfCosto.getText()));
+        boleto.setAsiento(tfAsiento.getText());
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

@@ -6,6 +6,8 @@ package vistas.administrativo;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import controladores.AerolineaControlador;
+import modelos.Aerolinea;
 
 /**
  *
@@ -253,10 +255,23 @@ public class VentanaFormularioAerolinea extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Aerolinea aero = new Aerolinea();
+        
+        aero.setNombre(tfNombre.getText());
+        aero.setPais(tfPais.getText());
+        aero.setCentroOperacionPrincipal(tfCentroOperaciones.getText());
+        aero.setSitioOficial(tfSitioWeb.getText());
+        aero.setTelefono(tfTelefono.getText());
+        aero.setNombreContacto(tfNonbreContacto.getText());
+        
+        new AerolineaControlador().crear(aero);
+        
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
