@@ -81,10 +81,4 @@ public class BoletoControlador {
     public boolean asientoDisponible(Vuelo vuelo, String asiento) {
         return !boletoDAO.asientoOcupado(vuelo, asiento);
     }
-
-    public List<String> asientosDisponibles(Vuelo vuelo, Clase clase) {
-        // Implementar lógica para obtener asientos disponibles según el mapa del avión
-        // Esto podría conectarse con el modelo de Avión para obtener la configuración de asientos
-        throw new UnsupportedOperationException("Funcionalidad no implementada aún");
-    }
 }

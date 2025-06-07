@@ -6,7 +6,10 @@ import io.jsondb.JsonDBTemplate;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import modelos.Avion;
+import modelos.Azafata;
 import modelos.Boleto;
+import modelos.Piloto;
 import modelos.Vuelo;
 
 public class VueloDAOimpl implements VueloDAO {
@@ -89,5 +92,28 @@ public class VueloDAOimpl implements VueloDAO {
     @Override
     public boolean existeVuelo(String id) {
         return db.findById(id, Vuelo.class) != null;
+    }
+    
+    @Override
+    public List<Vuelo> listarPorAvion(Avion avion) {
+        return db.find("avion.matricula = '" + avion.getMatricula() + "'", Vuelo.class);
+    }
+
+    @Override
+    public List<Vuelo> listarPorPiloto(Piloto piloto) {
+        return db.findAll(Vuelo.class).stream()
+            .filter(v -> v.getPilotos() != null && 
+                        v.getPilotos().stream()
+                         .anyMatch(p -> p.getCorreoElectronico().equals(piloto.getCorreoElectronico())))
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Vuelo> listarPorAzafata(Azafata azafata) {
+        return db.findAll(Vuelo.class).stream()
+            .filter(v -> v.getAzafatas() != null && 
+                        v.getAzafatas().stream()
+                         .anyMatch(a -> a.getCorreoElectronico().equals(azafata.getCorreoElectronico())))
+            .collect(Collectors.toList());
     }
 }
