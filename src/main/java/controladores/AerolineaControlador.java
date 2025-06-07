@@ -5,6 +5,8 @@ import modelos.Aerolinea;
 import modelos.utiles.validaciones.AerolineaValidacion;
 import jakarta.validation.ConstraintViolationException;
 import java.util.NoSuchElementException;
+import javax.swing.JTable;
+import modelos.Administrativo;
 import modelos.dao.implementaciones.AerolineaDAOimpl;
 
 public class AerolineaControlador {
@@ -76,5 +78,21 @@ public class AerolineaControlador {
             throw new IllegalArgumentException("No existe aerolínea con ID: " + id);
         }
         aerolineaDAOimpl.eliminar(id);
+    }
+    
+    public void mostrarEnTabla(JTable tabla) {
+        List<Aerolinea> aerolineas = listarTodas();
+            
+        int posFila = 0;
+        for(Aerolinea aerolinea: aerolineas) {
+            tabla.setValueAt(aerolinea.getNombre(), posFila, 0);
+            tabla.setValueAt(aerolinea.getPais(), posFila, 1);
+            tabla.setValueAt(aerolinea.getTelefono(), posFila, 2);
+            tabla.setValueAt(aerolinea.getSitioOficial(), posFila, 3);
+            
+            posFila++;
+        }
+        
+        tabla.setVisible(true);
     }
 }

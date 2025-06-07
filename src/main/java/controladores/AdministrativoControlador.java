@@ -3,6 +3,7 @@ package controladores;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.swing.JTable;
 import modelos.Administrativo;
 import modelos.dao.implementaciones.AdministrativoDAOimpl;
 import modelos.utiles.validaciones.AdministrativoValidacion;
@@ -77,4 +78,23 @@ public class AdministrativoControlador {
         }
         administrativoDAOimpl.eliminar(correoElectronico);
     }
+    
+    public void mostrarEnTabla(JTable tabla) {
+        List<Administrativo> admins = listarTodas();
+            
+        int posFila = 0;
+        for(Administrativo admin: admins) {
+            tabla.setValueAt(admin.getCorreoElectronico(), posFila, 0);
+            tabla.setValueAt(admin.getDeptoTrabajo(), posFila, 1);
+
+            String horario = admin.getHorarioEntrada() + " - " + admin.getHorarioSalida();
+
+            tabla.setValueAt(horario, posFila, 2);
+            posFila++;
+        }
+        
+        tabla.setVisible(true);
+    }
+    
+
 }
