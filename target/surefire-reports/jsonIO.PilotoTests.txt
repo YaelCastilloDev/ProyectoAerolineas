@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: jsonIO.ClienteTests
+Test set: jsonIO.PilotoTests
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.586 s -- in jsonIO.ClienteTests
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.546 s -- in jsonIO.PilotoTests
