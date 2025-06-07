@@ -147,10 +147,6 @@
                   <Component id="pnlDatos1" max="32767" attributes="0"/>
                   <Component id="pnlDatos2" alignment="0" max="32767" attributes="0"/>
                   <Component id="pnlDatos3" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="txtOperacion" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
                   <Component id="jPanel1" max="32767" attributes="0"/>
                   <Component id="pnlDatos7" alignment="1" max="32767" attributes="0"/>
                   <Component id="pnlDatos4" alignment="1" max="32767" attributes="0"/>
@@ -162,9 +158,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtOperacion" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Component id="pnlDatos1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlDatos2" min="-2" max="-2" attributes="0"/>
@@ -246,14 +240,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="txtOperacion">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="18" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="[Nombre de Operaci&#xf3;n Aqu&#xed;] Administrativo"/>
-      </Properties>
-    </Component>
     <Container class="javax.swing.JPanel" name="pnlDatos2">
 
       <Layout>

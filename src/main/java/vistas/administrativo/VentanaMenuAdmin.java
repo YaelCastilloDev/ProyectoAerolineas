@@ -188,6 +188,11 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         btnBoletos.setText("Boletos");
 
         btnComprarBoleto.setText("Comprar Boletos");
+        btnComprarBoleto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarBoletoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlClientesLayout = new javax.swing.GroupLayout(pnlClientes);
         pnlClientes.setLayout(pnlClientesLayout);
@@ -251,11 +256,7 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
     private void btnPilotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPilotosActionPerformed
         try {
             VentanaAdministrativo ventana = new VentanaAdministrativo();
-            
-            new AdministrativoControlador().mostrarEnTabla(ventana.getTablaAdministrativos());
-            
-            ventana.show(true);
-            
+            ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
         }
@@ -264,11 +265,7 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
     private void btnAerolineasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAerolineasActionPerformed
         try {
             VentanaAerolinea ventana = new VentanaAerolinea();
-            
-            new AdministrativoControlador().mostrarEnTabla(ventana.getTablaAerolineas());
-            
-            ventana.show(true);
-            
+            ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
         }
@@ -277,10 +274,7 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
     private void btnAdministrativosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrativosActionPerformed
         try {
             VentanaAdministrativo ventana = new VentanaAdministrativo();
-            
-            new AdministrativoControlador().mostrarEnTabla(ventana.getTablaAdministrativos());
-            
-            ventana.show(true);
+            ventana.setVisible(true);
             
         } catch (Exception e) {
             // TODO add your handling code here:
@@ -288,8 +282,24 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministrativosActionPerformed
 
     private void btnAzafatasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzafatasActionPerformed
-        // TODO add your handling code here:
+        try {
+            VentanaAzafata ventana = new VentanaAzafata();
+            ventana.setVisible(true);
+            
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
     }//GEN-LAST:event_btnAzafatasActionPerformed
+
+    private void btnComprarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletoActionPerformed
+        try {
+            VentanaSeleccionCliente ventana = new VentanaSeleccionCliente();
+            ventana.setVisible(true);
+            
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
+    }//GEN-LAST:event_btnComprarBoletoActionPerformed
 
     /**
      * @param args the command line arguments

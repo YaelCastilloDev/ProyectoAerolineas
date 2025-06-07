@@ -301,6 +301,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Comprar Boletos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarBoletoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

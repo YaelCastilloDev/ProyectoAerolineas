@@ -20,10 +20,11 @@ import java.util.List;
 public class VentanaAerolinea extends javax.swing.JFrame {
     AerolineaControlador aerolineaControlador = new AerolineaControlador();
     /**
-     * Creates new form Aerolinea
+     * Creates new form VentanaAerolinea
      */
     public VentanaAerolinea() {
         initComponents();
+        cargarTablaAerolineas();
     }
 
     /**
@@ -40,8 +41,6 @@ public class VentanaAerolinea extends javax.swing.JFrame {
         btnSi = new javax.swing.JButton();
         txtOperacion = new javax.swing.JLabel();
         pnlSuperior = new javax.swing.JPanel();
-        tfBuscar = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         btnRefrescar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -95,17 +94,8 @@ public class VentanaAerolinea extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Aerolíneas");
-
-        tfBuscar.setToolTipText("");
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
 
         btnRefrescar.setText("Refrescar");
         btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,23 +121,15 @@ public class VentanaAerolinea extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRefrescar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(517, Short.MAX_VALUE))
         );
         pnlSuperiorLayout.setVerticalGroup(
             pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnRefrescar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tfBuscar)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnRefrescar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -263,8 +245,7 @@ public class VentanaAerolinea extends javax.swing.JFrame {
         try {
             VentanaFormularioAerolinea ventana = new VentanaFormularioAerolinea();
             
-            ventana.getTxtOperacion().setText("Registrar Aerolínea");
-            
+            ventana.setTitle("Registrar Aerolínea");
             ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
@@ -276,7 +257,7 @@ public class VentanaAerolinea extends javax.swing.JFrame {
             int posFila = tablaAerolineas.getSelectedRow();
             String correo = tablaAerolineas.getValueAt(posFila, 1).toString();
             
-            Aerolinea aerolinea = new AerolineaControlador().buscarPorId(correo);
+            Aerolinea aerolinea = aerolineaControlador.buscarPorId(correo);
         
             VentanaFormularioAerolinea ventana = new VentanaFormularioAerolinea();
             
@@ -287,9 +268,8 @@ public class VentanaAerolinea extends javax.swing.JFrame {
             ventana.getTfTelefono().setText(aerolinea.getTelefono());
             ventana.getTfNonbreContacto().setText(aerolinea.getNombreContacto());
             
-            ventana.getTxtOperacion().setText("Modificar Aerolínea");
-
-            ventana.show(true);
+            ventana.setTitle("Modificar Aerolínea");
+            ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
         }
@@ -308,17 +288,13 @@ public class VentanaAerolinea extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
         cargarTablaAerolineas();
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     public void cargarTablaAerolineas() {
         try {
-            List<Aerolinea> aerolineas = new AerolineaControlador().listarTodas(); // Este método debes tenerlo implementado
+            List<Aerolinea> aerolineas = aerolineaControlador.listarTodas(); // Este método debes tenerlo implementado
             DefaultTableModel modelo = new DefaultTableModel();
 
             modelo.setColumnIdentifiers(new Object[]{
@@ -350,9 +326,8 @@ public class VentanaAerolinea extends javax.swing.JFrame {
         }
     }
 
-
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
@@ -397,20 +372,6 @@ public class VentanaAerolinea extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -422,7 +383,6 @@ public class VentanaAerolinea extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnNo;
@@ -435,7 +395,6 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
     private javax.swing.JTable tablaAerolineas;
-    private javax.swing.JTextField tfBuscar;
     private javax.swing.JLabel txtOperacion;
     // End of variables declaration//GEN-END:variables
 

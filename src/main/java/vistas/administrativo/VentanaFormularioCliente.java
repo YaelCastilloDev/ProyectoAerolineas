@@ -6,8 +6,10 @@ package vistas.administrativo;
 
 import controladores.ClienteControlador;
 import java.time.LocalDate;
+import javax.swing.JLabel;
 import modelos.Cliente;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 /**
  *
@@ -36,7 +38,6 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
         tfNombre = new javax.swing.JTextField();
         tfNacionalidad = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtOperacion = new javax.swing.JLabel();
         pnlDatos2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         tfTelefono = new javax.swing.JTextField();
@@ -89,9 +90,6 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
                         .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        txtOperacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtOperacion.setText("[Nombre de Operación Aquí] Cliente");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Teléfono");
@@ -220,19 +218,14 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlDatos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDatos2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDatos4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtOperacion)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(pnlDatos4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtOperacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(37, 37, 37)
                 .addComponent(pnlDatos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDatos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,6 +313,31 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
     private javax.swing.JTextField tfNacionalidad;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfTelefono;
-    private javax.swing.JLabel txtOperacion;
     // End of variables declaration//GEN-END:variables
+
+    public JSlider getSldNumeroPasaportes() {
+        return sldNumeroPasaportes;
+    }
+
+    public JTextField getTfCorreo() {
+        return tfCorreo;
+    }
+
+    public JTextField getTfFechaNacimiento() {
+        return tfFechaNacimiento;
+    }
+
+    public JTextField getTfNacionalidad() {
+        return tfNacionalidad;
+    }
+
+    public JTextField getTfNombre() {
+        return tfNombre;
+    }
+
+    public JTextField getTfTelefono() {
+        return tfTelefono;
+    }
+    
+    
 }

@@ -34,7 +34,6 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
         tfNombre = new javax.swing.JTextField();
         tfCapacidad = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtOperacion = new javax.swing.JLabel();
         pnlDatos2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         tfPeso = new javax.swing.JTextField();
@@ -88,9 +87,6 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
                         .addComponent(tfCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        txtOperacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtOperacion.setText("[Nombre de Operación Aquí] Avión");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Peso");
@@ -219,9 +215,6 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtOperacion)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,9 +232,7 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtOperacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addComponent(pnlDatos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDatos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,6 +330,5 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
     private javax.swing.JTextField tfModelo;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfPeso;
-    private javax.swing.JLabel txtOperacion;
     // End of variables declaration//GEN-END:variables
 }

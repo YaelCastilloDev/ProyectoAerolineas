@@ -7,6 +7,7 @@ package vistas.administrativo;
 import controladores.VueloControlador;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import javax.swing.JTextField;
 import modelos.Vuelo;
 
 /**
@@ -36,7 +37,6 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
         tfCiudadOrigen = new javax.swing.JTextField();
         tfCiudadDestino = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtOperacion = new javax.swing.JLabel();
         pnlDatos2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         tfFechaSalida = new javax.swing.JTextField();
@@ -104,9 +104,6 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
                         .addComponent(tfCiudadOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        txtOperacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtOperacion.setText("[Nombre de Operación Aquí] Vuelo");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Fecha Salida");
@@ -221,7 +218,7 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
         jLabel9.setText("Clase");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setText("Avión");
+        jLabel10.setText("Avión (matrícula)");
 
         javax.swing.GroupLayout pnlDatos5Layout = new javax.swing.GroupLayout(pnlDatos5);
         pnlDatos5.setLayout(pnlDatos5Layout);
@@ -338,7 +335,6 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtOperacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDatos1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDatos2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlDatos4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -353,9 +349,7 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtOperacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(37, 37, 37)
                 .addComponent(pnlDatos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDatos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -474,6 +468,55 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
     private javax.swing.JTextField tfHoraSalida;
     private javax.swing.JTextField tfPasajeros;
     private javax.swing.JTextField tfPilotos;
-    private javax.swing.JLabel txtOperacion;
     // End of variables declaration//GEN-END:variables
+
+    public JTextField getTfAvion() {
+        return tfAvion;
+    }
+
+    public JTextField getTfAzafatas() {
+        return tfAzafatas;
+    }
+
+    public JTextField getTfCiudadDestino() {
+        return tfCiudadDestino;
+    }
+
+    public JTextField getTfCiudadOrigen() {
+        return tfCiudadOrigen;
+    }
+
+    public JTextField getTfClase() {
+        return tfClase;
+    }
+
+    public JTextField getTfCostoBoletos() {
+        return tfCostoBoletos;
+    }
+
+    public JTextField getTfFechaLlegada() {
+        return tfFechaLlegada;
+    }
+
+    public JTextField getTfFechaSalida() {
+        return tfFechaSalida;
+    }
+
+    public JTextField getTfHoraLlegada() {
+        return tfHoraLlegada;
+    }
+
+    public JTextField getTfHoraSalida() {
+        return tfHoraSalida;
+    }
+
+    public JTextField getTfPasajeros() {
+        return tfPasajeros;
+    }
+
+    public JTextField getTfPilotos() {
+        return tfPilotos;
+    }
+
+    
 }

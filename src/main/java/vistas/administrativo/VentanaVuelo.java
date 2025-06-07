@@ -4,17 +4,27 @@
  */
 package vistas.administrativo;
 
+import controladores.VueloControlador;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelos.Vuelo;
+
 /**
  *
  * @author Diego Ivan
  */
 public class VentanaVuelo extends javax.swing.JFrame {
-
+    VueloControlador vueloControlador = new VueloControlador();
+    
     /**
-     * Creates new form Aerolinea
+     * Creates new form VentanaVuelo
      */
     public VentanaVuelo() {
         initComponents();
+        cargarTablaVuelos();
     }
 
     /**
@@ -27,8 +37,6 @@ public class VentanaVuelo extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlSuperior = new javax.swing.JPanel();
-        tfBuscar = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         btnRefrescar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -41,15 +49,6 @@ public class VentanaVuelo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Vuelos");
-
-        tfBuscar.setToolTipText("");
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
 
         btnRefrescar.setText("Refrescar");
         btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
@@ -75,23 +74,15 @@ public class VentanaVuelo extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRefrescar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(917, Short.MAX_VALUE))
         );
         pnlSuperiorLayout.setVerticalGroup(
             pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnRefrescar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tfBuscar)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnRefrescar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -100,14 +91,14 @@ public class VentanaVuelo extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Estado", "N. Pasajeros", "Costo/Boleto", "Tiempo Recorrido", "Ciudad Origen", "Ciudad Destino", "F. y H. Llegada", "F. y H. Salida"
+                "N. Pasajeros", "Costo/Boleto", "Ciudad Origen", "Ciudad Destino", "Fecha Salida", "Hora Salida", "Fecha Llegada", "Hora Llegada"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, true, true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -120,6 +111,9 @@ public class VentanaVuelo extends javax.swing.JFrame {
         });
         tablaVuelos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaVuelos);
+        if (tablaVuelos.getColumnModel().getColumnCount() > 0) {
+            tablaVuelos.getColumnModel().getColumn(7).setResizable(false);
+        }
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -184,7 +178,7 @@ public class VentanaVuelo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
                     .addComponent(pnlBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -204,33 +198,131 @@ public class VentanaVuelo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        try {
+            VentanaFormularioVuelo ventana = new VentanaFormularioVuelo();
+            
+            // Establecer el título de la ventana y mostrarla
+            ventana.setTitle("Registrar Vuelo");
+            ventana.pack();
+            ventana.setLocationRelativeTo(this);
+            ventana.setVisible(true);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaVuelos.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                Vuelo vuelo = obtenerVuelo(fila);
+
+                VentanaFormularioVuelo ventana = new VentanaFormularioVuelo();
+
+                // Llenar los campos del formulario con los datos del administrativo
+                ventana.getTfCiudadOrigen().setText(vuelo.getCiudadSalida());
+                ventana.getTfCiudadDestino().setText(vuelo.getCiudadLlegada());
+                ventana.getTfFechaSalida().setText(vuelo.getFechaSalida().toString());
+                ventana.getTfFechaLlegada().setText(vuelo.getFechaLlegada().toString());
+                ventana.getTfClase().setText(vuelo.getClase().getNombre());
+                ventana.getTfAvion().setText(vuelo.getAvion().getMatricula());
+                ventana.getTfPilotos().setText(vuelo.getPilotos().toString());
+                ventana.getTfAzafatas().setText(vuelo.getAzafatas().toString());
+                ventana.getTfPasajeros().setText(String.valueOf(vuelo.getPasajerosRegistrados()));
+                ventana.getTfCostoBoletos().setText(String.valueOf(vuelo.getCostoBoleto()));
+
+                // Establecer el título de la ventana y mostrarla
+                ventana.setTitle("Modificar Vuelo");
+                ventana.pack();
+                ventana.setLocationRelativeTo(this);
+                ventana.setVisible(true);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un cliente de la tabla.");
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaVuelos.getSelectedRow();
+        if (fila >= 0) {
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Deseas eliminar el vuelo?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    vueloControlador.eliminarVuelo(
+                            (String) tablaVuelos.getValueAt(fila, 4),
+                            (LocalDate) tablaVuelos.getValueAt(fila, 6),
+                            (LocalTime) tablaVuelos.getValueAt(fila, 7));
+                    cargarTablaVuelos(); // Asegúrate de tener este método que refresca la tabla
+                    JOptionPane.showMessageDialog(this, "Vuelo eliminado con éxito.");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un administrativo de la tabla.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+        cargarTablaVuelos();
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    public void cargarTablaVuelos() {
+        try {
+            List<Vuelo> vuelos = vueloControlador.listarTodosVuelos(); // método necesario en el controlador
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.setColumnIdentifiers(new Object[]{
+                    "N. Pasajeros", "Costo/Boleto", "Ciudad Origen", "Ciudad Destino",
+                "Fecha Salida", "Hora Salida", "Fecha Llegada", "Hora Llegada"
+            });
+
+            for (Vuelo vuelo : vuelos) {
+                modelo.addRow(new Object[]{
+                        vuelo.getPasajerosRegistrados(),
+                        vuelo.getCostoBoleto(),
+                        vuelo.getCiudadSalida(),
+                        vuelo.getCiudadLlegada(), // o format(fechaNacimiento)
+                        vuelo.getFechaSalida(),
+                        vuelo.getHoraSalida(),
+                        vuelo.getFechaLlegada(),
+                        vuelo.getHoraLlegada()
+                });
+            }
+
+            tablaVuelos.setModel(modelo);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar vuelos: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public Vuelo obtenerVuelo(int fila) {
+        String ciudadSalida = (String) tablaVuelos.getValueAt(fila, 4);
+        LocalDate fechaSalida = (LocalDate) tablaVuelos.getValueAt(fila, 6);
+        LocalTime horaSalida = (LocalTime) tablaVuelos.getValueAt(fila, 7);
+        return vueloControlador.buscarVuelo(ciudadSalida, fechaSalida, horaSalida);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -283,7 +375,6 @@ public class VentanaVuelo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnRefrescar;
@@ -293,6 +384,5 @@ public class VentanaVuelo extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
     private javax.swing.JTable tablaVuelos;
-    private javax.swing.JTextField tfBuscar;
     // End of variables declaration//GEN-END:variables
 }

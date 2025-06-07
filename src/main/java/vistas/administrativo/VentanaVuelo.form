@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pnlSuperior" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" alignment="0" pref="951" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="1088" max="32767" attributes="0"/>
                   <Component id="pnlBotones" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -60,11 +60,7 @@
                   <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnRefrescar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="tfBuscar" min="-2" pref="250" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnBuscar" min="-2" pref="65" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="917" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -72,15 +68,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnRefrescar" alignment="1" pref="37" max="32767" attributes="0"/>
-                          <Component id="btnRegresar" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="tfBuscar" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnBuscar" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="btnRefrescar" alignment="1" pref="37" max="32767" attributes="0"/>
+                      <Component id="btnRegresar" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -88,19 +78,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="tfBuscar">
-          <Properties>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnBuscar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Buscar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btnRefrescar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Refrescar"/>
@@ -133,14 +110,14 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="8" rowCount="1">
-                <Column editable="false" title="Estado" type="java.lang.String"/>
                 <Column editable="false" title="N. Pasajeros" type="java.lang.Integer"/>
                 <Column editable="false" title="Costo/Boleto" type="java.lang.Float"/>
-                <Column editable="false" title="Tiempo Recorrido" type="java.lang.String"/>
                 <Column editable="false" title="Ciudad Origen" type="java.lang.String"/>
                 <Column editable="false" title="Ciudad Destino" type="java.lang.String"/>
-                <Column editable="false" title="F. y H. Llegada" type="java.lang.String"/>
-                <Column editable="false" title="F. y H. Salida" type="java.lang.String"/>
+                <Column editable="true" title="Fecha Salida" type="java.lang.String"/>
+                <Column editable="true" title="Hora Salida" type="java.lang.String"/>
+                <Column editable="false" title="Fecha Llegada" type="java.lang.String"/>
+                <Column editable="true" title="Hora Llegada" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -180,7 +157,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>

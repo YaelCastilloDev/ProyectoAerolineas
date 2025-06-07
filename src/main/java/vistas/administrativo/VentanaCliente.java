@@ -5,6 +5,8 @@
 package vistas.administrativo;
 
 import controladores.ClienteControlador;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import modelos.Cliente;
 
 import javax.swing.*;
@@ -16,12 +18,14 @@ import java.util.List;
  * @author Diego Ivan
  */
 public class VentanaCliente extends javax.swing.JFrame {
-
+    ClienteControlador clienteControlador = new ClienteControlador();
+    
     /**
-     * Creates new form Aerolinea
+     * Creates new form VentanaCliente
      */
     public VentanaCliente() {
         initComponents();
+        cargarTablaClientes();
     }
 
     /**
@@ -35,8 +39,6 @@ public class VentanaCliente extends javax.swing.JFrame {
 
         pnlSuperior = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
-        tfBuscar = new javax.swing.JTextField();
         btnRefrescar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
@@ -46,7 +48,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes");
 
         btnRegresar.setText("Regresar");
@@ -56,15 +58,6 @@ public class VentanaCliente extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        tfBuscar.setToolTipText("");
 
         btnRefrescar.setText("Refrescar");
         btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
@@ -82,21 +75,15 @@ public class VentanaCliente extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRefrescar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(517, Short.MAX_VALUE))
         );
         pnlSuperiorLayout.setVerticalGroup(
             pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnRefrescar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(tfBuscar)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -209,28 +196,82 @@ public class VentanaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        try {
+            VentanaFormularioCliente ventana = new VentanaFormularioCliente();
+            
+            // Establecer el título de la ventana y mostrarla
+            ventana.setTitle("Registrar Cliente");
+            ventana.pack();
+            ventana.setLocationRelativeTo(this);
+            ventana.setVisible(true);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaClientes.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                String correo = tablaClientes.getValueAt(fila, 3).toString(); // Asegúrate que la columna 0 es el correo
+                Cliente cliente = clienteControlador.buscarPorId(correo);
+
+                VentanaFormularioCliente ventana = new VentanaFormularioCliente();
+
+                // Llenar los campos del formulario con los datos del administrativo
+                ventana.getTfNombre().setText(cliente.getNombre());
+                ventana.getTfNacionalidad().setText(cliente.getNacionalidad());
+                ventana.getTfFechaNacimiento().setText(cliente.getFechaNacimiento().toString());
+                ventana.getTfCorreo().setText(cliente.getCorreoElectronico());
+                ventana.getTfTelefono().setText(String.valueOf(cliente.getTelefono()));
+                ventana.getSldNumeroPasaportes().setValue(cliente.getPasaportes().size());
+
+                // Establecer el título de la ventana y mostrarla
+                ventana.setTitle("Modificar Cliente");
+                ventana.pack();
+                ventana.setLocationRelativeTo(this);
+                ventana.setVisible(true);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un cliente de la tabla.");
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaClientes.getSelectedRow();
+        if (fila >= 0) {
+            String correo = tablaClientes.getValueAt(fila, 4).toString();
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Deseas eliminar al cliente con correo: " + correo + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    clienteControlador.eliminar(correo);
+                    cargarTablaClientes(); // Asegúrate de tener este método que refresca la tabla
+                    JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un administrativo de la tabla.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportarActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
         cargarTablaClientes();
@@ -238,7 +279,7 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     public void cargarTablaClientes() {
         try {
-            List<Cliente> clientes = new ClienteControlador().listarTodas(); // método necesario en el controlador
+            List<Cliente> clientes = clienteControlador.listarTodas(); // método necesario en el controlador
             DefaultTableModel modelo = new DefaultTableModel();
 
             modelo.setColumnIdentifiers(new Object[]{
@@ -295,132 +336,6 @@ public class VentanaCliente extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -432,7 +347,6 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnRefrescar;
@@ -442,6 +356,5 @@ public class VentanaCliente extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
     private javax.swing.JTable tablaClientes;
-    private javax.swing.JTextField tfBuscar;
     // End of variables declaration//GEN-END:variables
 }

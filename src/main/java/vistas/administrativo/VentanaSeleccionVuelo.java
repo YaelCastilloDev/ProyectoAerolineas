@@ -4,17 +4,36 @@
  */
 package vistas.administrativo;
 
+import controladores.BoletoControlador;
+import controladores.VueloControlador;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelos.Cliente;
+import modelos.Vuelo;
+
 /**
  *
  * @author Diego Ivan
  */
-public class VentanaBoleto extends javax.swing.JFrame {
-
+public class VentanaSeleccionVuelo extends javax.swing.JFrame {
+    private VueloControlador vueloControlador = new VueloControlador();
+    private Cliente cliente;
+    
     /**
-     * Creates new form VentanaBoleto
+     * Creates new form VentanaVuelo
      */
-    public VentanaBoleto() {
+    public VentanaSeleccionVuelo() {
         initComponents();
+        cargarTablaVuelos();
+    }
+    
+    public VentanaSeleccionVuelo(Cliente cliente) {
+        initComponents();
+        cargarTablaVuelos();
+        this.cliente = cliente;
     }
 
     /**
@@ -32,11 +51,10 @@ public class VentanaBoleto extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaVuelos = new javax.swing.JTable();
         pnlBotones = new javax.swing.JPanel();
-        btnComprar = new javax.swing.JButton();
-        btnExportar = new javax.swing.JButton();
+        btnSeleccionar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Boletos");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Vuelos");
 
         btnRefrescar.setText("Refrescar");
         btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
@@ -62,7 +80,7 @@ public class VentanaBoleto extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRefrescar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(917, Short.MAX_VALUE))
         );
         pnlSuperiorLayout.setVerticalGroup(
             pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,17 +94,17 @@ public class VentanaBoleto extends javax.swing.JFrame {
 
         tablaVuelos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Estado", "Cliente", "Vuelo", "Clase", "Costo", "Fecha Emisión"
+                "N. Pasajeros", "Costo/Boleto", "Ciudad Origen", "Ciudad Destino", "Fecha Salida", "Hora Salida", "Fecha Llegada", "Hora Llegada"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, true
+                false, false, false, false, true, true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -99,18 +117,14 @@ public class VentanaBoleto extends javax.swing.JFrame {
         });
         tablaVuelos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaVuelos);
+        if (tablaVuelos.getColumnModel().getColumnCount() > 0) {
+            tablaVuelos.getColumnModel().getColumn(7).setResizable(false);
+        }
 
-        btnComprar.setText("Comprar");
-        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+        btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComprarActionPerformed(evt);
-            }
-        });
-
-        btnExportar.setText("Exportar Datos");
-        btnExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportarActionPerformed(evt);
+                btnSeleccionarActionPerformed(evt);
             }
         });
 
@@ -120,18 +134,14 @@ public class VentanaBoleto extends javax.swing.JFrame {
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotonesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnExportar)
-                .addContainerGap())
+                .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(992, Short.MAX_VALUE))
         );
         pnlBotonesLayout.setVerticalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotonesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -143,7 +153,7 @@ public class VentanaBoleto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
                     .addComponent(pnlBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -162,23 +172,70 @@ public class VentanaBoleto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        VentanaSeleccionCliente ventana = new VentanaSeleccionCliente();
-        ventana.setVisible(true);
-    }//GEN-LAST:event_btnComprarActionPerformed
-
-    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnExportarActionPerformed
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        int fila = tablaVuelos.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                Vuelo vuelo = obtenerVuelo(fila);
+                
+                new BoletoControlador().crearBoleto(cliente, vuelo, vuelo.getClase(), vuelo.getCostoBoleto(), null);
+                this.dispose();
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un vuelo de la tabla.");
+        }
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+        cargarTablaVuelos();
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    public void cargarTablaVuelos() {
+        try {
+            List<Vuelo> vuelos = vueloControlador.listarVuelosPorFechas(LocalDate.now(), LocalDate.now().plusYears(1)); // método necesario en el controlador
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.setColumnIdentifiers(new Object[]{
+                    "N. Pasajeros", "Costo/Boleto", "Ciudad Origen", "Ciudad Destino",
+                "Fecha Salida", "Hora Salida", "Fecha Llegada", "Hora Llegada"
+            });
+
+            for (Vuelo vuelo : vuelos) {
+                modelo.addRow(new Object[]{
+                        vuelo.getPasajerosRegistrados(),
+                        vuelo.getCostoBoleto(),
+                        vuelo.getCiudadSalida(),
+                        vuelo.getCiudadLlegada(), // o format(fechaNacimiento)
+                        vuelo.getFechaSalida(),
+                        vuelo.getHoraSalida(),
+                        vuelo.getFechaLlegada(),
+                        vuelo.getHoraLlegada()
+                });
+            }
+
+            tablaVuelos.setModel(modelo);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar vuelos: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    public Vuelo obtenerVuelo(int fila) {
+        String ciudadSalida = (String) tablaVuelos.getValueAt(fila, 4);
+        LocalDate fechaSalida = (LocalDate) tablaVuelos.getValueAt(fila, 6);
+        LocalTime horaSalida = (LocalTime) tablaVuelos.getValueAt(fila, 7);
+        return vueloControlador.buscarVuelo(ciudadSalida, fechaSalida, horaSalida);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -196,13 +253,13 @@ public class VentanaBoleto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaSeleccionVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaSeleccionVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaSeleccionVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaSeleccionVuelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -210,19 +267,28 @@ public class VentanaBoleto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaBoleto().setVisible(true);
+                new VentanaSeleccionVuelo().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnComprar;
-    private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnRefrescar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSeleccionar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
     private javax.swing.JTable tablaVuelos;
     // End of variables declaration//GEN-END:variables
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
+    
 }

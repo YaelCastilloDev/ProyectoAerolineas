@@ -24,6 +24,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
      */
     public VentanaAdministrativo() {
         initComponents();
+        cargarTablaAdministrativos();
     }
 
     /**
@@ -41,8 +42,6 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
         txtOperacion = new javax.swing.JLabel();
         pnlSuperior = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
-        tfBuscar = new javax.swing.JTextField();
         btnRefrescar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAdministrativos = new javax.swing.JTable();
@@ -95,7 +94,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrativos");
 
         btnRegresar.setText("Regresar");
@@ -105,15 +104,6 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        tfBuscar.setToolTipText("");
 
         btnRefrescar.setText("Refrescar");
         btnRefrescar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,21 +121,15 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRefrescar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlSuperiorLayout.setVerticalGroup(
             pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSuperiorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnRefrescar, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(tfBuscar)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnRefrescar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -265,8 +249,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
         try {
             VentanaFormularioAdministrativo ventana = new VentanaFormularioAdministrativo();
             
-            ventana.getTxtOperacion().setText("Registrar Administrativo");
-            
+            ventana.setTitle("Registrar Administrativo");
             ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
@@ -280,7 +263,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
                 String correo = tablaAdministrativos.getValueAt(fila, 0).toString(); // Asegúrate que la columna 0 es el correo
                 Administrativo admin = administrativoControlador.buscarPorId(correo);
 
-                VentanaFormularioActualizarAdministrativo ventana = new VentanaFormularioActualizarAdministrativo();
+                VentanaFormularioAdministrativo ventana = new VentanaFormularioAdministrativo();
 
                 // Llenar los campos del formulario con los datos del administrativo
                 ventana.getTfCorreo().setText(admin.getCorreoElectronico());
@@ -292,7 +275,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
                 ventana.getTfHoraSalida().setText(admin.getHorarioSalida().toString());
 
                 // Establecer el título de la ventana y mostrarla
-                ventana.setTitle("MODIFICAR ADMINISTRATIVO");
+                ventana.setTitle("Modificar Administrativo");
                 ventana.pack();
                 ventana.setLocationRelativeTo(this);
                 ventana.setVisible(true);
@@ -312,7 +295,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
 
             int confirmacion = JOptionPane.showConfirmDialog(this,
                     "¿Deseas eliminar al administrativo con correo: " + correo + "?",
-                    "CONFIRMAR ELIMINACIÓN",
+                    "Confirmar Eliminación",
                     JOptionPane.YES_NO_OPTION
             );
 
@@ -329,18 +312,14 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona un administrativo de la tabla.");
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }                                           
 //GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {
-        //GEN-FIRST:event_btnExportarActionPerformed
+//GEN-FIRST:event_btnExportarActionPerformed
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportarActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {
         cargarTablaAdministrativos();
@@ -421,12 +400,6 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -437,7 +410,6 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnNo;
@@ -450,7 +422,6 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
     private javax.swing.JTable tablaAdministrativos;
-    private javax.swing.JTextField tfBuscar;
     private javax.swing.JLabel txtOperacion;
     // End of variables declaration//GEN-END:variables
 
