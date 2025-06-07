@@ -48,8 +48,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlClientes" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="pnlAdministracion" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="pnlAdministracion" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,12 +106,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnEmpleados" max="32767" attributes="0"/>
+                      <Component id="btnPilotos" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="125" max="32767" attributes="0"/>
                       </Group>
                       <Component id="btnCerrarSesion" max="32767" attributes="0"/>
+                      <Component id="btnAdministrativos" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnAzafatas" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -123,10 +125,14 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnEmpleados" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="btnPilotos" min="-2" pref="32" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnAzafatas" min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnAdministrativos" min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
                   <Component id="btnCerrarSesion" min="-2" pref="32" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -140,18 +146,34 @@
             <Property name="text" type="java.lang.String" value="Administraci&#xf3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnEmpleados">
+        <Component class="javax.swing.JButton" name="btnPilotos">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Empleados"/>
+            <Property name="text" type="java.lang.String" value="Pilotos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEmpleadosActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPilotosActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCerrarSesion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cerrar Sesi&#xf3;n"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnAdministrativos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Administrativos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdministrativosActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnAzafatas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Azafatas"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAzafatasActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

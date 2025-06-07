@@ -4,6 +4,10 @@
  */
 package vistas.administrativo;
 
+import controladores.AerolineaControlador;
+import javax.swing.JTable;
+import modelos.Aerolinea;
+
 /**
  *
  * @author Diego Ivan
@@ -26,6 +30,10 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogoEliminar = new javax.swing.JDialog();
+        btnNo = new javax.swing.JButton();
+        btnSi = new javax.swing.JButton();
+        txtOperacion = new javax.swing.JLabel();
         pnlSuperior = new javax.swing.JPanel();
         tfBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -38,6 +46,49 @@ public class VentanaAerolinea extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
+
+        btnNo.setText("No");
+        btnNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoActionPerformed(evt);
+            }
+        });
+
+        btnSi.setText("Si");
+        btnSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiActionPerformed(evt);
+            }
+        });
+
+        txtOperacion.setText("¿Estás seguro de que deseas eliminarlo?");
+
+        javax.swing.GroupLayout dialogoEliminarLayout = new javax.swing.GroupLayout(dialogoEliminar.getContentPane());
+        dialogoEliminar.getContentPane().setLayout(dialogoEliminarLayout);
+        dialogoEliminarLayout.setHorizontalGroup(
+            dialogoEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoEliminarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSi)
+                .addGap(18, 18, 18)
+                .addComponent(btnNo)
+                .addContainerGap())
+            .addGroup(dialogoEliminarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtOperacion)
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        dialogoEliminarLayout.setVerticalGroup(
+            dialogoEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoEliminarLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(txtOperacion)
+                .addGap(18, 18, 18)
+                .addGroup(dialogoEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNo)
+                    .addComponent(btnSi))
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aerolíneas");
@@ -97,17 +148,17 @@ public class VentanaAerolinea extends javax.swing.JFrame {
 
         tablaAerolineas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Nombre", "País", "Teléfono", "Sitio Oficial", "Última Actualización"
+                "Nombre", "País", "Teléfono", "Sitio Oficial"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -204,15 +255,48 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        try {
+            VentanaFormularioAdministrativo ventana = new VentanaFormularioAdministrativo();
+            
+            ventana.getTxtOperacion().setText("Registrar Aerolínea");
+            
+            ventana.setVisible(true);
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int posFila = tablaAerolineas.getSelectedRow();
+            String correo = tablaAerolineas.getValueAt(posFila, 1).toString();
+            
+            Aerolinea aerolinea = new AerolineaControlador().buscarPorId(correo);
+        
+            VentanaFormularioAerolinea ventana = new VentanaFormularioAerolinea();
+            
+            ventana.getTfNombre().setText(aerolinea.getNombre());
+            ventana.getTfPais().setText(aerolinea.getPais());
+            ventana.getTfCentroOperaciones().setText(aerolinea.getCentroOperacionPrincipal());
+            ventana.getTfSitioWeb().setText(aerolinea.getSitioOficial());
+            ventana.getTfTelefono().setText(aerolinea.getTelefono());
+            ventana.getTfNonbreContacto().setText(aerolinea.getNombreContacto());
+            
+            ventana.getTxtOperacion().setText("Modificar Aerolínea");
+
+            ventana.show(true);
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        try {
+            dialogoEliminar.setTitle("Eliminar Aerolínea");
+            dialogoEliminar.setVisible(true);
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
@@ -224,12 +308,27 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+        new AerolineaControlador().mostrarEnTabla(tablaAerolineas);
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
+        dialogoEliminar.dispose();
+    }//GEN-LAST:event_btnNoActionPerformed
+
+    private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
+        try {
+            int posFila = tablaAerolineas.getSelectedRow();
+            String correo = tablaAerolineas.getValueAt(posFila, 1).toString();
+
+            new AerolineaControlador().eliminar(correo);
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_btnSiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,13 +385,22 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExportar;
+    private javax.swing.JButton btnNo;
     private javax.swing.JButton btnRefrescar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSi;
+    private javax.swing.JDialog dialogoEliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
     private javax.swing.JTable tablaAerolineas;
     private javax.swing.JTextField tfBuscar;
+    private javax.swing.JLabel txtOperacion;
     // End of variables declaration//GEN-END:variables
+
+    public JTable getTablaAerolineas() {
+        return tablaAerolineas;
+    }
+    
 }

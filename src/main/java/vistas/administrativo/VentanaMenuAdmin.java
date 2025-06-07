@@ -4,6 +4,10 @@
  */
 package vistas.administrativo;
 
+import controladores.AdministrativoControlador;
+import java.util.List;
+import modelos.Administrativo;
+
 /**
  *
  * @author Diego Ivan
@@ -31,8 +35,10 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         txtBienvenido = new javax.swing.JLabel();
         pnlAdministracion = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        btnEmpleados = new javax.swing.JButton();
+        btnPilotos = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        btnAdministrativos = new javax.swing.JButton();
+        btnAzafatas = new javax.swing.JButton();
         pnlAerolineas = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnAerolineas = new javax.swing.JButton();
@@ -76,14 +82,28 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Administración");
 
-        btnEmpleados.setText("Empleados");
-        btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
+        btnPilotos.setText("Pilotos");
+        btnPilotos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmpleadosActionPerformed(evt);
+                btnPilotosActionPerformed(evt);
             }
         });
 
         btnCerrarSesion.setText("Cerrar Sesión");
+
+        btnAdministrativos.setText("Administrativos");
+        btnAdministrativos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrativosActionPerformed(evt);
+            }
+        });
+
+        btnAzafatas.setText("Azafatas");
+        btnAzafatas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAzafatasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlAdministracionLayout = new javax.swing.GroupLayout(pnlAdministracion);
         pnlAdministracion.setLayout(pnlAdministracionLayout);
@@ -92,11 +112,13 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
             .addGroup(pnlAdministracionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlAdministracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPilotos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlAdministracionLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 125, Short.MAX_VALUE))
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdministrativos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAzafatas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlAdministracionLayout.setVerticalGroup(
@@ -105,10 +127,14 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPilotos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAzafatas, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAdministrativos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -215,20 +241,55 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlAdministracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlAdministracion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEmpleadosActionPerformed
+    private void btnPilotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPilotosActionPerformed
+        try {
+            VentanaAdministrativo ventana = new VentanaAdministrativo();
+            
+            new AdministrativoControlador().mostrarEnTabla(ventana.getTablaAdministrativos());
+            
+            ventana.show(true);
+            
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
+    }//GEN-LAST:event_btnPilotosActionPerformed
 
     private void btnAerolineasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAerolineasActionPerformed
-        // TODO add your handling code here:
+        try {
+            VentanaAerolinea ventana = new VentanaAerolinea();
+            
+            new AdministrativoControlador().mostrarEnTabla(ventana.getTablaAerolineas());
+            
+            ventana.show(true);
+            
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
     }//GEN-LAST:event_btnAerolineasActionPerformed
+
+    private void btnAdministrativosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrativosActionPerformed
+        try {
+            VentanaAdministrativo ventana = new VentanaAdministrativo();
+            
+            new AdministrativoControlador().mostrarEnTabla(ventana.getTablaAdministrativos());
+            
+            ventana.show(true);
+            
+        } catch (Exception e) {
+            // TODO add your handling code here:
+        }
+    }//GEN-LAST:event_btnAdministrativosActionPerformed
+
+    private void btnAzafatasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzafatasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAzafatasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,13 +327,15 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdministrativos;
     private javax.swing.JButton btnAerolineas;
     private javax.swing.JButton btnAviones;
+    private javax.swing.JButton btnAzafatas;
     private javax.swing.JButton btnBoletos;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnComprarBoleto;
-    private javax.swing.JButton btnEmpleados;
+    private javax.swing.JButton btnPilotos;
     private javax.swing.JButton btnVuelos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

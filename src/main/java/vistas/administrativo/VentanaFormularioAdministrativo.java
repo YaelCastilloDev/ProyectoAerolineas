@@ -4,6 +4,15 @@
  */
 package vistas.administrativo;
 
+import controladores.AdministrativoControlador;
+import java.time.LocalTime;
+import java.util.Arrays;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import modelos.Administrativo;
+
 /**
  *
  * @author Diego Ivan
@@ -26,6 +35,14 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogoCancelar = new javax.swing.JDialog();
+        btnCancelarNo = new javax.swing.JButton();
+        btnCancelarSi = new javax.swing.JButton();
+        txtOperacion3 = new javax.swing.JLabel();
+        dialogoGuardar = new javax.swing.JDialog();
+        btnGuardarNo = new javax.swing.JButton();
+        btnGuardarSi = new javax.swing.JButton();
+        txtOperacion4 = new javax.swing.JLabel();
         pnlDatos1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
@@ -38,14 +55,16 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         tfContrato = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         pnlDatos3 = new javax.swing.JPanel();
-        tfContraseña = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        pfContra1 = new javax.swing.JPasswordField();
+        pfContra2 = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         pnlDatos7 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        tfFechaNacimiento3 = new javax.swing.JTextField();
+        tfAñosExperiencia = new javax.swing.JTextField();
         tfCorreo = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         pnlDatos4 = new javax.swing.JPanel();
@@ -53,6 +72,92 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         tfHoraEntrada = new javax.swing.JTextField();
         tfHoraSalida = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+
+        btnCancelarNo.setText("No");
+        btnCancelarNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarNoActionPerformed(evt);
+            }
+        });
+
+        btnCancelarSi.setText("Si");
+        btnCancelarSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarSiActionPerformed(evt);
+            }
+        });
+
+        txtOperacion3.setText("¿Estás seguro de que deseas cancelar?");
+
+        javax.swing.GroupLayout dialogoCancelarLayout = new javax.swing.GroupLayout(dialogoCancelar.getContentPane());
+        dialogoCancelar.getContentPane().setLayout(dialogoCancelarLayout);
+        dialogoCancelarLayout.setHorizontalGroup(
+            dialogoCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoCancelarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelarSi)
+                .addGap(18, 18, 18)
+                .addComponent(btnCancelarNo)
+                .addContainerGap())
+            .addGroup(dialogoCancelarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtOperacion3)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        dialogoCancelarLayout.setVerticalGroup(
+            dialogoCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoCancelarLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(txtOperacion3)
+                .addGap(18, 18, 18)
+                .addGroup(dialogoCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelarNo)
+                    .addComponent(btnCancelarSi))
+                .addContainerGap())
+        );
+
+        btnGuardarNo.setText("No");
+        btnGuardarNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarNoActionPerformed(evt);
+            }
+        });
+
+        btnGuardarSi.setText("Si");
+        btnGuardarSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarSiActionPerformed(evt);
+            }
+        });
+
+        txtOperacion4.setText("¿Estás seguro de que deseas guardar?");
+
+        javax.swing.GroupLayout dialogoGuardarLayout = new javax.swing.GroupLayout(dialogoGuardar.getContentPane());
+        dialogoGuardar.getContentPane().setLayout(dialogoGuardarLayout);
+        dialogoGuardarLayout.setHorizontalGroup(
+            dialogoGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoGuardarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardarSi)
+                .addGap(18, 18, 18)
+                .addComponent(btnGuardarNo)
+                .addContainerGap())
+            .addGroup(dialogoGuardarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtOperacion4)
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+        dialogoGuardarLayout.setVerticalGroup(
+            dialogoGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoGuardarLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(txtOperacion4)
+                .addGap(18, 18, 18)
+                .addGroup(dialogoGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarNo)
+                    .addComponent(btnGuardarSi))
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,6 +241,9 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Contraseña");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("Confirmar Contraseña");
+
         javax.swing.GroupLayout pnlDatos3Layout = new javax.swing.GroupLayout(pnlDatos3);
         pnlDatos3.setLayout(pnlDatos3Layout);
         pnlDatos3Layout.setHorizontalGroup(
@@ -144,17 +252,27 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(tfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pfContra1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(pfContra2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDatos3Layout.setVerticalGroup(
             pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatos3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlDatos3Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pfContra2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlDatos3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pfContra1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         btnCancelar.setText("Cancelar");
@@ -206,7 +324,7 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlDatos7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
-                    .addComponent(tfFechaNacimiento3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfAñosExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatos7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
@@ -225,7 +343,7 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
                     .addGroup(pnlDatos7Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfFechaNacimiento3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tfAñosExperiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -308,12 +426,48 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        dialogoCancelar.setTitle("Cancelar Operación");
+        dialogoCancelar.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        if(pfContra1.getPassword() == pfContra2.getPassword()) {
+            dialogoGuardar.setTitle("Guardar");
+            dialogoGuardar.setVisible(true);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarNoActionPerformed
+        dialogoCancelar.dispose();
+    }//GEN-LAST:event_btnCancelarNoActionPerformed
+
+    private void btnCancelarSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarSiActionPerformed
+        dialogoCancelar.dispose();
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarSiActionPerformed
+
+    private void btnGuardarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarNoActionPerformed
+        dialogoGuardar.dispose();
+    }//GEN-LAST:event_btnGuardarNoActionPerformed
+
+    private void btnGuardarSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarSiActionPerformed
+        Administrativo admin = new Administrativo();
+        
+        admin.setPuesto(tfPuesto.getText());
+        admin.setDeptoTrabajo(tfDepartamento.getText());
+        admin.setAnosExperiencia(Integer.parseInt(tfAñosExperiencia.getText()));
+        admin.setTipoContrato(tfContrato.getText());
+        admin.setCorreoElectronico(tfCorreo.getText());
+        admin.setHorarioEntrada(LocalTime.parse(tfHoraEntrada.getText()));
+        admin.setHorarioSalida(LocalTime.parse(tfHoraSalida.getText()));
+        admin.setPuesto(tfPuesto.getText());
+        admin.setContrasena(Arrays.toString(pfContra1.getPassword()));
+        
+        new AdministrativoControlador().crear(admin);
+        
+        dialogoGuardar.dispose();
+        this.dispose();
+    }//GEN-LAST:event_btnGuardarSiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,7 +509,13 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCancelarNo;
+    private javax.swing.JButton btnCancelarSi;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardarNo;
+    private javax.swing.JButton btnGuardarSi;
+    private javax.swing.JDialog dialogoCancelar;
+    private javax.swing.JDialog dialogoGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -365,21 +525,76 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField pfContra1;
+    private javax.swing.JPasswordField pfContra2;
     private javax.swing.JPanel pnlDatos1;
     private javax.swing.JPanel pnlDatos2;
     private javax.swing.JPanel pnlDatos3;
     private javax.swing.JPanel pnlDatos4;
     private javax.swing.JPanel pnlDatos7;
-    private javax.swing.JTextField tfContraseña;
+    private javax.swing.JTextField tfAñosExperiencia;
     private javax.swing.JTextField tfContrato;
     private javax.swing.JTextField tfCorreo;
     private javax.swing.JTextField tfDepartamento;
-    private javax.swing.JTextField tfFechaNacimiento3;
     private javax.swing.JTextField tfHoraEntrada;
     private javax.swing.JTextField tfHoraSalida;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfPuesto;
     private javax.swing.JLabel txtOperacion;
+    private javax.swing.JLabel txtOperacion3;
+    private javax.swing.JLabel txtOperacion4;
     // End of variables declaration//GEN-END:variables
+
+    public JPasswordField getPfContra1() {
+        return pfContra1;
+    }
+
+    public JPasswordField getPfContra2() {
+        return pfContra2;
+    }
+
+    public JTextField getTfContrato() {
+        return tfContrato;
+    }
+
+    public JTextField getTfCorreo() {
+        return tfCorreo;
+    }
+
+    public JTextField getTfDepartamento() {
+        return tfDepartamento;
+    }
+
+    public JTextField getTfAñosExperiencia() {
+        return tfAñosExperiencia;
+    }
+
+    public JTextField getTfHoraEntrada() {
+        return tfHoraEntrada;
+    }
+
+    public JTextField getTfHoraSalida() {
+        return tfHoraSalida;
+    }
+
+    public JTextField getTfNombre() {
+        return tfNombre;
+    }
+
+    public JTextField getTfPuesto() {
+        return tfPuesto;
+    }
+
+    public JLabel getTxtOperacion() {
+        return txtOperacion;
+    }
+
+    public void setTxtOperacion(JLabel txtOperacion) {
+        this.txtOperacion = txtOperacion;
+    }
+
+    
+    
 }
