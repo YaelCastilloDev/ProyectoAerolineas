@@ -202,15 +202,73 @@ public class VentanaPiloto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        VentanaFormularioPiloto ventana = new VentanaFormularioPiloto();
+        ventana.esEdicion = false;
+            
+        ventana.setTitle("Registrar Piloto");
+        ventana.pack();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaPilotos.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                String correo = tablaPilotos.getValueAt(fila, 5).toString().trim(); // Asegúrate que la columna 0 es el correo
+                Piloto piloto = controlador.buscarPorId(correo);
+
+                VentanaFormularioPiloto ventana = new VentanaFormularioPiloto();
+                ventana.esEdicion = true;
+
+                // Llenar los campos del formulario con los datos del administrativo
+                ventana.getTfNombre().setText(piloto.getNombre());
+                ventana.getTfLicencia().setText(piloto.getTipoLicencia());
+                ventana.getTfFechaNacimiento().setText(piloto.getFechaNacimiento().toString());
+                ventana.getTfCorreo().setText(piloto.getCorreoElectronico());
+                ventana.getTfDireccion().setText(piloto.getDireccion());
+                ventana.getTfContraseña().setText(piloto.getContrasena());
+                ventana.getTfSalario().setText(String.valueOf(piloto.getSalario()));
+                ventana.getCbGenero().setSelectedItem(piloto.getGenero());
+                ventana.getTfFechaInicio().setText(piloto.getAnoInicio().toString());
+
+                // Establecer el título de la ventana y mostrarla
+                ventana.setTitle("Modificar Cliente");
+                ventana.pack();
+                ventana.setLocationRelativeTo(this);
+                ventana.setVisible(true);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un cliente de la tabla.");
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaPilotos.getSelectedRow();
+        if (fila >= 0) {
+            String correo = tablaPilotos.getValueAt(fila, 5).toString().trim();
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Deseas eliminar al cliente con correo: " + correo + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    controlador.eliminar(correo);
+                    cargarTablaPilotos(); // Asegúrate de tener este método que refresca la tabla
+                    JOptionPane.showMessageDialog(this, "Piloto eliminado con éxito.");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un piloto de la tabla.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
