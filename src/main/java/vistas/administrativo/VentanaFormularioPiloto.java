@@ -327,6 +327,7 @@ public class VentanaFormularioPiloto extends javax.swing.JFrame {
             // Parse date with proper format
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate fechaNacimiento = LocalDate.parse(tfFechaNacimiento.getText(), dateFormatter);
+            LocalDate fechaInicio = LocalDate.parse(tfFechaInicio.getText(), dateFormatter);
 
             // Validate date is not in the future
             if (fechaNacimiento.isAfter(LocalDate.now())) {
@@ -344,11 +345,11 @@ public class VentanaFormularioPiloto extends javax.swing.JFrame {
             piloto.setSalario(Double.parseDouble(tfSalario.getText()));
             piloto.setDireccion(tfDireccion.getText());
             piloto.setTipoLicencia(tfLicencia.getText());
-            piloto.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
+            piloto.setFechaNacimiento(fechaNacimiento);
             piloto.setCorreoElectronico(tfCorreo.getText());
             piloto.setGenero((String) cbGenero.getSelectedItem());
             piloto.setContrasena(tfContraseña.getText());
-            piloto.setAnoInicio(LocalDate.parse(tfFechaInicio.getText()));
+            piloto.setAnoInicio(fechaInicio);
         
             PilotoControlador controlador = new PilotoControlador();
             if (esEdicion) {
@@ -359,13 +360,13 @@ public class VentanaFormularioPiloto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Piloto registrado con éxito.");
             }
             this.dispose();
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                     "Por favor ingrese un valor numérico válido para el salario",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(this,
                     "El formato de fecha debe ser dd/MM/yyyy (ej. 12/05/2005)",

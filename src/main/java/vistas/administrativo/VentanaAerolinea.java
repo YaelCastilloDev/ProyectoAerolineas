@@ -244,8 +244,10 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
             VentanaFormularioAerolinea ventana = new VentanaFormularioAerolinea();
-            
+            ventana.esEdicion = false;
             ventana.setTitle("Registrar Aerolínea");
+            ventana.pack();
+            ventana.setLocationRelativeTo(this);
             ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
@@ -253,34 +255,59 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        try {
-            int posFila = tablaAerolineas.getSelectedRow();
-            String correo = tablaAerolineas.getValueAt(posFila, 1).toString();
+        int fila = tablaAerolineas.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                String nombre = tablaAerolineas.getValueAt(fila, 0).toString();
             
-            Aerolinea aerolinea = aerolineaControlador.buscarPorId(correo);
+                Aerolinea aerolinea = aerolineaControlador.buscarPorId(nombre);
         
-            VentanaFormularioAerolinea ventana = new VentanaFormularioAerolinea();
+                VentanaFormularioAerolinea ventana = new VentanaFormularioAerolinea();
+                ventana.esEdicion = true;
             
-            ventana.getTfNombre().setText(aerolinea.getNombre());
-            ventana.getTfPais().setText(aerolinea.getPais());
-            ventana.getTfCentroOperaciones().setText(aerolinea.getCentroOperacionPrincipal());
-            ventana.getTfSitioWeb().setText(aerolinea.getSitioOficial());
-            ventana.getTfTelefono().setText(aerolinea.getTelefono());
-            ventana.getTfNonbreContacto().setText(aerolinea.getNombreContacto());
-            
-            ventana.setTitle("Modificar Aerolínea");
-            ventana.setVisible(true);
-        } catch (Exception e) {
-            // TODO add your handling code here:
+                ventana.getTfNombre().setText(aerolinea.getNombre());
+                ventana.getTfPais().setText(aerolinea.getPais());
+                ventana.getTfCentroOperaciones().setText(aerolinea.getCentroOperacionPrincipal());
+                ventana.getTfSitioWeb().setText(aerolinea.getSitioOficial());
+                ventana.getTfTelefono().setText(aerolinea.getTelefono());
+                ventana.getTfNonbreContacto().setText(aerolinea.getNombreContacto());
+                ventana.getTfBases().setText(aerolinea.getBases().iterator().next());
+
+                // Establecer el título de la ventana y mostrarla
+                ventana.setTitle("Modificar Aerolínea");
+                ventana.pack();
+                ventana.setLocationRelativeTo(this);
+                ventana.setVisible(true);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una aerolínea de la tabla.");
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try {
-            dialogoEliminar.setTitle("Eliminar Aerolínea");
-            dialogoEliminar.setVisible(true);
-        } catch (Exception e) {
-            // TODO add your handling code here:
+        int fila = tablaAerolineas.getSelectedRow();
+        if (fila >= 0) {
+            String nombre = tablaAerolineas.getValueAt(fila, 0).toString().trim();
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Deseas eliminar a la aerolínea: " + nombre + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    aerolineaControlador.eliminar(nombre);
+                    cargarTablaAerolineas(); // Asegúrate de tener este método que refresca la tabla
+                    JOptionPane.showMessageDialog(this, "Aerolínea eliminada con éxito.");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una aerolínea de la tabla.");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -314,10 +341,6 @@ public class VentanaAerolinea extends javax.swing.JFrame {
             }
 
             tablaAerolineas.setModel(modelo);
-
-            // Opcional: ajustar anchos de columnas
-            tablaAerolineas.getColumnModel().getColumn(3).setPreferredWidth(150); // Bases
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Error al cargar las aerolíneas: " + e.getMessage(),
@@ -331,18 +354,11 @@ public class VentanaAerolinea extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
-        dialogoEliminar.dispose();
+
     }//GEN-LAST:event_btnNoActionPerformed
 
     private void btnSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiActionPerformed
-        try {
-            int posFila = tablaAerolineas.getSelectedRow();
-            String correo = tablaAerolineas.getValueAt(posFila, 1).toString();
 
-            new AerolineaControlador().eliminar(correo);
-        } catch (Exception e) {
-
-        }
     }//GEN-LAST:event_btnSiActionPerformed
 
     /**
