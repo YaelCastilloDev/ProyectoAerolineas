@@ -7,6 +7,8 @@ package vistas.administrativo;
 import controladores.AvionControlador;
 import modelos.Avion;
 
+import javax.swing.*;
+
 /**
  *
  * @author Diego Ivan
@@ -247,26 +249,61 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose(); // Simply close the window
+    }
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        Avion avion = new Avion();
-                
-        avion.setNombre(tfNombre.getText());
-        avion.setCapacidad(Integer.parseInt(tfCapacidad.getText()));
-        avion.setPeso(Integer.parseInt(tfPeso.getText()));
-        avion.setMatricula(tfMatricula.getText());
-        avion.setAerolineaPropietaria(tfAerolinea.getText());
-        avion.setModelo(tfModelo.getText());
-        
-        new AvionControlador().crearAvion(avion.getNombre(), avion.getCapacidad(), avion.getModelo(), avion.getPeso(), avion.getMatricula(), avion.getAerolineaPropietaria());
-        
-        this.dispose();
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Validate all required fields are filled
+            if (tfNombre.getText().isEmpty() || tfCapacidad.getText().isEmpty() ||
+                    tfPeso.getText().isEmpty() || tfMatricula.getText().isEmpty() ||
+                    tfAerolinea.getText().isEmpty() || tfModelo.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Todos los campos son obligatorios",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create and populate the Avion object
+            Avion avion = new Avion();
+            avion.setNombre(tfNombre.getText());
+            avion.setCapacidad(Integer.parseInt(tfCapacidad.getText()));
+            avion.setPeso(Integer.parseInt(tfPeso.getText()));
+            avion.setMatricula(tfMatricula.getText());
+            avion.setAerolineaPropietaria(tfAerolinea.getText());
+            avion.setModelo(tfModelo.getText());
+
+            // Create the airplane through the controller
+            new AvionControlador().crearAvion(
+                    avion.getNombre(),
+                    avion.getCapacidad(),
+                    avion.getModelo(),
+                    avion.getPeso(),
+                    avion.getMatricula(),
+                    avion.getAerolineaPropietaria());
+
+            // Close the window after successful creation
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor ingrese valores numéricos válidos para capacidad y peso",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de validación: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments

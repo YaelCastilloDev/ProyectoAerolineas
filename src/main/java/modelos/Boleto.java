@@ -28,7 +28,7 @@ public class Boleto implements Serializable {
     private double costo;
     
     @NotBlank(message = "El asiento no puede estar vacío")
-    @Pattern(regexp = "^[A-Z][1-9][0-9]?$", message = "Formato de asiento inválido (Ej: A1, B12)")
+  //  @Pattern(regexp = "^[A-Z][1-9][0-9]?$", message = "Formato de asiento inválido (Ej: A1, B12)")
     private String asiento;
     
     @NotNull(message = "La fecha de emisión no puede estar vacía")

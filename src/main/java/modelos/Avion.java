@@ -26,7 +26,7 @@ public class Avion implements Serializable {
     private int peso;
     
     @NotBlank(message = "La matrícula no puede estar vacía")
-    @Pattern(regexp = "^[A-Z0-9]{2,10}$", message = "Formato de matrícula inválido")
+   // @Pattern(regexp = "^[A-Z0-9]{2,10}$", message = "Formato de matrícula inválido")
     private String matricula;
     
     @NotBlank(message = "La aerolínea propietaria no puede estar vacía")
