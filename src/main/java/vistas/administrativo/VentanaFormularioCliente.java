@@ -12,8 +12,6 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelos.Cliente;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
 
 /**
  *
@@ -243,10 +241,9 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose(); // Simply close the window
+    }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {

@@ -22,16 +22,25 @@ public class AvionControlador {
             int peso,
             String matricula,
             String aerolineaPropietaria) {
-        
+
         try {
+
             validador.validarCompleto(nombre, capacidad, modelo, peso, matricula, aerolineaPropietaria);
-            
-            Avion avion = validador.getAvionValidado();
+            // Create new Avion object and set all values
+            Avion avion = new Avion();
+            avion.setNombre(nombre);
+            avion.setCapacidad(capacidad);
+            avion.setModelo(modelo);
+            avion.setPeso(peso);
+            avion.setMatricula(matricula);
+            avion.setAerolineaPropietaria(aerolineaPropietaria);
+
+            // If validation passes, save to DAO
             avionDAO.crear(avion);
-            
+
         } catch (ConstraintViolationException e) {
             throw new IllegalArgumentException(
-                e.getConstraintViolations().iterator().next().getMessage());
+                    e.getConstraintViolations().iterator().next().getMessage());
         }
     }
 

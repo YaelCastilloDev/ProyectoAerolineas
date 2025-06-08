@@ -428,6 +428,8 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarSiActionPerformed
 
+
+
     private void btnGuardarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarNoActionPerformed
 
     }//GEN-LAST:event_btnGuardarNoActionPerformed

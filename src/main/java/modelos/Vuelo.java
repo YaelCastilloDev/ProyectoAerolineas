@@ -53,11 +53,20 @@ public class Vuelo implements Serializable {
     
     @Size(min = 4, max = 4, message = "Debe haber exactamente 4 azafatas")
     private List<@NotNull Azafata> azafatas;
-    
+
+    @PositiveOrZero(message = "El número de pasajeros no puede ser negativo")
+    public int getPasajerosRegistrados() {
+        return pasajerosRegistrados;
+    }
+
+    public void setPasajerosRegistrados(@PositiveOrZero(message = "El número de pasajeros no puede ser negativo") int pasajerosRegistrados) {
+        this.pasajerosRegistrados = pasajerosRegistrados;
+    }
+
     @PositiveOrZero(message = "El número de pasajeros no puede ser negativo")
     private int pasajerosRegistrados = 0;
     
-    @Positive(message = "El costo del boleto debe ser positivo")
+   // @Positive(message = "El costo del boleto debe ser positivo")
     private double costoBoleto;
     
     @JsonIgnore // Para evitar recursión en JSON
@@ -214,7 +223,7 @@ public class Vuelo implements Serializable {
         return Objects.hash(id);
     }
 
-    @Positive(message = "El costo del boleto debe ser positivo")
+    //@Positive(message = "El costo del boleto debe ser positivo")
     public double getCostoBoleto() {
         return costoBoleto;
     }

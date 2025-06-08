@@ -11,6 +11,12 @@ import modelos.Piloto;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import modelos.Piloto;
+
+import javax.swing.*;
 
 /**
  *
@@ -299,15 +305,41 @@ public class VentanaFormularioPiloto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose(); // Simply close the window
+    }
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
+            // Validate all required fields are filled
+            if (tfNombre.getText().isEmpty() || tfSalario.getText().isEmpty() ||
+                    tfDireccion.getText().isEmpty() || tfLicencia.getText().isEmpty() ||
+                    tfFechaNacimiento.getText().isEmpty() || tfCorreo.getText().isEmpty() ||
+                    tfContraseña.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Todos los campos son obligatorios",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Parse date with proper format
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fechaNacimiento = LocalDate.parse(tfFechaNacimiento.getText(), dateFormatter);
+
+            // Validate date is not in the future
+            if (fechaNacimiento.isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this,
+                        "La fecha de nacimiento no puede ser en el futuro",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create and populate the Piloto object
             Piloto piloto = new Piloto();
-        
+
             piloto.setNombre(tfNombre.getText());
             piloto.setSalario(Double.parseDouble(tfSalario.getText()));
             piloto.setDireccion(tfDireccion.getText());
@@ -327,12 +359,25 @@ public class VentanaFormularioPiloto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Piloto registrado con éxito.");
             }
             this.dispose();
-        } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor ingrese un valor numérico válido para el salario",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this,
+                    "El formato de fecha debe ser dd/MM/yyyy (ej. 12/05/2005)",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }
 
     /**
      * @param args the command line arguments
