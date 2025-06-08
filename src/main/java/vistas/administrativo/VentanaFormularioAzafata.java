@@ -6,8 +6,11 @@ package vistas.administrativo;
 
 import controladores.AzafataControlador;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 import modelos.Azafata;
-import javax.swing.JComboBox;
+
+import javax.swing.*;
 
 
 /**
@@ -327,26 +330,52 @@ public class VentanaFormularioAzafata extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        Azafata azafata = new Azafata();
-        
-        azafata.setNombre(tfNombre.getText());
-        azafata.setSalario(Double.parseDouble(tfSalario.getText()));
-        azafata.setDireccion(tfDireccion.getText());
-        //¿Donde esta el atributo de tipo de licencia?
-        azafata.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
-        azafata.setCorreoElectronico(tfCorreo.getText());
-        azafata.setGenero((String) cbGenero.getSelectedItem());
-        azafata.setContrasena(tfContraseña.getText());
-        azafata.setNumIdiomas(Integer.parseInt(tfNumIdiomas.getText()));
-        azafata.setAnoInicio(LocalDate.parse(tfAñoInicio.getText()));
-        
-        new AzafataControlador().crear(azafata);
-        
-        this.dispose();
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Validate all fields are filled
+            if (tfNombre.getText().isEmpty() || tfSalario.getText().isEmpty() ||
+                    tfDireccion.getText().isEmpty() || tfFechaNacimiento.getText().isEmpty() ||
+                    tfCorreo.getText().isEmpty() || tfContraseña.getText().isEmpty() ||
+                    tfNumIdiomas.getText().isEmpty() || tfAñoInicio.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            Azafata azafata = new Azafata();
+
+            azafata.setNombre(tfNombre.getText());
+            azafata.setSalario(Double.parseDouble(tfSalario.getText()));
+            azafata.setDireccion(tfDireccion.getText());
+
+            // Parse dates with proper format
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            azafata.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText(), dateFormatter));
+
+            azafata.setCorreoElectronico(tfCorreo.getText());
+            azafata.setGenero((String) cbGenero.getSelectedItem());
+            azafata.setContrasena(tfContraseña.getText());
+            azafata.setNumIdiomas(Integer.parseInt(tfNumIdiomas.getText()));
+
+            // Parse year of start (assuming it's just a year)
+            String añoInicioText = tfAñoInicio.getText();
+            if (añoInicioText.matches("\\d{4}")) {
+                // If it's just a 4-digit year, create a date for Jan 1 of that year
+                azafata.setAnoInicio(LocalDate.of(Integer.parseInt(añoInicioText), 1, 1));
+            } else {
+                // If it's a full date, parse it
+                azafata.setAnoInicio(LocalDate.parse(añoInicioText, dateFormatter));
+            }
+
+            new AzafataControlador().crear(azafata);
+            this.dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese valores numéricos válidos para salario y número de idiomas", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "El formato de fecha debe ser dd/MM/yyyy (ej. 12/05/2005)", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * @param args the command line arguments
      */

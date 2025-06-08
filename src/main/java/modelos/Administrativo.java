@@ -23,8 +23,8 @@ public class Administrativo implements Serializable {
     @Size(max = 30, message = "El puesto no puede exceder 30 caracteres")
     private String puesto;
     
-    @Pattern(regexp = "TIEMPO_COMPLETO|MEDIO_TIEMPO|CONTRATO", 
-             message = "Tipo de contrato inválido")
+  //  @Pattern(regexp = "TIEMPO_COMPLETO|MEDIO_TIEMPO|CONTRATO",
+  //           message = "Tipo de contrato inválido")
     private String tipoContrato;
     
     @PositiveOrZero(message = "Los años de experiencia no pueden ser negativos")

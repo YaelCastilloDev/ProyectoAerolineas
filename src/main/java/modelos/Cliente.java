@@ -33,7 +33,7 @@ public class Cliente implements Serializable {
     @Size(max = 60, message = "El correo no puede exceder 60 caracteres")
     private String correoElectronico;
     
-    @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Teléfono inválido")
+  //  @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Teléfono inválido")
     private String telefono;
     
     @Size(min = 1, max = 3, message = "Máximo 3 pasaportes")

@@ -23,7 +23,7 @@ public class Piloto implements Serializable {
     private LocalDate fechaNacimiento;
     
     @NotBlank(message = "El género no puede estar vacío")
-    @Pattern(regexp = "Masculino|Femenino|Otro", message = "Género no válido")
+  //  @Pattern(regexp = "Masculino|Femenino|Otro", message = "Género no válido")
     private String genero;
     
     @Positive(message = "El salario debe ser positivo")

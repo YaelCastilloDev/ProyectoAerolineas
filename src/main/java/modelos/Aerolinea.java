@@ -28,8 +28,8 @@ public class Aerolinea implements Serializable {
     
     @NotBlank(message = "El sitio web no puede estar vacío")
     @Size(max = 100, message = "El sitio web no puede exceder 100 caracteres")
-    @Pattern(regexp = "^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?$", 
-             message = "Debe ser una URL válida")
+    //@Pattern(regexp = "^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?$",
+   //          message = "Debe ser una URL válida")
     private String sitioOficial;
     
     @NotBlank(message = "El nombre de contacto no puede estar vacío")
