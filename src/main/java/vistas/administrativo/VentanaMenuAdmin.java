@@ -90,6 +90,11 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         });
 
         btnCerrarSesion.setText("Cerrar Sesión");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
 
         btnAdministrativos.setText("Administrativos");
         btnAdministrativos.addActionListener(new java.awt.event.ActionListener() {
@@ -148,8 +153,18 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         });
 
         btnAviones.setText("Aviones");
+        btnAviones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvionesActionPerformed(evt);
+            }
+        });
 
         btnVuelos.setText("Vuelos");
+        btnVuelos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVuelosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlAerolineasLayout = new javax.swing.GroupLayout(pnlAerolineas);
         pnlAerolineas.setLayout(pnlAerolineasLayout);
@@ -184,8 +199,18 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         jLabel4.setText("Clientes");
 
         btnClientes.setText("Clientes");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
 
         btnBoletos.setText("Boletos");
+        btnBoletos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBoletosActionPerformed(evt);
+            }
+        });
 
         btnComprarBoleto.setText("Comprar Boletos");
         btnComprarBoleto.addActionListener(new java.awt.event.ActionListener() {
@@ -255,7 +280,7 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
 
     private void btnPilotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPilotosActionPerformed
         try {
-            VentanaAdministrativo ventana = new VentanaAdministrativo();
+            VentanaPiloto ventana = new VentanaPiloto();
             ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
@@ -275,7 +300,6 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         try {
             VentanaAdministrativo ventana = new VentanaAdministrativo();
             ventana.setVisible(true);
-            
         } catch (Exception e) {
             // TODO add your handling code here:
         }
@@ -300,6 +324,26 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
             // TODO add your handling code here:
         }
     }//GEN-LAST:event_btnComprarBoletoActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBoletosActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnAvionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAvionesActionPerformed
+
+    private void btnVuelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVuelosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVuelosActionPerformed
 
     /**
      * @param args the command line arguments

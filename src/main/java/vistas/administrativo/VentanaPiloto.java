@@ -4,17 +4,26 @@
  */
 package vistas.administrativo;
 
+import controladores.PilotoControlador;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelos.Administrativo;
+import modelos.Piloto;
+
 /**
  *
  * @author Diego Ivan
  */
 public class VentanaPiloto extends javax.swing.JFrame {
+    PilotoControlador controlador = new PilotoControlador();
 
     /**
      * Creates new form
      */
     public VentanaPiloto() {
         initComponents();
+        cargarTablaPilotos();
     }
 
     /**
@@ -30,14 +39,14 @@ public class VentanaPiloto extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         btnRefrescar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaAerolineas = new javax.swing.JTable();
+        tablaPilotos = new javax.swing.JTable();
         pnlBotones = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pilotos");
 
         btnRegresar.setText("Regresar");
@@ -76,7 +85,7 @@ public class VentanaPiloto extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tablaAerolineas.setModel(new javax.swing.table.DefaultTableModel(
+        tablaPilotos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -99,11 +108,11 @@ public class VentanaPiloto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaAerolineas.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tablaAerolineas);
-        if (tablaAerolineas.getColumnModel().getColumnCount() > 0) {
-            tablaAerolineas.getColumnModel().getColumn(2).setResizable(false);
-            tablaAerolineas.getColumnModel().getColumn(3).setResizable(false);
+        tablaPilotos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaPilotos);
+        if (tablaPilotos.getColumnModel().getColumnCount() > 0) {
+            tablaPilotos.getColumnModel().getColumn(2).setResizable(false);
+            tablaPilotos.getColumnModel().getColumn(3).setResizable(false);
         }
 
         btnRegistrar.setText("Registrar");
@@ -189,7 +198,7 @@ public class VentanaPiloto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -209,9 +218,40 @@ public class VentanaPiloto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+        cargarTablaPilotos();
     }//GEN-LAST:event_btnRefrescarActionPerformed
+    
+    public void cargarTablaPilotos() {
+        try {
+            List<Piloto> pilotos = controlador.listarTodos();
+            DefaultTableModel modelo = new DefaultTableModel();
 
+            modelo.setColumnIdentifiers(new Object[]{"Nombre", "Dirección",
+                    "Fecha de Nacimiento", "Género", "Salario",
+                    "Email", "Año de Inicio", "Tipo Licencia"});
+
+            for (Piloto p : pilotos) {
+                modelo.addRow(new Object[]{
+                        p.getNombre(),
+                        p.getDireccion(),
+                        p.getFechaNacimiento(),
+                        p.getGenero(),
+                        p.getSalario(),
+                        p.getCorreoElectronico(),
+                        p.getAnoInicio(),
+                        p.getTipoLicencia()
+                });
+            }
+
+            tablaPilotos.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar los administrativos: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -384,6 +424,6 @@ public class VentanaPiloto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlSuperior;
-    private javax.swing.JTable tablaAerolineas;
+    private javax.swing.JTable tablaPilotos;
     // End of variables declaration//GEN-END:variables
 }

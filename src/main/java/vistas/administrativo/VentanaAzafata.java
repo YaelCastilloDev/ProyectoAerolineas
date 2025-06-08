@@ -4,17 +4,25 @@
  */
 package vistas.administrativo;
 
+import controladores.AzafataControlador;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelos.Azafata;
+
 /**
  *
  * @author Diego Ivan
  */
 public class VentanaAzafata extends javax.swing.JFrame {
+    AzafataControlador controlador = new AzafataControlador();
 
     /**
      * Creates new form VentanaAzafata
      */
     public VentanaAzafata() {
         initComponents();
+        cargarTablaAzafatas();
     }
 
     /**
@@ -37,7 +45,7 @@ public class VentanaAzafata extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Azafatas");
 
         btnRegresar.setText("Regresar");
@@ -185,7 +193,7 @@ public class VentanaAzafata extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -205,9 +213,38 @@ public class VentanaAzafata extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
-        // TODO add your handling code here:
+        cargarTablaAzafatas();
     }//GEN-LAST:event_btnRefrescarActionPerformed
+    
+    public void cargarTablaAzafatas() {
+        try {
+            List<Azafata> azafatas = controlador.listarTodas();
+            DefaultTableModel modelo = new DefaultTableModel();
 
+            modelo.setColumnIdentifiers(new Object[]{"Nombre", "Dirección",
+                    "Fecha de Nacimiento", "Género", "Salario",
+                    "Número de Idiomas", "Año de Inicio"});
+
+            for (Azafata a : azafatas) {
+                modelo.addRow(new Object[]{
+                        a.getNombre(),
+                        a.getDireccion(),
+                        a.getFechaNacimiento(),
+                        a.getGenero(),
+                        a.getSalario(),
+                        a.getNumIdiomas(),
+                        a.getAnoInicio()
+                });
+            }
+            tablaAzafatas.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar los administrativos: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
