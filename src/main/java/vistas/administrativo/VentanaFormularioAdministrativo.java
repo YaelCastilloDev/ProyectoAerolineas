@@ -6,6 +6,7 @@ package vistas.administrativo;
 
 import controladores.AdministrativoControlador;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -16,6 +17,7 @@ import modelos.Administrativo;
  * @author Diego Ivan
  */
 public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
+    public boolean esEdicion;
 
     /**
      * Creates new form VentanaFormularioCliente
@@ -42,8 +44,6 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         btnGuardarSi = new javax.swing.JButton();
         txtOperacion4 = new javax.swing.JLabel();
         pnlDatos1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        tfNombre = new javax.swing.JTextField();
         tfPuesto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         pnlDatos2 = new javax.swing.JPanel();
@@ -54,8 +54,6 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         pnlDatos3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         pfContra1 = new javax.swing.JPasswordField();
-        pfContra2 = new javax.swing.JPasswordField();
-        jLabel9 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -156,10 +154,7 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Nombre");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Puesto");
@@ -171,27 +166,17 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
             .addGroup(pnlDatos1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlDatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(tfPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDatos1Layout.setVerticalGroup(
             pnlDatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatos1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlDatos1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDatos1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -235,9 +220,6 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Contraseña");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("Confirmar Contraseña");
-
         javax.swing.GroupLayout pnlDatos3Layout = new javax.swing.GroupLayout(pnlDatos3);
         pnlDatos3.setLayout(pnlDatos3Layout);
         pnlDatos3Layout.setHorizontalGroup(
@@ -246,26 +228,16 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(pfContra1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(pfContra2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pfContra1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDatos3Layout.setVerticalGroup(
             pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatos3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDatos3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlDatos3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pfContra2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDatos3Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pfContra1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pfContra1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -415,17 +387,35 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dialogoCancelar.setTitle("Cancelar Operación");
-        dialogoCancelar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-        if(Arrays.equals(pfContra1.getPassword(), pfContra2.getPassword())) {
-            dialogoGuardar.setTitle("Guardar");
-            dialogoGuardar.setVisible(true);
-        } else {
-            // You might want to add some error message here
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            Administrativo admin = new Administrativo();
+
+            admin.setPuesto(tfPuesto.getText());
+            admin.setDeptoTrabajo(tfDepartamento.getText());
+            admin.setAnosExperiencia(Integer.parseInt(tfAñosExperiencia.getText()));
+            admin.setTipoContrato(tfContrato.getText());
+            admin.setCorreoElectronico(tfCorreo.getText());
+            admin.setHorarioEntrada(LocalTime.parse(tfHoraEntrada.getText()));
+            admin.setHorarioSalida(LocalTime.parse(tfHoraSalida.getText()));
+            admin.setPuesto(tfPuesto.getText());
+            admin.setContrasena(new String(pfContra1.getPassword()));
+
+            if (esEdicion) {
+                new AdministrativoControlador().actualizar(admin);
+                JOptionPane.showMessageDialog(this, "Administrativo actualizado con éxito.");
+            } else {
+                new AdministrativoControlador().crear(admin);
+                JOptionPane.showMessageDialog(this, "Administrativo registrado con éxito.");
+            }
+            this.dispose();
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -439,26 +429,11 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarSiActionPerformed
 
     private void btnGuardarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarNoActionPerformed
-        dialogoGuardar.dispose();
+
     }//GEN-LAST:event_btnGuardarNoActionPerformed
 
     private void btnGuardarSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarSiActionPerformed
-        Administrativo admin = new Administrativo();
         
-        admin.setPuesto(tfPuesto.getText());
-        admin.setDeptoTrabajo(tfDepartamento.getText());
-        admin.setAnosExperiencia(Integer.parseInt(tfAñosExperiencia.getText()));
-        admin.setTipoContrato(tfContrato.getText());
-        admin.setCorreoElectronico(tfCorreo.getText());
-        admin.setHorarioEntrada(LocalTime.parse(tfHoraEntrada.getText()));
-        admin.setHorarioSalida(LocalTime.parse(tfHoraSalida.getText()));
-        admin.setPuesto(tfPuesto.getText());
-        admin.setContrasena(Arrays.toString(pfContra1.getPassword()));
-        
-        new AdministrativoControlador().crear(admin);
-        
-        dialogoGuardar.dispose();
-        this.dispose();
     }//GEN-LAST:event_btnGuardarSiActionPerformed
 
     /**
@@ -508,7 +483,6 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardarSi;
     private javax.swing.JDialog dialogoCancelar;
     private javax.swing.JDialog dialogoGuardar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -517,10 +491,8 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField pfContra1;
-    private javax.swing.JPasswordField pfContra2;
     private javax.swing.JPanel pnlDatos1;
     private javax.swing.JPanel pnlDatos2;
     private javax.swing.JPanel pnlDatos3;
@@ -532,7 +504,6 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     private javax.swing.JTextField tfDepartamento;
     private javax.swing.JTextField tfHoraEntrada;
     private javax.swing.JTextField tfHoraSalida;
-    private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfPuesto;
     private javax.swing.JLabel txtOperacion3;
     private javax.swing.JLabel txtOperacion4;
@@ -540,10 +511,6 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
 
     public JPasswordField getPfContra1() {
         return pfContra1;
-    }
-
-    public JPasswordField getPfContra2() {
-        return pfContra2;
     }
 
     public JTextField getTfContrato() {
@@ -569,11 +536,7 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
     public JTextField getTfHoraSalida() {
         return tfHoraSalida;
     }
-
-    public JTextField getTfNombre() {
-        return tfNombre;
-    }
-
+    
     public JTextField getTfPuesto() {
         return tfPuesto;
     }

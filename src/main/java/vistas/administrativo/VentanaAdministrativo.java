@@ -248,8 +248,11 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
             VentanaFormularioAdministrativo ventana = new VentanaFormularioAdministrativo();
+            ventana.esEdicion = false;
             
             ventana.setTitle("Registrar Administrativo");
+            ventana.pack();
+            ventana.setLocationRelativeTo(this);
             ventana.setVisible(true);
         } catch (Exception e) {
             // TODO add your handling code here:
@@ -264,6 +267,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
                 Administrativo admin = administrativoControlador.buscarPorId(correo);
 
                 VentanaFormularioAdministrativo ventana = new VentanaFormularioAdministrativo();
+                ventana.esEdicion = true;
 
                 // Llenar los campos del formulario con los datos del administrativo
                 ventana.getTfCorreo().setText(admin.getCorreoElectronico());
@@ -302,7 +306,7 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
             if (confirmacion == JOptionPane.YES_OPTION) {
                 try {
                     administrativoControlador.eliminar(correo);
-                    administrativoControlador.listarTodas(); // Asegúrate de tener este método que refresca la tabla
+                    cargarTablaAdministrativos();
                     JOptionPane.showMessageDialog(this, "Administrativo eliminado con éxito.");
                 } catch (IllegalArgumentException | IllegalStateException e) {
                     JOptionPane.showMessageDialog(this, e.getMessage(),
