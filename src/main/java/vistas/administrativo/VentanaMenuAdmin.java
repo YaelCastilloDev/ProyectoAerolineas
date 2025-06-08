@@ -10,7 +10,7 @@ import modelos.Administrativo;
 
 /**
  *
- * @author Diego Ivan
+ * @author Raziel
  */
 public class VentanaMenuAdmin extends javax.swing.JFrame {
 

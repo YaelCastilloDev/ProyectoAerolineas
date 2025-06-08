@@ -16,7 +16,7 @@ import modelos.Vuelo;
 
 /**
  *
- * @author Diego Ivan
+ * @author Raziel
  */
 public class VentanaSeleccionVuelo extends javax.swing.JFrame {
     private VueloControlador vueloControlador = new VueloControlador();
@@ -172,19 +172,59 @@ public class VentanaSeleccionVuelo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private Vuelo obtenerVuelo(int fila) {
+        // Obtener datos clave de la fila seleccionada
+        String ciudadSalida = (String) tablaVuelos.getValueAt(fila, 2); // Columna ciudad salida
+        LocalDate fechaSalida = (LocalDate) tablaVuelos.getValueAt(fila, 4); // Columna fecha salida
+        LocalTime horaSalida = (LocalTime) tablaVuelos.getValueAt(fila, 5); // Columna hora salida
+    
+        // Buscar vuelo exacto
+        return new VueloControlador().buscarVuelo(ciudadSalida, fechaSalida, horaSalida);
+    }
+    
+    private Vuelo obtenerVueloDesdeTabla(int fila) {
+        // Obtener datos clave de la fila seleccionada
+        String ciudadSalida = (String) tablaVuelos.getValueAt(fila, 2);
+        LocalDate fechaSalida = (LocalDate) tablaVuelos.getValueAt(fila, 4);
+        LocalTime horaSalida = (LocalTime) tablaVuelos.getValueAt(fila, 5);
+
+        // Buscar vuelo exacto
+        return new VueloControlador().buscarVuelo(ciudadSalida, fechaSalida, horaSalida);
+    }
+    
+    private void abrirFormularioBoleto(Vuelo vuelo) {
+        VentanaFormularioBoleto formulario = new VentanaFormularioBoleto(cliente, vuelo);
+        formulario.setVisible(true);
+        this.dispose();
+    }
+    
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mostrarAdvertencia(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+    
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         int fila = tablaVuelos.getSelectedRow();
         if (fila >= 0) {
             try {
-                Vuelo vuelo = obtenerVuelo(fila);
-                
-                new BoletoControlador().crearBoleto(cliente, vuelo, vuelo.getClase(), vuelo.getCostoBoleto(), null);
-                this.dispose();
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                Vuelo vuelo = obtenerVueloDesdeTabla(fila);
+
+                // Verificar disponibilidad
+                if (!vuelo.tieneAsientosDisponibles()) {
+                    throw new IllegalArgumentException(
+                        "No hay asientos disponibles en este vuelo");
+                }
+
+                // Abrir formulario de boleto
+                abrirFormularioBoleto(vuelo);
+            } catch (IllegalArgumentException e) {
+                mostrarError(e.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecciona un vuelo de la tabla.");
+            mostrarAdvertencia("Seleccione un vuelo de la tabla");
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
@@ -227,13 +267,6 @@ public class VentanaSeleccionVuelo extends javax.swing.JFrame {
                     "ERROR", JOptionPane.ERROR_MESSAGE
             );
         }
-    }
-    
-    public Vuelo obtenerVuelo(int fila) {
-        String ciudadSalida = (String) tablaVuelos.getValueAt(fila, 4);
-        LocalDate fechaSalida = (LocalDate) tablaVuelos.getValueAt(fila, 6);
-        LocalTime horaSalida = (LocalTime) tablaVuelos.getValueAt(fila, 7);
-        return vueloControlador.buscarVuelo(ciudadSalida, fechaSalida, horaSalida);
     }
     
     /**

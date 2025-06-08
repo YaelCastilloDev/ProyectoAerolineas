@@ -5,19 +5,85 @@
 package vistas.administrativo;
 
 import controladores.BoletoControlador;
+import controladores.ClaseControlador;
+import java.util.List;
+import javax.swing.JOptionPane;
 import modelos.Boleto;
+import modelos.Clase;
+import modelos.Cliente;
+import modelos.Vuelo;
 
 /**
  *
- * @author Diego Ivan
+ * @author Raziel
  */
 public class VentanaFormularioBoleto extends javax.swing.JFrame {
-
+    private final Cliente cliente;
+    private final Vuelo vuelo;
+    private final BoletoControlador boletoControlador = new BoletoControlador();
+    private final ClaseControlador claseControlador = new ClaseControlador();
     /**
      * Creates new form VentanaFormularioCliente
      */
-    public VentanaFormularioBoleto() {
+    public VentanaFormularioBoleto(Cliente cliente, Vuelo vuelo) {
         initComponents();
+        this.cliente = cliente;
+        this.vuelo = vuelo;
+        inicializarDatos();
+        configurarListeners();
+    }
+    
+     private void inicializarDatos() {
+        // Configurar título
+        txtOperacion.setText("Nuevo Boleto para: " + cliente.getNombre());
+        
+        // Mostrar datos del vuelo (no editables)
+        tfVueloOrigen.setText(vuelo.getCiudadSalida());
+        tfVueloDestino.setText(vuelo.getCiudadLlegada());
+        tfFechaSalida.setText(vuelo.getFechaSalida().toString());
+        tfHoraSalida.setText(vuelo.getHoraSalida().toString());
+        
+        // Cargar clases disponibles
+        cargarClasesDisponibles();
+        
+        // Mostrar costo base inicial
+        actualizarCosto();
+    }
+     
+    private void cargarClasesDisponibles() {
+        cmbClase.removeAllItems();
+        try {
+            // Obtener todas las clases
+            List<Clase> clases = claseControlador.listarTodasClases();
+
+            // Agregar cada clase al ComboBox
+            for (Clase clase : clases) {
+                cmbClase.addItem(clase.getNombre()); // Agregamos solo el nombre
+            }
+
+            if (clases.isEmpty()) {
+                JOptionPane.showMessageDialog(this, 
+                    "No hay clases disponibles para este vuelo",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al cargar clases: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void configurarListeners() {
+        // Actualizar costo cuando cambie la clase seleccionada
+        cmbClase.addActionListener(e -> actualizarCosto());
+    }
+    
+    private void actualizarCosto() {
+        if (cmbClase.getSelectedItem() != null) {
+            Clase claseSeleccionada = (Clase) cmbClase.getSelectedItem();
+            double costo = vuelo.getCostoBoleto() * claseSeleccionada.getMultiplicadorPrecio();
+            tfCosto.setText(String.format("$%.2f", costo));
+        }
     }
 
     /**
@@ -31,16 +97,24 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
 
         pnlDatos1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tfNombre = new javax.swing.JTextField();
         tfCosto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        cmbClase = new javax.swing.JComboBox<>();
         txtOperacion = new javax.swing.JLabel();
         pnlDatos2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         tfAsiento = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JButton();
+        tfVueloOrigen = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        pnlDatos4 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        tfFechaSalida = new javax.swing.JTextField();
+        tfVueloDestino = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        tfHoraSalida = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +124,8 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Costo");
 
+        cmbClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout pnlDatos1Layout = new javax.swing.GroupLayout(pnlDatos1);
         pnlDatos1.setLayout(pnlDatos1Layout);
         pnlDatos1Layout.setHorizontalGroup(
@@ -58,7 +134,7 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlDatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbClase, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -73,7 +149,7 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
                     .addGroup(pnlDatos1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatos1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -87,33 +163,93 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Asiento");
 
+        tfVueloOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfVueloOrigenActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Ciudad de Salida");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Fecha de Salida");
+
+        tfVueloDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfVueloDestinoActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("Ciudad de Llegada");
+
+        javax.swing.GroupLayout pnlDatos4Layout = new javax.swing.GroupLayout(pnlDatos4);
+        pnlDatos4.setLayout(pnlDatos4Layout);
+        pnlDatos4Layout.setHorizontalGroup(
+            pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDatos4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tfFechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18)
+                .addGroup(pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfVueloDestino)
+                    .addGroup(pnlDatos4Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(0, 52, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlDatos4Layout.setVerticalGroup(
+            pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDatos4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlDatos4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfFechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfVueloDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pnlDatos2Layout = new javax.swing.GroupLayout(pnlDatos2);
         pnlDatos2.setLayout(pnlDatos2Layout);
         pnlDatos2Layout.setHorizontalGroup(
             pnlDatos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatos2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(pnlDatos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tfAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18)
                 .addGroup(pnlDatos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(tfAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(194, Short.MAX_VALUE))
+                    .addComponent(tfVueloOrigen)
+                    .addGroup(pnlDatos2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pnlDatos2Layout.createSequentialGroup()
+                .addComponent(pnlDatos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         pnlDatos2Layout.setVerticalGroup(
             pnlDatos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatos2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addGroup(pnlDatos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlDatos2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfAsiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfVueloOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(pnlDatos4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -122,26 +258,21 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setText("Hora de Salida");
+
+        tfHoraSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfHoraSalidaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,9 +281,6 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtOperacion)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(pnlDatos1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -160,19 +288,38 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
                                 .addComponent(pnlDatos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtOperacion)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfHoraSalida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(144, 144, 144))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(txtOperacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDatos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDatos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -185,76 +332,108 @@ public class VentanaFormularioBoleto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        Boleto boleto = new Boleto();
-        
-        //boleto.setClase(); ¿Es un atributo de tipo Clase o es un nombre?
-        boleto.setCosto(Double.parseDouble(tfCosto.getText()));
-        boleto.setAsiento(tfAsiento.getText());
+        try {
+            // Validar selección de clase
+            if (cmbClase.getSelectedItem() == null) {
+                throw new IllegalArgumentException("Debe seleccionar una clase");
+            }
+            
+            Clase claseSeleccionada = (Clase) cmbClase.getSelectedItem();
+            String asiento = tfAsiento.getText().trim();
+            
+            // Validar asiento
+            if (asiento.isEmpty()) {
+                throw new IllegalArgumentException("Debe ingresar un número de asiento");
+            }
+            
+            // Calcular costo final
+            double costo = vuelo.getCostoBoleto() * claseSeleccionada.getMultiplicadorPrecio();
+            
+            // Crear el boleto
+            Boleto boleto = boletoControlador.crearBoleto(
+                cliente, 
+                vuelo, 
+                claseSeleccionada,
+                costo,
+                asiento
+            );
+            
+            // Mostrar confirmación
+            mostrarConfirmacion(boleto, claseSeleccionada, costo);
+            
+            this.dispose();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, 
+                e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+        private void mostrarConfirmacion(Boleto boleto, Clase clase, double costo) {
+        String mensaje = String.format(
+            "¡Boleto creado exitosamente!\n\n" +
+            "Número: %s\n" +
+            "Cliente: %s\n" +
+            "Vuelo: %s a %s\n" +
+            "Clase: %s\n" +
+            "Asiento: %s\n" +
+            "Costo: $%.2f",
+            boleto.getId(),
+            cliente.getNombre(),
+            vuelo.getCiudadSalida(),
+            vuelo.getCiudadLlegada(),
+            clase.getNombre(),
+            boleto.getAsiento(),
+            costo
+        );
+        
+        JOptionPane.showMessageDialog(this, 
+            mensaje,
+            "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void tfVueloOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfVueloOrigenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfVueloOrigenActionPerformed
+
+    private void tfVueloDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfVueloDestinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfVueloDestinoActionPerformed
+
+    private void tfHoraSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfHoraSalidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfHoraSalidaActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaFormularioBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaFormularioBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaFormularioBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaFormularioBoleto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaFormularioBoleto().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<String> cmbClase;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel pnlDatos1;
     private javax.swing.JPanel pnlDatos2;
+    private javax.swing.JPanel pnlDatos3;
+    private javax.swing.JPanel pnlDatos4;
     private javax.swing.JTextField tfAsiento;
+    private javax.swing.JTextField tfAsiento1;
     private javax.swing.JTextField tfCosto;
-    private javax.swing.JTextField tfNombre;
+    private javax.swing.JTextField tfFechaSalida;
+    private javax.swing.JTextField tfHoraSalida;
+    private javax.swing.JTextField tfVueloDestino;
+    private javax.swing.JTextField tfVueloOrigen;
+    private javax.swing.JTextField tfVueloOrigen1;
     private javax.swing.JLabel txtOperacion;
     // End of variables declaration//GEN-END:variables
 }

@@ -93,7 +93,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="txtBienvenido">
           <Properties>
-            <Property name="text" type="java.lang.String" value="."/>
+            <Property name="text" type="java.lang.String" value=" "/>
           </Properties>
         </Component>
       </SubComponents>

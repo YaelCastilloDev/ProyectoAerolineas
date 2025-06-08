@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
 import modelos.Cliente;
 
 /**
