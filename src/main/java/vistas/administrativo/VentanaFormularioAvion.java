@@ -14,6 +14,7 @@ import javax.swing.*;
  * @author Diego Ivan
  */
 public class VentanaFormularioAvion extends javax.swing.JFrame {
+    public boolean esEdicion;
 
     /**
      * Creates new form VentanaFormularioCliente
@@ -275,18 +276,16 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
             avion.setAerolineaPropietaria(tfAerolinea.getText());
             avion.setModelo(tfModelo.getText());
 
-            // Create the airplane through the controller
-            new AvionControlador().crearAvion(
-                    avion.getNombre(),
-                    avion.getCapacidad(),
-                    avion.getModelo(),
-                    avion.getPeso(),
-                    avion.getMatricula(),
-                    avion.getAerolineaPropietaria());
-
-            // Close the window after successful creation
+            if (esEdicion) {
+                new AvionControlador().actualizarAvion(avion.getNombre(), avion.getCapacidad(), avion.getModelo(),
+                        avion.getPeso(), avion.getMatricula(), avion.getAerolineaPropietaria());
+                JOptionPane.showMessageDialog(this, "Avión actualizado con éxito.");
+            } else {
+                new AvionControlador().crearAvion(avion.getNombre(), avion.getCapacidad(), avion.getModelo(),
+                        avion.getPeso(), avion.getMatricula(), avion.getAerolineaPropietaria());
+                JOptionPane.showMessageDialog(this, "Avión actualizado con éxito.");
+            }
             this.dispose();
-
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                     "Por favor ingrese valores numéricos válidos para capacidad y peso",
@@ -368,4 +367,28 @@ public class VentanaFormularioAvion extends javax.swing.JFrame {
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfPeso;
     // End of variables declaration//GEN-END:variables
+
+    public JTextField getTfAerolinea() {
+        return tfAerolinea;
+    }
+
+    public JTextField getTfCapacidad() {
+        return tfCapacidad;
+    }
+
+    public JTextField getTfMatricula() {
+        return tfMatricula;
+    }
+
+    public JTextField getTfModelo() {
+        return tfModelo;
+    }
+
+    public JTextField getTfNombre() {
+        return tfNombre;
+    }
+
+    public JTextField getTfPeso() {
+        return tfPeso;
+    }
 }

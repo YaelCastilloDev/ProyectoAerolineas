@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Document(collection = "aviones", schemaVersion= "1.0")
 public class Avion implements Serializable {
     
-    @Id
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max = 30, message = "El nombre no puede exceder 30 caracteres")
     private String nombre;
@@ -25,6 +24,7 @@ public class Avion implements Serializable {
     @Max(value = 500000, message = "El peso máximo es 500,000 kg")
     private int peso;
     
+    @Id
     @NotBlank(message = "La matrícula no puede estar vacía")
    // @Pattern(regexp = "^[A-Z0-9]{2,10}$", message = "Formato de matrícula inválido")
     private String matricula;

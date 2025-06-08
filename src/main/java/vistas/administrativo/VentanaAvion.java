@@ -11,6 +11,7 @@ import modelos.Avion;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import modelos.Aerolinea;
 
 /**
  *
@@ -195,15 +196,68 @@ public class VentanaAvion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        VentanaFormularioAvion ventana = new VentanaFormularioAvion();
+        ventana.esEdicion = false;
+        ventana.setTitle("Registrar Avión");
+        ventana.pack();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaAviones.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                String matricula = tablaAviones.getValueAt(fila, 4).toString();
+            
+                Avion avion = avionControlador.buscarAvion(matricula);
+        
+                VentanaFormularioAvion ventana = new VentanaFormularioAvion();
+                ventana.esEdicion = true;
+            
+                ventana.getTfNombre().setText(avion.getNombre());
+                ventana.getTfMatricula().setText(avion.getMatricula());
+                ventana.getTfModelo().setText(avion.getModelo());
+                ventana.getTfPeso().setText(String.valueOf(avion.getPeso()));
+                ventana.getTfCapacidad().setText(String.valueOf(avion.getCapacidad()));
+                ventana.getTfAerolinea().setText(avion.getAerolineaPropietaria());
+
+                // Establecer el título de la ventana y mostrarla
+                ventana.setTitle("Modificar Aerolínea");
+                ventana.pack();
+                ventana.setLocationRelativeTo(this);
+                ventana.setVisible(true);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un avión de la tabla.");
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaAviones.getSelectedRow();
+        if (fila >= 0) {
+            String matricula = tablaAviones.getValueAt(fila, 4).toString().trim();
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Deseas eliminar al avión con matrícula: " + matricula + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    avionControlador.eliminarAvion(matricula);
+                    cargarTablaAviones(); // Asegúrate de tener este método que refresca la tabla
+                    JOptionPane.showMessageDialog(this, "Avión eliminado con éxito.");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un avión de la tabla.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
