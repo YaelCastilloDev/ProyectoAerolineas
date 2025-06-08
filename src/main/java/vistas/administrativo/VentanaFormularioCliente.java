@@ -6,10 +6,13 @@ package vistas.administrativo;
 
 import controladores.ClienteControlador;
 import java.time.LocalDate;
-import javax.swing.JLabel;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
+
 import modelos.Cliente;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
 
 /**
  *
@@ -239,22 +242,73 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose(); // Simply close the window
+    }
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        Cliente cliente = new Cliente();
-        
-        cliente.setNombre(tfNombre.getText());
-        cliente.setNacionalidad(tfNacionalidad.getText());
-        cliente.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
-        cliente.setCorreoElectronico(tfCorreo.getText());
-        cliente.setTelefono(tfTelefono.getText());
-        //cliente.setPasaportes(sldNumeroPasaportes.getValue()); ¿Por que es una lista?
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Validate all required fields are filled
+            if (tfNombre.getText().isEmpty() || tfNacionalidad.getText().isEmpty() ||
+                    tfFechaNacimiento.getText().isEmpty() || tfCorreo.getText().isEmpty() ||
+                    tfTelefono.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Todos los campos son obligatorios",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Parse date with proper format
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fechaNacimiento = LocalDate.parse(tfFechaNacimiento.getText(), dateFormatter);
+
+            // Validate date is not in the future
+            if (fechaNacimiento.isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this,
+                        "La fecha de nacimiento no puede ser en el futuro",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create and populate the Cliente object
+            Cliente cliente = new Cliente();
+            cliente.setNombre(tfNombre.getText());
+            cliente.setNacionalidad(tfNacionalidad.getText());
+            cliente.setFechaNacimiento(fechaNacimiento);
+            cliente.setCorreoElectronico(tfCorreo.getText());
+            cliente.setTelefono(tfTelefono.getText());
+
+            // Create list with single element from slider value
+            List<String> pasaportes = new ArrayList<>();
+            pasaportes.add(String.valueOf(sldNumeroPasaportes.getValue()));
+            cliente.setPasaportes(pasaportes);
+
+            // Create through controller
+            new ClienteControlador().crear(cliente);
+
+            // Close the window after successful creation
+            this.dispose();
+
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this,
+                    "El formato de fecha debe ser dd/MM/yyyy (ej. 12/05/2005)",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de validación: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments

@@ -414,18 +414,86 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dialogoCancelar.setTitle("Cancelar Operación");
-        dialogoCancelar.setVisible(true);
-    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose(); // Simply close the window
+    }
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
-        if(Arrays.equals(pfContra1.getPassword(), pfContra2.getPassword())) {
-            dialogoGuardar.setTitle("Guardar");
-            dialogoGuardar.setVisible(true);
-        } else {
-            // You might want to add some error message here
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            // Validate all required fields are filled
+            if (tfNombre.getText().isEmpty() || tfPuesto.getText().isEmpty() ||
+                    tfDepartamento.getText().isEmpty() || tfContrato.getText().isEmpty() ||
+                    tfAñosExperiencia.getText().isEmpty() || tfCorreo.getText().isEmpty() ||
+                    tfHoraEntrada.getText().isEmpty() || tfHoraSalida.getText().isEmpty() ||
+                    pfContra1.getPassword().length == 0 || pfContra2.getPassword().length == 0) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Todos los campos son obligatorios",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Validate password match
+            if (!Arrays.equals(pfContra1.getPassword(), pfContra2.getPassword())) {
+                JOptionPane.showMessageDialog(this,
+                        "Las contraseñas no coinciden",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Parse time inputs
+            LocalTime horaEntrada = LocalTime.parse(tfHoraEntrada.getText());
+            LocalTime horaSalida = LocalTime.parse(tfHoraSalida.getText());
+
+            // Validate time logic
+            if (horaSalida.isBefore(horaEntrada)) {
+                JOptionPane.showMessageDialog(this,
+                        "La hora de salida debe ser después de la hora de entrada",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create and populate the Administrativo object
+            Administrativo admin = new Administrativo();
+            admin.setPuesto(tfPuesto.getText());
+            admin.setDeptoTrabajo(tfDepartamento.getText());
+            admin.setTipoContrato(tfContrato.getText());
+            admin.setAnosExperiencia(Integer.parseInt(tfAñosExperiencia.getText()));
+            admin.setCorreoElectronico(tfCorreo.getText());
+            admin.setHorarioEntrada(horaEntrada);
+            admin.setHorarioSalida(horaSalida);
+            admin.setContrasena(new String(pfContra1.getPassword())); // Convert char[] to String
+
+            // Create through controller
+            new AdministrativoControlador().crear(admin);
+
+            // Close the window after successful creation
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor ingrese un valor numérico válido para años de experiencia",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (java.time.format.DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Formato de hora inválido. Use HH:mm (ej. 08:30)",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de validación: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -437,6 +505,8 @@ public class VentanaFormularioAdministrativo extends javax.swing.JFrame {
         dialogoCancelar.dispose();
         this.dispose();
     }//GEN-LAST:event_btnCancelarSiActionPerformed
+
+
 
     private void btnGuardarNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarNoActionPerformed
         dialogoGuardar.dispose();

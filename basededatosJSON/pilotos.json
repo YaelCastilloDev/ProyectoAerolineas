@@ -2,3 +2,4 @@
 {"nombre":"Roberto Martínez","direccion":"Av. Insurgentes 456, CDMX","fechaNacimiento":[1980,4,18],"genero":"Masculino","salario":85000.0,"correoElectronico":"roberto.m@aerolinea.com","contrasena":"Piloto123","anoInicio":[2005,6,15],"tipoLicencia":"ATP"}
 {"nombre":"Laura Díaz","direccion":"Calle Central 789, MTY","fechaNacimiento":[1985,9,22],"genero":"Femenino","salario":90000.0,"correoElectronico":"laura.d@aerolinea.com","contrasena":"Piloto456","anoInicio":[2010,3,10],"tipoLicencia":"ATP"}
 {"nombre":"Carlos Ramírez","direccion":"Paseo de la Reforma 1010, CDMX","fechaNacimiento":[1975,12,5],"genero":"Masculino","salario":95000.0,"correoElectronico":"carlos.r@aerolinea.com","contrasena":"Piloto789","anoInicio":[1998,8,20],"tipoLicencia":"ATP"}
+{"nombre":"holaaa","direccion":"san pedro","fechaNacimiento":[2000,4,17],"genero":"Hombre","salario":1500.0,"correoElectronico":"fjdk@gmail.com","contrasena":"12345678Asd","anoInicio":[2025,6,7],"tipoLicencia":"ATP"}

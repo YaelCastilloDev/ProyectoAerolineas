@@ -3,3 +3,4 @@
 {"deptoTrabajo":"Operaciones","horarioEntrada":[8,0],"horarioSalida":[16,0],"puesto":"Supervisor","tipoContrato":"TIEMPO_COMPLETO","anosExperiencia":5,"correoElectronico":"admin1@aerolinea.com","contrasena":"Admin1234"}
 {"deptoTrabajo":"Recursos Humanos","horarioEntrada":[9,30],"horarioSalida":[17,30],"puesto":"Reclutador","tipoContrato":"MEDIO_TIEMPO","anosExperiencia":2,"correoElectronico":"rh@aerolinea.com","contrasena":"Rh123456"}
 {"deptoTrabajo":"Finanzas","horarioEntrada":[7,0],"horarioSalida":[15,0],"puesto":"Contador","tipoContrato":"TIEMPO_COMPLETO","anosExperiencia":10,"correoElectronico":"contabilidad@aerolinea.com","contrasena":"Conta2023"}
+{"deptoTrabajo":"Primero","horarioEntrada":[12,32],"horarioSalida":[12,33],"puesto":"Contador","tipoContrato":"Tiempo completo","anosExperiencia":12,"correoElectronico":"f@gmail.com","contrasena":"12345678"}

@@ -37,7 +37,7 @@ public class Cliente implements Serializable {
     private String telefono;
     
     @Size(min = 1, max = 3, message = "Máximo 3 pasaportes")
-    private List<@Size(min = 8, max = 20) String> pasaportes;
+    private List<@Size(min = 1, max = 20) String> pasaportes;
 
     // Getters and Setters
     public String getId(){
@@ -87,7 +87,6 @@ public class Cliente implements Serializable {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
     public List<String> getPasaportes() {
         return pasaportes;
     }

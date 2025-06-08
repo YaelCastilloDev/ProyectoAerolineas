@@ -6,8 +6,12 @@ package vistas.administrativo;
 
 import controladores.PilotoControlador;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import modelos.Piloto;
-import javax.swing.JComboBox;
+
+import javax.swing.*;
 
 /**
  *
@@ -276,28 +280,80 @@ public class VentanaFormularioPiloto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose(); // Simply close the window
+    }
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        Piloto piloto = new Piloto();
-        
-        piloto.setNombre(tfNombre.getText());
-        piloto.setSalario(Double.parseDouble(tfSalario.getText()));
-        piloto.setDireccion(tfDireccion.getText());
-        piloto.setTipoLicencia(tfLicencia.getText());
-        piloto.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
-        piloto.setCorreoElectronico(tfCorreo.getText());
-        piloto.setGenero((String) cbGenero.getSelectedItem());
-        piloto.setContrasena(tfContraseña.getText());
-        
-        new PilotoControlador().crear(piloto);
-        
-        this.dispose();
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Validate all required fields are filled
+            if (tfNombre.getText().isEmpty() || tfSalario.getText().isEmpty() ||
+                    tfDireccion.getText().isEmpty() || tfLicencia.getText().isEmpty() ||
+                    tfFechaNacimiento.getText().isEmpty() || tfCorreo.getText().isEmpty() ||
+                    tfContraseña.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Todos los campos son obligatorios",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Parse date with proper format
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fechaNacimiento = LocalDate.parse(tfFechaNacimiento.getText(), dateFormatter);
+
+            // Validate date is not in the future
+            if (fechaNacimiento.isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(this,
+                        "La fecha de nacimiento no puede ser en el futuro",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create and populate the Piloto object
+            Piloto piloto = new Piloto();
+            piloto.setNombre(tfNombre.getText());
+            piloto.setSalario(Double.parseDouble(tfSalario.getText()));
+            piloto.setDireccion(tfDireccion.getText());
+            piloto.setTipoLicencia(tfLicencia.getText());
+            piloto.setFechaNacimiento(fechaNacimiento);
+            piloto.setCorreoElectronico(tfCorreo.getText());
+            piloto.setGenero((String) cbGenero.getSelectedItem());
+            piloto.setContrasena(tfContraseña.getText());
+
+            // Set current date as añoInicio
+            piloto.setAnoInicio(LocalDate.now());
+
+            // Create through controller
+            new PilotoControlador().crear(piloto);
+
+            // Close the window after successful creation
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor ingrese un valor numérico válido para el salario",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this,
+                    "El formato de fecha debe ser dd/MM/yyyy (ej. 12/05/2005)",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de validación: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments

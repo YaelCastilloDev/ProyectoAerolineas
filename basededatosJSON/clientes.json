@@ -1,2 +1,3 @@
 {"schemaVersion":"1.0"}
-{"nombre":"Mauricio","nacionalidad":"Mexicano","fechaNacimiento":[2005,11,16],"correoElectronico":"mauricio@gmail.com","telefono":"1234567890","pasaportes":["Mexicana","Estadounidense"]}
+{"id":null,"nombre":"Mauricio","nacionalidad":"Mexicano","fechaNacimiento":[2005,11,16],"correoElectronico":"mauricio@gmail.com","telefono":"1234567890","pasaportes":["Mexicana","Estadounidense"]}
+{"id":"9521253c-7a23-40db-adc2-a895e3700495","nombre":"As","nacionalidad":"Mexicana","fechaNacimiento":[1990,11,11],"correoElectronico":"dsadasdsfds@gmail.com","telefono":"123123434","pasaportes":["2"]}
