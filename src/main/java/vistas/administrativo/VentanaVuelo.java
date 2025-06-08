@@ -47,7 +47,7 @@ public class VentanaVuelo extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Vuelos");
 
         btnRefrescar.setText("Refrescar");
