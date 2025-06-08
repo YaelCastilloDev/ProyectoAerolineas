@@ -228,7 +228,7 @@ public class VentanaVuelo extends javax.swing.JFrame {
                 ventana.getTfAvion().setText(vuelo.getAvion().getMatricula());
                 ventana.getTfPilotos().setText(vuelo.getPilotos().toString());
                 ventana.getTfAzafatas().setText(vuelo.getAzafatas().toString());
-                ventana.getTfPasajeros().setText(String.valueOf(vuelo.getPasajerosRegistrados()));
+                ventana.getTfPasajeros().setText(String.valueOf(vuelo.tieneAsientosDisponibles()));
                 ventana.getTfCostoBoletos().setText(String.valueOf(vuelo.getCostoBoleto()));
 
                 // Establecer el título de la ventana y mostrarla
@@ -295,7 +295,7 @@ public class VentanaVuelo extends javax.swing.JFrame {
 
             for (Vuelo vuelo : vuelos) {
                 modelo.addRow(new Object[]{
-                        vuelo.getPasajerosRegistrados(),
+                        vuelo.tieneAsientosDisponibles(),
                         vuelo.getCostoBoleto(),
                         vuelo.getCiudadSalida(),
                         vuelo.getCiudadLlegada(), // o format(fechaNacimiento)

@@ -213,4 +213,13 @@ public class Vuelo implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Positive(message = "El costo del boleto debe ser positivo")
+    public double getCostoBoleto() {
+        return costoBoleto;
+    }
+
+    public void setCostoBoleto(@Positive(message = "El costo del boleto debe ser positivo") double costoBoleto) {
+        this.costoBoleto = costoBoleto;
+    }
 }

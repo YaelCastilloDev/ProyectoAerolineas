@@ -208,7 +208,7 @@ public class VentanaSeleccionVuelo extends javax.swing.JFrame {
 
             for (Vuelo vuelo : vuelos) {
                 modelo.addRow(new Object[]{
-                        vuelo.getPasajerosRegistrados(),
+                        vuelo.tieneAsientosDisponibles(),
                         vuelo.getCostoBoleto(),
                         vuelo.getCiudadSalida(),
                         vuelo.getCiudadLlegada(), // o format(fechaNacimiento)
