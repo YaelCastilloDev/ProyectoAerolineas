@@ -1,0 +1,3 @@
+{"schemaVersion":"1.0"}
+{"nombre":"Económica Plus","capacidad":180,"precioBase":2500.0,"multiplicadorPrecio":1.0,"tipo":"ECONOMICA"}
+{"nombre":"Ejecutiva Platinum","capacidad":24,"precioBase":3500.0,"multiplicadorPrecio":1.3,"tipo":"EJECUTIVA"}

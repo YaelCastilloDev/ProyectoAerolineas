@@ -1,1 +1,6 @@
 {"schemaVersion":"1.0"}
+{"nombre":"Avianca","pais":"Colombia","centroOperacionPrincipal":"Aeropuerto Internacional El Dorado","bases":["Bogotá","Medellín","Cali","Lima","San Salvador"],"sitioOficial":"https://www.avianca.com","nombreContacto":"Carlos Muñoz","telefono":"+571123456789"}
+{"nombre":"Lufthansa","pais":"Alemania","centroOperacionPrincipal":"Aeropuerto de Frankfurt","bases":["Munich","Düsseldorf","Viena","Zúrich"],"sitioOficial":"https://www.lufthansa.com","nombreContacto":"Anna Schmidt","telefono":"+496912345678"}
+{"nombre":"Volaris","pais":"México","centroOperacionPrincipal":"Aeropuerto Internacional de la Ciudad de México","bases":["Guadalajara","Tijuana","Cancún"],"sitioOficial":"https://www.volaris.mx","nombreContacto":"Enrique Beltranena","telefono":"+525555123456"}
+{"nombre":"Singapore Airlines","pais":"Singapur","centroOperacionPrincipal":"Aeropuerto de Changi","bases":["Bangkok","Hong Kong","Tokio"],"sitioOficial":"https://www.singaporeair.com","nombreContacto":"Goh Choon Phong","telefono":"+6565432100"}
+{"nombre":"Delta Air Lines","pais":"Estados Unidos","centroOperacionPrincipal":"Aeropuerto Internacional Hartsfield-Jackson","bases":["Nueva York","Los Ángeles","Seattle","Atlanta"],"sitioOficial":"https://www.delta.com","nombreContacto":"Ed Bastian","telefono":"+18002212122"}

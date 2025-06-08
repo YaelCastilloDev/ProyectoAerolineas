@@ -1,6 +1,6 @@
 {"schemaVersion":"1.0"}
-{"nombre":"asdasda","direccion":"dsad","fechaNacimiento":[2005,12,12],"genero":"Hombre","salario":12.0,"correoElectronico":"yra3@gmail.com","contrasena":"12345Asd","numIdiomas":2,"anoInicio":[2005,12,12]}
+{"nombre":"Mauricio","direccion":"Calle 1, Xalapa, Ver.","fechaNacimiento":[2005,12,12],"genero":"Hombre","salario":5000.0,"correoElectronico":"yra3@gmail.com","contrasena":"12345Asd","numIdiomas":2,"anoInicio":[2005,12,12]}
 {"nombre":"María González","direccion":"Av. Reforma 123, CDMX","fechaNacimiento":[1990,5,15],"genero":"Femenino","salario":25000.0,"correoElectronico":"maria.g@aerolinea.com","contrasena":"Azafata123","numIdiomas":3,"anoInicio":[2015,3,10]}
 {"nombre":"Ana López","direccion":"Calle Falsa 123, GDL","fechaNacimiento":[1988,8,22],"genero":"Femenino","salario":28000.0,"correoElectronico":"ana.l@aerolinea.com","contrasena":"Azafata456","numIdiomas":4,"anoInicio":[2018,6,15]}
-{"nombre":"Carlos Sánchez","direccion":"Boulevard Kukulcan Km 12, Cancún","fechaNacimiento":[1992,11,5],"genero":"Masculino","salario":27000.0,"correoElectronico":"carlos.s@aerolinea.com","contrasena":"Azafata789","numIdiomas":2,"anoInicio":[2020,1,20]}
 {"nombre":"Patricia Ramírez","direccion":"Av. Universidad 456, MTY","fechaNacimiento":[1991,7,30],"genero":"Femenino","salario":26000.0,"correoElectronico":"patricia.r@aerolinea.com","contrasena":"Azafata012","numIdiomas":3,"anoInicio":[2019,5,12]}
+{"nombre":"Maple","direccion":"Calle 1","fechaNacimiento":[2003,1,11],"genero":"Hombre","salario":5000.0,"correoElectronico":"maple@correo.com","contrasena":"holA1234","numIdiomas":3,"anoInicio":[2005,11,16]}

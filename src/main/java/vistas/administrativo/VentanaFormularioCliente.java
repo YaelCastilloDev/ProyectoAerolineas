@@ -6,12 +6,11 @@ package vistas.administrativo;
 
 import controladores.ClienteControlador;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
-
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import modelos.Cliente;
 
 /**
@@ -19,7 +18,7 @@ import modelos.Cliente;
  * @author Diego Ivan
  */
 public class VentanaFormularioCliente extends javax.swing.JFrame {
-
+    public boolean esEdicion;
     /**
      * Creates new form VentanaFormularioCliente
      */
@@ -246,69 +245,36 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
         this.dispose(); // Simply close the window
     }
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
-            // Validate all required fields are filled
-            if (tfNombre.getText().isEmpty() || tfNacionalidad.getText().isEmpty() ||
-                    tfFechaNacimiento.getText().isEmpty() || tfCorreo.getText().isEmpty() ||
-                    tfTelefono.getText().isEmpty()) {
-
-                JOptionPane.showMessageDialog(this,
-                        "Todos los campos son obligatorios",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Parse date with proper format
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate fechaNacimiento = LocalDate.parse(tfFechaNacimiento.getText(), dateFormatter);
-
-            // Validate date is not in the future
-            if (fechaNacimiento.isAfter(LocalDate.now())) {
-                JOptionPane.showMessageDialog(this,
-                        "La fecha de nacimiento no puede ser en el futuro",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Create and populate the Cliente object
             Cliente cliente = new Cliente();
             cliente.setNombre(tfNombre.getText());
             cliente.setNacionalidad(tfNacionalidad.getText());
-            cliente.setFechaNacimiento(fechaNacimiento);
+            cliente.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
             cliente.setCorreoElectronico(tfCorreo.getText());
             cliente.setTelefono(tfTelefono.getText());
 
-            // Create list with single element from slider value
             List<String> pasaportes = new ArrayList<>();
-            pasaportes.add(String.valueOf(sldNumeroPasaportes.getValue()));
+            for (int i = 1; i <= sldNumeroPasaportes.getValue(); i++) {
+                pasaportes.add("PASAPORTE_" + i); // Aquí puedes pedir datos reales si es necesario
+            }
             cliente.setPasaportes(pasaportes);
 
-            // Create through controller
-            new ClienteControlador().crear(cliente);
-
-            // Close the window after successful creation
+            ClienteControlador clienteControlador = new ClienteControlador();
+            if (esEdicion) {
+                clienteControlador.actualizar(cliente); // Este método debe existir
+                JOptionPane.showMessageDialog(this, "Cliente actualizado con éxito.");
+            } else {
+                clienteControlador.crear(cliente); // Este método debe existir
+                JOptionPane.showMessageDialog(this, "Cliente registrado con éxito.");
+            }
             this.dispose();
-
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this,
-                    "El formato de fecha debe ser dd/MM/yyyy (ej. 12/05/2005)",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error de validación: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al guardar: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,7 +357,5 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
 
     public JTextField getTfTelefono() {
         return tfTelefono;
-    }
-    
-    
+    } 
 }

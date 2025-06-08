@@ -4,11 +4,19 @@
  */
 package vistas.administrativo;
 
+import controladores.BoletoControlador;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelos.Boleto;
+import modelos.Cliente;
+
 /**
  *
  * @author Diego Ivan
  */
 public class VentanaBoleto extends javax.swing.JFrame {
+    BoletoControlador controlador = new BoletoControlador();
 
     /**
      * Creates new form VentanaBoleto
@@ -176,9 +184,40 @@ public class VentanaBoleto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRefrescarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+    
+    public void cargarTablaBoletos() {
+        /*try {
+            List<Boleto> boletos = controlador.listarBoletosPorVuelo(vuelo); // método necesario en el controlador
+            DefaultTableModel modelo = new DefaultTableModel();
 
+            modelo.setColumnIdentifiers(new Object[]{
+                    "ID", "Nombre", "Nacionalidad", "Fecha Nacimiento", "Correo", "Teléfono", "Pasaportes"
+            });
+
+            for (Cliente cliente : clientes) {
+                modelo.addRow(new Object[]{
+                        cliente.getId(),
+                        cliente.getNombre(),
+                        cliente.getNacionalidad(),
+                        cliente.getFechaNacimiento(), // o format(fechaNacimiento)
+                        cliente.getCorreoElectronico(),
+                        cliente.getTelefono(),
+                        String.join(", ", cliente.getPasaportes())
+                });
+            }
+
+            tablaClientes.setModel(modelo);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al cargar clientes: " + e.getMessage(),
+                    "ERROR", JOptionPane.ERROR_MESSAGE
+            );
+        }*/
+    }
+    
     /**
      * @param args the command line arguments
      */

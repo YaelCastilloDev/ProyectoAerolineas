@@ -1,0 +1,6 @@
+{"schemaVersion":"1.0"}
+{"nombre":"Jumbo 747","capacidad":416,"modelo":"Boeing 747-400","peso":397000,"matricula":"N12345","aerolineaPropietaria":"Delta Air Lines"}
+{"nombre":"Airbus A320","capacidad":180,"modelo":"A320-200","peso":78000,"matricula":"EC-ABC","aerolineaPropietaria":"Avianca"}
+{"nombre":"Embraer E190","capacidad":114,"modelo":"E190","peso":50000,"matricula":"PT-XYZ","aerolineaPropietaria":"Volaris"}
+{"nombre":"Carguero 777","capacidad":0,"modelo":"Boeing 777F","peso":347450,"matricula":"F-GABC","aerolineaPropietaria":"Lufthansa"}
+{"nombre":"Gulfstream G650","capacidad":18,"modelo":"G650ER","peso":45359,"matricula":"N1GV","aerolineaPropietaria":"Singapore Airlines"}

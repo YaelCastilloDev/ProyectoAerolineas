@@ -197,15 +197,72 @@ public class VentanaAzafata extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        VentanaFormularioAzafata ventana = new VentanaFormularioAzafata();
+        ventana.esEdicion = false;
+        ventana.setTitle("Registrar Azafata");
+        ventana.pack();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaAzafatas.getSelectedRow();
+        if (fila >= 0) {
+            try {
+                String correo = tablaAzafatas.getValueAt(fila, 1).toString(); // Asegúrate que la columna 0 es el correo
+                Azafata azafata = controlador.buscarPorId(correo);
+
+                VentanaFormularioAzafata ventana = new VentanaFormularioAzafata();
+
+                // Llenar los campos del formulario con los datos del administrativo
+                ventana.getTfNombre().setText(azafata.getNombre());
+                ventana.getTfDireccion().setText(azafata.getDireccion());
+                ventana.getTfFechaNacimiento().setText(azafata.getFechaNacimiento().toString());
+                ventana.getTfNumIdiomas().setText(String.valueOf(azafata.getNumIdiomas()));
+                ventana.getTfAñoInicio().setText(azafata.getAnoInicio().toString());
+                ventana.getTfCorreo().setText(correo);
+                ventana.getTfSalario().setText(String.valueOf(azafata.getSalario()));
+                ventana.getCbGenero().setSelectedItem(azafata.getGenero());
+                ventana.getTfContraseña().setText(azafata.getContrasena());
+                ventana.esEdicion = true;
+
+                // Establecer el título de la ventana y mostrarla
+                ventana.setTitle("Modificar Azafata");
+                ventana.pack();
+                ventana.setLocationRelativeTo(this);
+                ventana.setVisible(true);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una azafata de la tabla.");
+        }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int fila = tablaAzafatas.getSelectedRow();
+        if (fila >= 0) {
+            String correo = tablaAzafatas.getValueAt(fila, 1).toString();
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Deseas eliminar a la azafata con correo: " + correo + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                try {
+                    controlador.eliminar(correo);
+                    cargarTablaAzafatas(); // Asegúrate de tener este método que refresca la tabla
+                    JOptionPane.showMessageDialog(this, "Azafata eliminado con éxito.");
+                } catch (IllegalArgumentException | IllegalStateException e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage(),
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una azafata de la tabla.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
@@ -221,13 +278,14 @@ public class VentanaAzafata extends javax.swing.JFrame {
             List<Azafata> azafatas = controlador.listarTodas();
             DefaultTableModel modelo = new DefaultTableModel();
 
-            modelo.setColumnIdentifiers(new Object[]{"Nombre", "Dirección",
+            modelo.setColumnIdentifiers(new Object[]{"Nombre", "Email", "Dirección",
                     "Fecha de Nacimiento", "Género", "Salario",
                     "Número de Idiomas", "Año de Inicio"});
 
             for (Azafata a : azafatas) {
                 modelo.addRow(new Object[]{
                         a.getNombre(),
+                        a.getCorreoElectronico(),
                         a.getDireccion(),
                         a.getFechaNacimiento(),
                         a.getGenero(),

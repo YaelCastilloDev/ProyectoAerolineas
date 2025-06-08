@@ -330,19 +330,23 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletosActionPerformed
-        // TODO add your handling code here:
+        VentanaBoleto ventana = new VentanaBoleto();
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnBoletosActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
+        VentanaCliente ventana = new VentanaCliente();
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnAvionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvionesActionPerformed
-        // TODO add your handling code here:
+        VentanaAvion ventana = new VentanaAvion();
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnAvionesActionPerformed
 
     private void btnVuelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVuelosActionPerformed
-        // TODO add your handling code here:
+        VentanaVuelo ventana = new VentanaVuelo();
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnVuelosActionPerformed
 
     /**
