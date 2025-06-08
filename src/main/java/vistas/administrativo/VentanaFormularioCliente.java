@@ -6,7 +6,11 @@ package vistas.administrativo;
 
 import controladores.ClienteControlador;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import modelos.Cliente;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -16,7 +20,7 @@ import javax.swing.JTextField;
  * @author Diego Ivan
  */
 public class VentanaFormularioCliente extends javax.swing.JFrame {
-
+    public boolean esEdicion;
     /**
      * Creates new form VentanaFormularioCliente
      */
@@ -245,15 +249,34 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        Cliente cliente = new Cliente();
-        
-        cliente.setNombre(tfNombre.getText());
-        cliente.setNacionalidad(tfNacionalidad.getText());
-        cliente.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
-        cliente.setCorreoElectronico(tfCorreo.getText());
-        cliente.setTelefono(tfTelefono.getText());
-        //cliente.setPasaportes(sldNumeroPasaportes.getValue()); ¿Por que es una lista?
+        try {
+            Cliente cliente = new Cliente();
+            cliente.setNombre(tfNombre.getText());
+            cliente.setNacionalidad(tfNacionalidad.getText());
+            cliente.setFechaNacimiento(LocalDate.parse(tfFechaNacimiento.getText()));
+            cliente.setCorreoElectronico(tfCorreo.getText());
+            cliente.setTelefono(tfTelefono.getText());
+
+            List<String> pasaportes = new ArrayList<>();
+            for (int i = 1; i <= sldNumeroPasaportes.getValue(); i++) {
+                pasaportes.add("PASAPORTE_" + i); // Aquí puedes pedir datos reales si es necesario
+            }
+            cliente.setPasaportes(pasaportes);
+
+            ClienteControlador clienteControlador = new ClienteControlador();
+            if (esEdicion) {
+                clienteControlador.actualizar(cliente); // Este método debe existir
+                JOptionPane.showMessageDialog(this, "Cliente actualizado con éxito.");
+            } else {
+                clienteControlador.crear(cliente); // Este método debe existir
+                JOptionPane.showMessageDialog(this, "Cliente registrado con éxito.");
+            }
+            this.dispose();
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
@@ -337,7 +360,5 @@ public class VentanaFormularioCliente extends javax.swing.JFrame {
 
     public JTextField getTfTelefono() {
         return tfTelefono;
-    }
-    
-    
+    } 
 }

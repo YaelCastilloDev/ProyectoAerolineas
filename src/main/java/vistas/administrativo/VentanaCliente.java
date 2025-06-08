@@ -202,6 +202,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
             VentanaFormularioCliente ventana = new VentanaFormularioCliente();
+            ventana.esEdicion = false;
             
             // Establecer el título de la ventana y mostrarla
             ventana.setTitle("Registrar Cliente");
@@ -217,10 +218,11 @@ public class VentanaCliente extends javax.swing.JFrame {
         int fila = tablaClientes.getSelectedRow();
         if (fila >= 0) {
             try {
-                String correo = tablaClientes.getValueAt(fila, 3).toString(); // Asegúrate que la columna 0 es el correo
+                String correo = tablaClientes.getValueAt(fila, 4).toString().trim(); // Asegúrate que la columna 0 es el correo
                 Cliente cliente = clienteControlador.buscarPorId(correo);
 
                 VentanaFormularioCliente ventana = new VentanaFormularioCliente();
+                ventana.esEdicion = true;
 
                 // Llenar los campos del formulario con los datos del administrativo
                 ventana.getTfNombre().setText(cliente.getNombre());
@@ -246,7 +248,7 @@ public class VentanaCliente extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int fila = tablaClientes.getSelectedRow();
         if (fila >= 0) {
-            String correo = tablaClientes.getValueAt(fila, 4).toString();
+            String correo = tablaClientes.getValueAt(fila, 4).toString().trim();
 
             int confirmacion = JOptionPane.showConfirmDialog(this,
                     "¿Deseas eliminar al cliente con correo: " + correo + "?",
@@ -265,7 +267,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecciona un administrativo de la tabla.");
+            JOptionPane.showMessageDialog(this, "Selecciona un cliente de la tabla.");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 

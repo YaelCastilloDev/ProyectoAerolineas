@@ -11,7 +11,6 @@ import java.util.List;
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id
     private String id;
     
     @NotBlank(message = "El nombre no puede estar vacío")
@@ -27,7 +26,7 @@ public class Cliente implements Serializable {
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     private LocalDate fechaNacimiento;
     
-    
+    @Id
     @NotBlank(message = "El correo no puede estar vacío")
     @Email(message = "Debe ser un correo válido")
     @Size(max = 60, message = "El correo no puede exceder 60 caracteres")
