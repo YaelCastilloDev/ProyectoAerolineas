@@ -68,7 +68,8 @@ public class Vuelo implements Serializable {
     
    // @Positive(message = "El costo del boleto debe ser positivo")
     private double costoBoleto;
-    
+
+
     @JsonIgnore // Para evitar recursión en JSON
     private List<Boleto> boletos = new ArrayList<>();
 
@@ -79,7 +80,7 @@ public class Vuelo implements Serializable {
         }
         boletos.add(boleto);
     }
-
+    @JsonIgnore
     // Método para obtener boletos no cancelados
     public List<Boleto> getBoletosActivos() {
         return boletos.stream()

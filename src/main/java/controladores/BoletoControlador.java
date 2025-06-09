@@ -26,8 +26,14 @@ public class BoletoControlador {
             String asiento) {
         
         try {
+            Boleto boleto = new Boleto();
+            boleto.setAsiento(asiento);
+            boleto.setCliente(cliente);
+            boleto.setVuelo(vuelo);
+            boleto.setClase(clase);
+            boleto.setCosto(costo);
             validador.validarCompleto(cliente, vuelo, clase, costo, asiento);
-            Boleto boleto = validador.getBoletoValidado();
+         //   Boleto boleto = validador.getBoletoValidado();
             boletoDAO.crear(boleto);
             return boleto;
         } catch (ConstraintViolationException e) {

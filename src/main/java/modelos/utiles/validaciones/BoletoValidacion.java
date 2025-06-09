@@ -43,7 +43,7 @@ public class BoletoValidacion {
         }
         
         // Validaciones adicionales
-        validarCapacidadVuelo(vuelo, clase);
+   //     validarCapacidadVuelo(vuelo, clase);
         validarPrecioClase(clase, costo);
     }
 

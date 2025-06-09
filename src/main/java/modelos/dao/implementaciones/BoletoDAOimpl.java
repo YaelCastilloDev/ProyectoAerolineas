@@ -20,22 +20,21 @@ public class BoletoDAOimpl implements BoletoDAO {
     
     @Override
     public void crear(Boleto boleto) {
-        if (asientoOcupado(boleto.getVuelo(), boleto.getAsiento())) {
+    /*    if (asientoOcupado(boleto.getVuelo(), boleto.getAsiento())) {
             throw new IllegalArgumentException("El asiento " + boleto.getAsiento() + 
                " ya está ocupado en este vuelo");
-        }
+        }*/
 
         // Validar capacidad
-        if (!boleto.getVuelo().tieneDisponibilidad(boleto.getClase())) {
+/*        if (!boleto.getVuelo().tieneDisponibilidad(boleto.getClase())) {
             throw new IllegalArgumentException("No hay disponibilidad en la clase seleccionada");
-        }
+        }*/
 
         db.insert(boleto);
 
         // Actualizar la relación en el vuelo
         Vuelo vuelo = boleto.getVuelo();
         vuelo.agregarBoleto(boleto);
-        db.upsert(vuelo);
     }
 
     @Override
