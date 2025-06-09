@@ -21,7 +21,7 @@ public class ExportarDatosBoleto extends JFrame {
 
     public ExportarDatosBoleto() {
         // Initialize JsonDBTemplate with your values
-        String dbFilesLocation = "/home/yael/Escritorio/basededatosJSON";
+        String dbFilesLocation = "D:/proyectos/Aerolinea/ProyectoAerolineas/basededatosJSON";
         String baseScanPackage = "modelos";
 
         try {

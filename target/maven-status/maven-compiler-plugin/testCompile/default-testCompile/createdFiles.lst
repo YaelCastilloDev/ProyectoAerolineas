@@ -1,5 +1,5 @@
-jsonIO/AdministrativoTest.class
-jsonIO/PilotoTests.class
-jsonIO/AzafataTest.class
-jsonIO/AerolineaTests.class
-jsonIO/ClienteTests.class
+jsonIO\ClienteTests.class
+jsonIO\AdministrativoTest.class
+jsonIO\PilotoTests.class
+jsonIO\AerolineaTests.class
+jsonIO\AzafataTest.class
