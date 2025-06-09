@@ -40,7 +40,7 @@ public class dbConeccion {
 */
 public class dbConexion {
     // Usa esta ruta exacta (ajusta según tu sistema)
-    private static final String DB_FILES_LOCATION = "/home/yael/Escritorio/basededatosJSON/";
+    private static final String DB_FILES_LOCATION = "D:/proyectos/Aerolinea/ProyectoAerolineas/basededatosJSON";
     private static final String BASE_SCAN_PACKAGE = "modelos"; // Asegúrate que coincida con tu paquete
     private static JsonDBTemplate jsonDBTemplate;
     

@@ -322,7 +322,8 @@ public class VentanaAdministrativo extends javax.swing.JFrame {
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {
 //GEN-FIRST:event_btnExportarActionPerformed
 
-        // TODO add your handling code here:
+        ExportarDatosAdministrativo ventana = new ExportarDatosAdministrativo();
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {

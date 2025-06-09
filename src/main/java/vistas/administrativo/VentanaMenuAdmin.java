@@ -56,7 +56,7 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("UniAir");
 
-        txtBienvenido.setText(".");
+        txtBienvenido.setText(" ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,7 +205,7 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
             }
         });
 
-        btnBoletos.setText("Boletos");
+        btnBoletos.setText("Exportar Datos de Boleto");
         btnBoletos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBoletosActionPerformed(evt);
@@ -330,7 +330,7 @@ public class VentanaMenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletosActionPerformed
-        VentanaBoleto ventana = new VentanaBoleto();
+        ExportarDatosBoleto ventana = new ExportarDatosBoleto();
         ventana.setVisible(true);
     }//GEN-LAST:event_btnBoletosActionPerformed
 

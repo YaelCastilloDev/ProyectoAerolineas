@@ -266,7 +266,8 @@ public class VentanaAzafata extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        // TODO add your handling code here:
+        ExportarDatosAzafata ventana = new ExportarDatosAzafata();
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarActionPerformed
