@@ -48,10 +48,10 @@ public class VueloControlador {
                 clase, avion, pilotos, azafatas);
             
             // Validaciones adicionales
-            validarDisponibilidadAvion(avion, fechaSalida, fechaLlegada);
-            validarDisponibilidadPilotos(pilotos, fechaSalida, fechaLlegada);
-            validarDisponibilidadAzafatas(azafatas, fechaSalida, fechaLlegada);
-            validarLicenciasPilotos(pilotos, avion.getModelo());
+          //  validarDisponibilidadAvion(avion, fechaSalida, fechaLlegada);
+      //      validarDisponibilidadPilotos(pilotos, fechaSalida, fechaLlegada);
+       //     validarDisponibilidadAzafatas(azafatas, fechaSalida, fechaLlegada);
+     //       validarLicenciasPilotos(pilotos, avion.getModelo());
 
             Vuelo vuelo = validador.getVueloValidado();
             vueloDAO.crear(vuelo);

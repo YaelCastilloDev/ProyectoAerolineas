@@ -121,12 +121,11 @@ public class Vuelo implements Serializable {
         return fechaLlegada.isAfter(fechaSalida);
     }
 
-    // Getters y Setters
-    public String getId(){
+    public String getId() {
         return id;
     }
     
-    public void setId(){
+    public void setId(String id){
         this.id = id;
     }
     

@@ -14,26 +14,27 @@ import modelos.Vuelo;
 
 public class VueloDAOimpl implements VueloDAO {
     private final JsonDBTemplate db;
-    
+
     public VueloDAOimpl() {
         this.db = dbConexion.getConnection();
         if (!this.db.collectionExists(Vuelo.class)) {
             this.db.createCollection(Vuelo.class);
         }
     }
-    
+
     private String generarIdVuelo(Vuelo vuelo) {
-        return vuelo.getCiudadSalida() + "_" + 
-               vuelo.getFechaSalida().toString() + "_" + 
+        return vuelo.getCiudadSalida() + "_" +
+               vuelo.getFechaSalida().toString() + "_" +
                vuelo.getHoraSalida().toString();
     }
-    
+
     @Override
     public void crear(Vuelo vuelo) {
         String id = generarIdVuelo(vuelo);
         if (db.findById(id, Vuelo.class) != null) {
             throw new IllegalArgumentException("Ya existe un vuelo con estas características");
         }
+        vuelo.setId(id); // Set the generated ID on the object
         db.insert(vuelo);
     }
 

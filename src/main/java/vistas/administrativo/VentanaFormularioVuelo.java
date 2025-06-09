@@ -243,7 +243,7 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
         jLabel9.setText("Clase");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setText("Avión (nombre)");
+        jLabel10.setText("Avión (matricula)");
 
         javax.swing.GroupLayout pnlDatos5Layout = new javax.swing.GroupLayout(pnlDatos5);
         pnlDatos5.setLayout(pnlDatos5Layout);
@@ -278,10 +278,10 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
         );
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Pilotos 1");
+        jLabel5.setText("Pilotos 1 (email)");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Azafatas 1");
+        jLabel6.setText("Azafatas 1 (email)");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setText("Azafatas 2");
@@ -521,7 +521,8 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
 
             // Create the flight using the controller
             try {
-                new VueloControlador().crearVuelo(
+                VueloControlador vueloControlador = new VueloControlador();
+                vueloControlador.crearVuelo(
                         vuelo.getCiudadSalida(),
                         vuelo.getCiudadLlegada(),
                         vuelo.getFechaSalida(),
@@ -539,8 +540,10 @@ public class VentanaFormularioVuelo extends javax.swing.JFrame {
                 this.dispose();
 
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error al crear el vuelo: " + e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
+
             }
         } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "Formato de fecha/hora incorrecto. Use dd/MM/yyyy para fechas y HH:mm para horas.",
