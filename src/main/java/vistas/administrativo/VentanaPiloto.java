@@ -304,7 +304,7 @@ public class VentanaPiloto extends javax.swing.JFrame {
             tablaPilotos.setModel(modelo);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Error al cargar los administrativos: " + e.getMessage(),
+                    "Error al cargar los pilotos: " + e.getMessage(),
                     "ERROR", JOptionPane.ERROR_MESSAGE
             );
         }

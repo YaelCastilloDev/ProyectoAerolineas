@@ -10,16 +10,16 @@ import controladores.ExportadorCSVControlador;
 import controladores.ExportadorExcelControlador;
 import controladores.ExportadorPDFControlador;
 import io.jsondb.JsonDBTemplate;
-import modelos.Azafata;
+import modelos.Boleto;
 
-public class ExportarDatosAzafata extends JFrame {
+public class ExportarDatosBoleto extends JFrame {
 
     private JButton btnCSV;
     private JButton btnPDF;
     private JButton btnExcel;
     private JsonDBTemplate jsonDB;
 
-    public ExportarDatosAzafata() {
+    public ExportarDatosBoleto() {
         // Initialize JsonDBTemplate with your values
         String dbFilesLocation = "/home/yael/Escritorio/basededatosJSON";
         String baseScanPackage = "modelos";
@@ -38,7 +38,7 @@ public class ExportarDatosAzafata extends JFrame {
             e.printStackTrace();
         }
 
-        setTitle("Exportar Datos de Azafatas");
+        setTitle("Exportar Datos de Boletos");
         setSize(400, 150);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -68,7 +68,7 @@ public class ExportarDatosAzafata extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (jsonDB == null) {
-                JOptionPane.showMessageDialog(ExportarDatosAzafata.this,
+                JOptionPane.showMessageDialog(ExportarDatosBoleto.this,
                         "No se pudo establecer conexión con la base de datos",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -78,7 +78,7 @@ public class ExportarDatosAzafata extends JFrame {
             fileChooser.setDialogTitle("Guardar como " + formato);
 
             // Set default file name and extension
-            String defaultFileName = "azafatas";
+            String defaultFileName = "boletos";
             switch (formato) {
                 case "CSV":
                     fileChooser.setSelectedFile(new File(defaultFileName + ".csv"));
@@ -91,7 +91,7 @@ public class ExportarDatosAzafata extends JFrame {
                     break;
             }
 
-            int userSelection = fileChooser.showSaveDialog(ExportarDatosAzafata.this);
+            int userSelection = fileChooser.showSaveDialog(ExportarDatosBoleto.this);
 
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 File fileToSave = fileChooser.getSelectedFile();
@@ -101,22 +101,22 @@ public class ExportarDatosAzafata extends JFrame {
                     switch (formato) {
                         case "CSV":
                             ExportadorCSVControlador csvControlador = new ExportadorCSVControlador(jsonDB);
-                            csvControlador.exportarACSV(Azafata.class, filePath, true);
+                            csvControlador.exportarACSV(Boleto.class, filePath, true);
                             break;
                         case "PDF":
                             ExportadorPDFControlador pdfControlador = new ExportadorPDFControlador(jsonDB);
-                            pdfControlador.exportarAPDF(Azafata.class, filePath);
+                            pdfControlador.exportarAPDF(Boleto.class, filePath);
                             break;
                         case "Excel":
                             ExportadorExcelControlador excelControlador = new ExportadorExcelControlador(jsonDB);
-                            excelControlador.exportarAXLSX(Azafata.class, filePath);
+                            excelControlador.exportarAXLSX(Boleto.class, filePath);
                             break;
                     }
-                    JOptionPane.showMessageDialog(ExportarDatosAzafata.this,
+                    JOptionPane.showMessageDialog(ExportarDatosBoleto.this,
                             "Datos exportados exitosamente a " + filePath,
                             "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(ExportarDatosAzafata.this,
+                    JOptionPane.showMessageDialog(ExportarDatosBoleto.this,
                             "Error al exportar datos: " + ex.getMessage(),
                             "Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
@@ -127,7 +127,7 @@ public class ExportarDatosAzafata extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            ExportarDatosAzafata ventana = new ExportarDatosAzafata();
+            ExportarDatosBoleto ventana = new ExportarDatosBoleto();
             ventana.setVisible(true);
         });
     }
